@@ -36,7 +36,7 @@ public class SystemLogAspect {
      * Controller层切点 注解拦截
      */
     /*@Pointcut("@annotation(com.huishu.lbs.common.SystemControllerLog)")*/
-    @Pointcut("execution(* com.huishu.lbs.controller.*.*(..))")
+    @Pointcut("execution(* com.zkjl.wf_clserver.core.controller.*.*(..))")
     public void controllerAspect(){
     }
     long beginTime=0L;
