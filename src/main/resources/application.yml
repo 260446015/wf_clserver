@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  data:
+    elasticsearch:
+      cluster-nodes: 47.93.10.136:44336
+      cluster-name: elasticsearch
+    mongodb:
+      host: 47.93.10.136
+      port: 44335
