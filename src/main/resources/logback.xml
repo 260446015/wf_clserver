@@ -40,6 +40,7 @@
 
     <!-- 任务调度日志级别如果是DEBUG会抛出一个异常,不影响使用 -->
     <logger name="org.springframework.scheduling" level="info"/>
+    <logger name="org.springframework.data.jpa" level="debug"/>
 
     <!-- 日志输出级别 , 测试用DEBUG级别, 线上用INFO级别-->
     <root level="INFO">

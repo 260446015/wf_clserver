@@ -2,9 +2,13 @@ server:
   port: 8080
 spring:
   data:
-    elasticsearch:
-      cluster-nodes: 47.93.10.136:44336
-      cluster-name: elasticsearch
+#    elasticsearch:
+#      cluster-nodes: 47.93.10.136:44336
+#      cluster-name: elasticsearch
     mongodb:
-      host: 47.93.10.136
-      port: 44335
+      uri: mongodb://221.1.97.28:44335/lbs
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/edu
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
