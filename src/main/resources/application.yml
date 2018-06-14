@@ -7,8 +7,3 @@ spring:
 #      cluster-name: elasticsearch
     mongodb:
       uri: mongodb://221.1.97.28:44335/lbs
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/edu
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: 123456
