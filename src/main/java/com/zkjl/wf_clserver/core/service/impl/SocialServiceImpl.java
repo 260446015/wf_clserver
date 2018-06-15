@@ -32,7 +32,7 @@ public class SocialServiceImpl implements SocialService {
 
 	@Override
 	public Map<String, Object> getWorkers(String idCard) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("workers");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Workers");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("id_card", idCard));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();

@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 			Pattern pattern = Pattern.compile("^.*" + keyword+ ".*$", Pattern.CASE_INSENSITIVE); 
 			criteria.append("name", pattern);
 		}
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("sys_user");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("SysUser");
 		return conllections.count(criteria);
 	}
 	
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 			Pattern pattern = Pattern.compile("^.*" + username+ ".*$", Pattern.CASE_INSENSITIVE); 
 			criteria.append("username", pattern);
 		}
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("sys_user");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("SysUser");
 		if(conllections.count(criteria)==1){
 			return true;
 		}else{
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(User user) {
 		MongoCollection<Document> collection = MongoManager.getMongoDatabase()
-				.getCollection("sys_user");
+				.getCollection("SysUser");
 		Document doc = new Document();
 		user.preInsert();
 		doc.append("id", user.getId());
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 	/** 根据用户id删除用户 */
 	@Override
 	public void deleteUser(String id) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("sys_user");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("SysUser");
 		BasicDBObject query = new BasicDBObject();
 		query.put("id", id);
 		//删除id为1的文档

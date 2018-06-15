@@ -34,7 +34,7 @@ public class InternetController {
 		mapList.put("broadbandList", broadbandMap);
 		//查询qq信息
 		Map<String, Object> workersMap=internetService.getQQList(mobile);
-		mapList.put("workers", workersMap);
+		mapList.put("Workers", workersMap);
 		//查询微信信息
 		Map<String, Object> wechatMap=internetService.getWechatList(mobile);
 		mapList.put("wechatList", wechatMap);

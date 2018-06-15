@@ -47,7 +47,7 @@ public class InternetServiceImpl implements InternetService {
 
 	@Override
 	public Map<String, Object> getWechatList(String mobile) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("wechat");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Wechat");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("mobile", mobile));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();
@@ -63,7 +63,7 @@ public class InternetServiceImpl implements InternetService {
 
 	@Override
 	public Map<String, Object> getTwitterList(String mobile) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("twitter");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Twitter");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("mobile", mobile));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();

@@ -71,7 +71,7 @@ public class TrackServiceImpl implements TrackService {
 
 	@Override
 	public Map<String, Object> findTakeTrain(String idCard,Date beginDate,Date endDate,String city) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("train");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Train");
 		BasicDBObject queryObject = new BasicDBObject().append("id_card", idCard);
 		if (StringUtils.isNotBlank(city)) {
 			Pattern pattern = Pattern.compile("^.*"+city.trim()+".*$",Pattern.CASE_INSENSITIVE); 

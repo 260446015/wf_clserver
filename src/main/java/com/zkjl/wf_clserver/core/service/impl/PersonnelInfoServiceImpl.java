@@ -331,7 +331,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 	}
 	@Override
 	public Map<String, Object> getWorkByIdCard(String idCard){
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("work_resume");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("WorkResume");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("id_card", idCard)).sort(new BasicDBObject().append("work_time", -1));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();

@@ -50,7 +50,7 @@ public class FocusServiceImpl implements FocusService {
 		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("fugitive_infor");
 		Document doc= conllections.find(new BasicDBObject().append("id_card", idCard)).first();
 		
-		MongoCollection<Document> conllectionTube = MongoManager.getMongoDatabase().getCollection("tube_record");
+		MongoCollection<Document> conllectionTube = MongoManager.getMongoDatabase().getCollection("TubeRecord");
 		Document documentTube= conllectionTube.find(new BasicDBObject().append("id_card", idCard)).first();
 		
 		MongoCollection<Document> conllectioncr = MongoManager.getMongoDatabase().getCollection("check_register");
