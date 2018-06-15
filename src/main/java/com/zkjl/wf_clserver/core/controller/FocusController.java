@@ -2,8 +2,10 @@ package com.zkjl.wf_clserver.core.controller;
 
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.service.FocusService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -26,9 +28,9 @@ public class FocusController {
 	/**
 	 * 重点关注信息
 	 */
-	@RequestMapping("/get")
+	@GetMapping("/get")
 	@SystemControllerLog(description="人员档案-重点关注信息查询")
-	public Map<String, Object> get(HttpServletRequest req,String idCard) throws Exception {
+	public Map<String, Object> get(String idCard) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		//查询违法犯罪信息
 		Map<String, Object> crimeInfors=focusService.getCrimeInfor(idCard);

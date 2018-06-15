@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service;
 
+import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.User;
 import org.bson.Document;
 
@@ -10,7 +11,7 @@ public interface UserService {
 	/**
 	 * 登陆
 	 */
-	public Document login(String username, String password);
+	Admins login(String username, String password);
 
 	/**
 	 * 查找用户

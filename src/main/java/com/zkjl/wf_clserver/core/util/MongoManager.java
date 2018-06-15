@@ -16,11 +16,17 @@ public class MongoManager {
 	
 	private static MongoDatabase mongoDatabase;
 
+	private static MongoClient mongoClient;
+
 	public static MongoManager getInstance() {
 		return instance;
 	}
 	public static MongoDatabase getMongoDatabase() {
 		return mongoDatabase;
+	}
+
+	public static MongoClient getMongoClient(){
+		return new MongoClient("221.1.97.28",44335);
 	}
 
 	public static void setMongoDatabase(MongoDatabase mongoDatabase) {

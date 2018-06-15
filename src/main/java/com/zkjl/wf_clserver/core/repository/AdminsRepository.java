@@ -13,4 +13,6 @@ import java.util.List;
 public interface AdminsRepository extends PagingAndSortingRepository<Admins,String>,MongoRepository<Admins,String> {
 
     List<Admins> findByUsername(String username);
+
+    Admins findByUsernameAndPassword(String username,String password);
 }

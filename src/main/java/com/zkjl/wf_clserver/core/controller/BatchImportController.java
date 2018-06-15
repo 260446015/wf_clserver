@@ -1,6 +1,7 @@
 package com.zkjl.wf_clserver.core.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.service.BatchImportService;
 import com.zkjl.wf_clserver.core.util.ResponseUtil;
 import org.apache.commons.io.FileUtils;
@@ -26,7 +27,7 @@ import java.util.Date;
 /** 上传下载文件 */
 @Controller
 @RequestMapping("/excel")
-public class BatchImportController {
+public class BatchImportController extends BaseController{
 
 	@Resource
 	private BatchImportService batchImportService;
@@ -36,8 +37,8 @@ public class BatchImportController {
 	 * 导入
 	 */
 	@RequestMapping("/import")
-	public String leadInExcelQuestionBank(@RequestParam("uploadExcel") CommonsMultipartFile uploadExcel, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ApiResult leadInExcelQuestionBank(@RequestParam("uploadExcel") CommonsMultipartFile uploadExcel, HttpServletRequest request,
+											 HttpServletResponse response) throws Exception {
 		String type = request.getParameter("type");
 		JSONObject result = new JSONObject();
 		// 文件上传路径 D:\apache-tomcat-7.0.55\webapps\movie_graph
@@ -92,7 +93,7 @@ public class BatchImportController {
 		System.out.println(String.valueOf("文件上传耗时：" + (endTime1 - startTime) + "ms"));
 		System.out.println(String.valueOf("插入数据库耗时：" + (endTime2 - endTime1) + "ms"));
 		ResponseUtil.write(response, result);
-		return null;
+		return success("上传成功");
 	}
 
 	/**

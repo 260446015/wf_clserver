@@ -3,11 +3,14 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.User;
+import com.zkjl.wf_clserver.core.repository.AdminsRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.JdbcUtil;
 import com.zkjl.wf_clserver.core.util.MongoManager;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,13 +19,15 @@ import java.util.regex.Pattern;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+	@Autowired
+	private AdminsRepository adminsRepository;
 	/** 登陆判断 */
 	@Override
-	public Document login(String username, String password) {
+	public Admins login(String username, String password) {
 		try {
-			MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("users");
-			Document doc = conllections.find(new BasicDBObject().append("username", username).append("password", password)).first();
-			return doc;
+//			MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("admins");
+			Admins admins = adminsRepository.findByUsernameAndPassword(username,password);
+			return admins;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -144,7 +149,7 @@ public class UserServiceImpl implements UserService {
 		query.put("id", id);
 		//删除id为1的文档
 		conllections.deleteOne(query);
-	
+
 	}
 
 	/** 首页展示的每个标签对应的节点数量 */
