@@ -13,18 +13,18 @@ public class twitter {
    /** 微博信息id
     * 
     * @pdOid 71abf0fc-0e31-4935-8ab0-300b8a6adce9 */
-   public java.lang.String id;
+   public String id;
    /** 手机号码
     * 
     * @pdOid 3cd86742-1442-4719-82ec-428f7c8c8989 */
-   public java.lang.String mobile;
+   public String mobile;
    /** 微博账号
     * 
     * @pdOid 4c4184b6-36ba-4f92-bb9d-276de256d1d3 */
-   public java.lang.String account;
+   public String account;
    /** 姓名
     * 
     * @pdOid 4453df3a-26c0-43ea-b089-2da20f4aadb6 */
-   public java.lang.String name;
+   public String name;
 
 }

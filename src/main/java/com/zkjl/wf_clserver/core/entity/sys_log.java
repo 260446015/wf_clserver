@@ -13,27 +13,27 @@ public class sys_log {
    /** 日志id
     * 
     * @pdOid 2fb46bd1-591f-4887-a4bc-e8753bf6882c */
-   public java.lang.String id;
+   public String id;
    /** 操作人
     * 
     * @pdOid 90fc2911-f95a-4a95-832b-c9a99fd226b7 */
-   public java.lang.String sys_user_id;
+   public String sys_user_id;
    /** 操作类型
     * 
     * @pdOid 0f22531d-ebe9-40fc-8e72-52e2c85688ca */
-   public java.lang.String category;
+   public String category;
    /** 操作描述
     * 
     * @pdOid ea77e5e8-dfac-4ac8-9e44-fbd0c99f83f7 */
-   public java.lang.String description;
+   public String description;
    /** 操作ip
     * 
     * @pdOid f88a2805-760b-49e8-a776-a80b6a695b3c */
-   public java.lang.String ip;
+   public String ip;
    /** 操作人姓名
     * 
     * @pdOid 3296e3d5-ffc1-4698-9b32-505667322e28 */
-   public java.lang.String username;
+   public String username;
    /** 创建时间
     * 
     * @pdOid 1b8c7be1-a850-4f92-b69d-109e2fad904b */
@@ -41,6 +41,6 @@ public class sys_log {
    /** 是否删除
     * 
     * @pdOid 50e65a99-7ffa-4aeb-8c99-3015a49cad9d */
-   public java.lang.String del_flag;
+   public String del_flag;
 
 }

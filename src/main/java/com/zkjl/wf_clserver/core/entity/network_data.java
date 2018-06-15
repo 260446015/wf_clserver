@@ -13,11 +13,11 @@ public class network_data {
    /** 网络统计数据id
     * 
     * @pdOid 971a8100-ae87-4a73-acb5-b9e409028e1a */
-   public java.lang.String id;
+   public String id;
    /** 网络数据类别名称
     * 
     * @pdOid e37573b3-0943-42fb-b1a5-f80266ac534e */
-   public java.lang.String name;
+   public String name;
    /** 数据量
     * 
     * @pdOid a7e8e2e9-747c-4a16-baec-c3bc63676d0e */
@@ -25,7 +25,7 @@ public class network_data {
    /** 统计维度
     * 
     * @pdOid b7246c64-4513-47bf-9d23-9057648edf09 */
-   public java.lang.String dimension;
+   public String dimension;
    /** 年
     * 
     * @pdOid 79bb4e61-72d2-48b5-849d-c1ee4c797e51 */
