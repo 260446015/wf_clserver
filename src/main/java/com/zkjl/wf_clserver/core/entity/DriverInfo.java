@@ -16,7 +16,7 @@ import java.util.*;
  * @pdOid 4c34861e-fcc1-4641-b2fc-7973c17ddf41 */
 @Document(collection = "driver_info")
 @Data
-public class driver_info {
+public class DriverInfo {
    /** 驾驶证信息id
     * 
     * @pdOid 759a69f4-f471-4c4b-9709-8fc853f73b23 */
