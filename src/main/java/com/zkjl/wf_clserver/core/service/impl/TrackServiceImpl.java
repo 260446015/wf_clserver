@@ -19,7 +19,7 @@ public class TrackServiceImpl implements TrackService {
 
 	@Override
 	public Map<String, Object> findStay(String idCard,Date beginDate,Date endDate,String city) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("stay");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Stay");
 		BasicDBObject queryObject = new BasicDBObject().append("id_card", idCard);
 		if (StringUtils.isNotBlank(city)) {
 			Pattern pattern = Pattern.compile("^.*"+city.trim()+".*$",Pattern.CASE_INSENSITIVE); 
@@ -123,7 +123,7 @@ public class TrackServiceImpl implements TrackService {
 
 	@Override
 	public Map<String, Object> findEntryExit(String idCard,Date beginDate,Date endDate,String city) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("passport");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Passport");
 		BasicDBObject queryObject = new BasicDBObject().append("id_card", idCard);
 		if (StringUtils.isNotBlank(city)) {
 			Pattern pattern = Pattern.compile("^.*"+city.trim()+".*$",Pattern.CASE_INSENSITIVE); 

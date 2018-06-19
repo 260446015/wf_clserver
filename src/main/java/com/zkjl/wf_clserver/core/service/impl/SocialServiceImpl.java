@@ -48,7 +48,7 @@ public class SocialServiceImpl implements SocialService {
 
 	@Override
 	public Map<String, Object> getMedicalInsurance(String idCard) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("medical_insurance");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("MedicalInsurance");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("id_card", idCard));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();

@@ -50,7 +50,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 	public Map<String, Object> serchByName(String name) {
 
 		Client client = EsUtil.getTransportClient();
-		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("personnel_info");
+		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");
 		BoolQueryBuilder bq = new BoolQueryBuilder();
 		Set<String> set = new HashSet<>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -130,7 +130,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		Client client = EsUtil.getTransportClient();
-	    SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("personnel_info");
+	    SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");
 		BoolQueryBuilder bq = new BoolQueryBuilder();
 		bq.must(QueryBuilders.termQuery("id_card", idCard));
 		SearchRequestBuilder res = nearbydatasBuilder.setQuery(bq).setFrom(0).setSize(30);
@@ -176,7 +176,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 	@Override
 	public Map<String, Object> serchByUsedName(String usedName) {
 		Client client = EsUtil.getTransportClient();
-		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("personnel_info");
+		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");
 		BoolQueryBuilder bq = new BoolQueryBuilder();
 		Set<String> set = new HashSet<>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -256,7 +256,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		Client client = EsUtil.getTransportClient();
 		try {
-			SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("personnel_info");
+			SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");
 			SearchRequestBuilder res = nearbydatasBuilder.setQuery(bq).setFrom(0).setSize(30);
 			SearchResponse actionGet = res.execute().actionGet();
 			SearchHits hits = actionGet.getHits();
@@ -317,7 +317,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 	
 	@Override
 	public Map<String, Object> getPassportByIdCard(String idCard){
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("passport");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Passport");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("id_card", idCard)).sort(new BasicDBObject().append("issueDate", -1));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();
@@ -346,7 +346,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 	
 	public Map<String, Object> getNeighborByAddress(String address){
 		Client client = EsUtil.getTransportClient();
-		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("personnel_info");
+		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");
 		BoolQueryBuilder bq = new BoolQueryBuilder();
 		Set<String> set = new HashSet<>();
 		Map<String, Object> map = new HashMap<String, Object>();

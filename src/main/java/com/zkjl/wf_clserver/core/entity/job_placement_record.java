@@ -113,7 +113,7 @@ public class job_placement_record {
    /** 享受社会救助类型
     * 
     * @pdOid 9eacaaa9-69e7-4eca-8247-adc2a2f43390 */
-   public String assistance-type;
+   public String assistanceType;
    /** 备注
     * 
     * @pdOid 8a2355f6-b518-470d-8a74-e3b0c3e97ac0 */

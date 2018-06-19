@@ -31,7 +31,7 @@ public class InternetServiceImpl implements InternetService {
 
 	@Override
 	public Map<String, Object> getQQList(String mobile) {
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("qq");
+		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("Qq");
 		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("mobile", mobile));
 		Iterator<Document> it = docIte.iterator();
 		List<Object> dataList = new ArrayList<Object>();

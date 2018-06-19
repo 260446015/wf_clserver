@@ -13,7 +13,7 @@ public class LogServiceImpl implements LogService {
 	@Override
 	public void createLog(Log log) {
 		MongoCollection<Document> collection = MongoManager.getMongoDatabase()
-				.getCollection("sys_log");
+				.getCollection("SysLog");
 		Document doc = new Document();
 		log.preInsert();
 		doc.append("id", log.getId());
