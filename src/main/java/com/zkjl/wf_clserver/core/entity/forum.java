@@ -4,6 +4,7 @@ package com.zkjl.wf_clserver.core.entity; /*************************************
  * Purpose: Defines the Class forum
  ***********************************************************************/
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +14,7 @@ import java.util.*;
  * 
  * @pdOid 70521700-8cc3-4400-bf68-3ce4ea329138 */
 @Document(collection = "forum")
+@Data
 public class Forum {
    /** 论坛信息id
     * 
