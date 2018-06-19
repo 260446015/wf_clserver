@@ -8,8 +8,6 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.*;
-
 /** 论坛
  * 
  * @pdOid 70521700-8cc3-4400-bf68-3ce4ea329138 */
