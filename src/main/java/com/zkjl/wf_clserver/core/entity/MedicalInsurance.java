@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  MedicalInsurance.java
- * Author:  Administrator
- * Purpose: Defines the Class MedicalInsurance
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

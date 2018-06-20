@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  SysLog.java
- * Author:  Administrator
- * Purpose: Defines the Class SysLog
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

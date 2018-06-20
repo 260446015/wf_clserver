@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  Twitter.java
- * Author:  Administrator
- * Purpose: Defines the Class Twitter
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

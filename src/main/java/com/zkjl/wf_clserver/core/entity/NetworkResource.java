@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  NetworkResource.java
- * Author:  Administrator
- * Purpose: Defines the Class NetworkResource
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

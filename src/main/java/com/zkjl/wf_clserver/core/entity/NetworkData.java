@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  NetworkData.java
- * Author:  Administrator
- * Purpose: Defines the Class NetworkData
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

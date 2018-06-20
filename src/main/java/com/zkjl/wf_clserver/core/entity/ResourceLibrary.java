@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  ResourceLibrary.java
- * Author:  Administrator
- * Purpose: Defines the Class ResourceLibrary
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

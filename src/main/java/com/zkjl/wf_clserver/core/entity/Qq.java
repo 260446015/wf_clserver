@@ -1,8 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  Qq.java
- * Author:  Administrator
- * Purpose: Defines the Class Qq
- ***********************************************************************/
+package com.zkjl.wf_clserver.core.entity;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

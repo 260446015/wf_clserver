@@ -1,9 +1,4 @@
-package com.zkjl.wf_clserver.core.entity; /***********************************************************************
- * Module:  Passport.java
- * Author:  Administrator
- * Purpose: Defines the Class Passport
- ***********************************************************************/
-
+package com.zkjl.wf_clserver.core.entity;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
