@@ -7,7 +7,6 @@ import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.User;
 import com.zkjl.wf_clserver.core.repository.AdminsRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
-import com.zkjl.wf_clserver.core.util.JdbcUtil;
 import com.zkjl.wf_clserver.core.util.MongoManager;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,29 +151,5 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	/** 首页展示的每个标签对应的节点数量 */
-	@Override
-	public Map<String, String> findLabels() {
-		JdbcUtil jdbcUtil = new JdbcUtil();
-		jdbcUtil.getConnection();
-
-		HashMap<String, String> hashMap = new HashMap<String, String>();
-		List<Map<String, Object>> result = null;
-		try {
-			// 查询结果集
-			result = jdbcUtil
-					.findList("match (n) with 'Count' as labels, count(n) as count, labels(n) as label where not 'User' in label RETURN labels,count union all  MATCH (n) with labels(n)[0] as labels, count(n) as count where 'User' <> labels RETURN labels,count order by count desc");
-			for (Map<String, Object> map : result) {
-				hashMap.put(map.get("labels").toString(), map.get("count").toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (null != jdbcUtil) {
-				jdbcUtil.close();
-			}
-		}
-		return hashMap;
-	}
 
 }

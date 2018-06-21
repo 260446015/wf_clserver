@@ -2,7 +2,6 @@ package com.zkjl.wf_clserver.core.service;
 
 import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.User;
-import org.bson.Document;
 
 import java.util.Map;
 
@@ -41,6 +40,4 @@ public interface UserService {
 	 */
 	public void deleteUser(String id);
 
-	/** 首页展示节点数量 */
-	public Map<String, String> findLabels();
 }
