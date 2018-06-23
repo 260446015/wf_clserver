@@ -1,7 +1,7 @@
 package com.zkjl.wf_clserver.core.common;
 
 import com.zkjl.wf_clserver.core.entity.Log;
-import com.zkjl.wf_clserver.core.entity.User;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.LogService;
 import com.zkjl.wf_clserver.core.util.UuidUtils;
 import org.aspectj.lang.JoinPoint;
@@ -59,7 +59,7 @@ public class SystemLogAspect {
     public void doAfter(JoinPoint joinPoint) {
     	 //读取session中的用户 
     	 HttpSession session = request.getSession();       
-         User user = (User) session.getAttribute("currentUser");
+         SysUser user = (SysUser) session.getAttribute("currentUser");
         if(user !=null){
             String description="";       
             //日志类型(info:入库,error:错误)
@@ -98,8 +98,8 @@ public class SystemLogAspect {
     @AfterThrowing(pointcut = "controllerAspect()", throwing = "e")  
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
     	 //读取session中的用户 
-   	 	HttpSession session = request.getSession();       
-   	    User user = (User) session.getAttribute("currentUser");      
+   	 	HttpSession session = request.getSession();
+        SysUser user = (SysUser) session.getAttribute("currentUser");
         Log log=new Log();
        if(user !=null){
            String title="";
@@ -125,7 +125,7 @@ public class SystemLogAspect {
 
     /**
      * 获取注解中对方法的描述信息 用于service层注解
-     * @param joinPoint切点
+     * @paramjoinPoint切点s
      * @return discription
      */
     public static String getServiceMthodDescription2(JoinPoint joinPoint) {

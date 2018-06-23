@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.entity;
 
+import com.zkjl.wf_clserver.core.util.UuidUtils;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,6 +23,10 @@ public class SysUser {
     * 
     */
    private String name;
+   /** 用户名
+    *
+    */
+   private String username;
    /** 密码
     * 
     */
@@ -71,4 +76,14 @@ public class SysUser {
    @Field(value = "del_flag")
    private String delFlag;
 
+
+   public void preInsert()
+   {
+
+      setId(UuidUtils.creatUUID());
+      this.updateDate = new Date();
+      if (this.createDate == null) {
+         this.createDate = new Date();
+      }
+   }
 }
