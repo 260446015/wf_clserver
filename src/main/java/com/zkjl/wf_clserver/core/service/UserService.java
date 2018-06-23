@@ -1,8 +1,12 @@
 package com.zkjl.wf_clserver.core.service;
 
+import com.zkjl.wf_clserver.core.dto.LoginDTO;
 import com.zkjl.wf_clserver.core.entity.Admins;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.entity.User;
+import org.springframework.data.domain.PageImpl;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -10,12 +14,12 @@ public interface UserService {
 	/**
 	 * 登陆
 	 */
-	Admins login(String username, String password);
+	SysUser login(String username, String password);
 
 	/**
 	 * 查找用户
 	 */
-	public Map<String, Object> findUser(String username, int page, int pageSize);
+	PageImpl<SysUser> findUser(Integer pageSize,Integer pageNum,String searchStr);
 
 	/**
 	 * 查询用户总数

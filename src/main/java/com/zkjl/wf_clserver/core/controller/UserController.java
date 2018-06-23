@@ -3,8 +3,10 @@ package com.zkjl.wf_clserver.core.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
+import com.zkjl.wf_clserver.core.dto.LoginDTO;
 import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.PageBean;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.entity.User;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.MD5Util;
@@ -19,6 +21,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,15 +51,14 @@ public class UserController extends BaseController {
     @GetMapping("/login")
     @SystemControllerLog(description = "登陆系统")
     @ApiOperation(value = "用户登录", notes = "根据登录用户的姓名密码进行校验，返回登录数据", httpMethod = "GET")
-    public ApiResult login(HttpServletRequest request, String username, String password) {
+    public ApiResult login(String username, String password) {
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject currentUser = SecurityUtils.getSubject();
 //            token.setRememberMe(true);
             // 执行登录.
             currentUser.login(token);
-            this.SetCurrentUser(request, username);
-            Admins login = userService.login(username, password);
+            SysUser login = userService.login(username, password);
             return success(login);
         } catch (UnknownAccountException uae) {
             System.out.println("账号不存在！" + uae.getMessage());
@@ -77,15 +81,15 @@ public class UserController extends BaseController {
     @ResponseBody
     @ApiOperation(value = "用户密码修改", notes = "根据用户id修改用户信息", httpMethod = "POST")
     public ApiResult modifyPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
-        String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
-        String MD5NewPwd = MD5Util.MD5Encode(user.getNewPassword(), "UTF-8");
-        user.setPassword(MD5pwd);
-        user.setNewPassword(MD5NewPwd);
+//        String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
+//        String MD5NewPwd = MD5Util.MD5Encode(user.getNewPassword(), "UTF-8");
+//        user.setPassword(MD5pwd);
+//        user.setNewPassword(MD5NewPwd);
 
-        Admins login = userService.login(user.getUserName(), user.getPassword());
+        SysUser login = userService.login(user.getUserName(), user.getPassword());
         JSONObject result = new JSONObject();
         if (null != login) {
-            user.setPassword(MD5NewPwd);
+            user.setPassword("");
             int resultTotal = userService.updateUser(user);
             if (resultTotal > 0) {
                 result.put("success", true);
@@ -120,25 +124,24 @@ public class UserController extends BaseController {
     /**
      * 查询
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     @SystemControllerLog(description = "后台管理-用户列表查询")
     @ResponseBody
     @ApiOperation(value = "用户列表查询")
-    public Map<String, Object> list(@ApiParam(value = "页数") @RequestParam(value = "page", required = false) String page,
-                                    @ApiParam(value = "记录数") @RequestParam(value = "rows", required = false) String rows, User s_user) throws Exception {
-        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", s_user.getName());
-        map.put("start", pageBean.getStart());
-        map.put("size", pageBean.getPageSize());
-        map = userService.findUser(s_user.getName(), pageBean.getStart(), pageBean.getPageSize());
-        return map;
+    public ApiResult list(Integer pageSize,Integer pageNum,String searchStr) throws Exception {
+        PageImpl<SysUser> user;
+        try {
+            user = userService.findUser(pageSize,pageNum,searchStr);
+        } catch (Exception e) {
+            return error("查询用户列表失败");
+        }
+        return successPages(user);
     }
 
     /**
      * 管理员添加或修改
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @SystemControllerLog(description = "后台管理-用户添加")
     @ResponseBody
     @ApiOperation(value = "用户添加", httpMethod = "POST")

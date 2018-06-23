@@ -1,6 +1,7 @@
 package com.zkjl.wf_clserver.core.security;
 
 import com.zkjl.wf_clserver.core.entity.Admins;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -27,7 +28,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		
 		char[] str = upToken.getPassword();
 		String password = String.valueOf(str);
-		Admins login = userService.login(username, password);
+		SysUser login = userService.login(username, password);
 //		String userBate = userDocment.getString("userBate");
 		
 		Session session = SecurityUtils.getSubject().getSession();
@@ -37,7 +38,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		if (login != null) {
 			//以下信息是从数据库中获取的.
 			//1). principal: 认证的实体信息. 可以是 username, 也可以是数据表对应的用户的实体类对象. 
-			principal = login.getUsername();
+			principal = login;
 			//2). credentials: 密码. 
 			credentials = login.getPassword();
 		}

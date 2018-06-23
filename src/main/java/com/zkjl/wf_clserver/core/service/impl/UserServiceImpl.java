@@ -3,30 +3,35 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.zkjl.wf_clserver.core.dto.LoginDTO;
 import com.zkjl.wf_clserver.core.entity.Admins;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.entity.User;
 import com.zkjl.wf_clserver.core.repository.AdminsRepository;
+import com.zkjl.wf_clserver.core.repository.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.MongoManager;
+import org.apache.commons.lang.StringUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private AdminsRepository adminsRepository;
+	private SysUserRepository sysUserRepository;
 	/** 登陆判断 */
 	@Override
-	public Admins login(String username, String password) {
+	public SysUser login(String username, String password) {
 		try {
-//			MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("admins");
-			Admins admins = adminsRepository.findByUsernameAndPassword(username,password);
-			return admins;
+			SysUser sysUser = sysUserRepository.findByNameAndPassword(username,password);
+			return sysUser;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -35,27 +40,16 @@ public class UserServiceImpl implements UserService {
 
 	/** 根据用户姓名或者登录名模糊查询 */
 	@Override
-	public Map<String, Object> findUser(String name, int page,int pageSize) {
-		int pagestart =(page-1)*pageSize;
-		long count = getTotalUser(name);
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("stationhistorys");
-		FindIterable<Document> docIte= conllections.find(new BasicDBObject().append("name", name)).sort(new BasicDBObject().append("create_date", -1)).skip(pagestart).limit(pageSize);
-		Iterator<Document> it = docIte.iterator();
-		List<Object> dataList = new ArrayList<Object>();
-		while (it.hasNext()) {
-			Document doc = it.next();
-			dataList.add(doc);
+	public PageImpl<SysUser> findUser(Integer pageSize,Integer pageNum,String searchStr) {
+		List<SysUser> all = sysUserRepository.findAll();
+		if(!StringUtils.isBlank(searchStr)){
+			all = all.stream().filter(sysUser -> sysUser.toString().contains(searchStr)).collect(Collectors.toList());
 		}
+		int count = all.size();
 		long totalpage =count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
 		totalpage=totalpage==0?1:totalpage;
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("totalcount", count);
-		dataMap.put("totalpage", totalpage);
-		dataMap.put("page", page);
-		dataMap.put("pageSize", pageSize);
-		dataMap.put("list", dataList);
-		
-		return dataMap;
+		PageImpl<SysUser> sysUserPage = new PageImpl<>(all);
+		return sysUserPage;
 	}
 
 	/** 更新用户信息 */

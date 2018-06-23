@@ -6,4 +6,9 @@ spring:
 #      cluster-nodes: 47.93.10.136:44336
 #      cluster-name: elasticsearch
     mongodb:
-      uri: mongodb://221.1.97.28:44335/lbs
+      uri: mongodb://221.1.97.28:44335/kklc
+      host: 221.1.97.28
+      port: 44335
+      database: kklc
+  freemarker:
+    template-loader-path: classpath:/templates/
