@@ -14,9 +14,9 @@ public class FileUlti {
         if (null != file) {
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
             String myFileName = file.getOriginalFilename();// 文件原名称
-            String basePath = request.getSession().getServletContext().getRealPath("/");;
+            String basePath = "D:\\Apache24\\Apache\\htdocs\\";
             //String pat=FileProperties.getFilePath()+"/src/main/webapp/";//获取文件保存路径
-            String sqlPath="images/upload/"+dateformat.format(new Date())+"/";
+            String sqlPath="images\\upload\\"+dateformat.format(new Date())+"\\";
 
             File fileDir=new File(basePath+sqlPath);
             if (!fileDir.exists()) { //如果不存在 则创建

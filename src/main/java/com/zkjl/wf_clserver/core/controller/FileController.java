@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ public class FileController {
     @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
     @SystemControllerLog(description="图片上传")
     @ResponseBody
-    public List<Map<String, Object>> upload(HttpServletRequest req) throws IOException {
+    public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response) throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)req;
         List<Map<String, Object>> mapList=new ArrayList<>();
         List multipartFiles = multipartRequest
@@ -43,6 +45,7 @@ public class FileController {
             }
             String fileUrl= FileUlti.uploadImg(req,multipartFile);
             map.put("url", fileUrl);
+            mapList.add(map);
         }
         return mapList;
     }
