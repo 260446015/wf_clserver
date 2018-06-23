@@ -1,20 +1,18 @@
 package com.zkjl.wf_clserver.core.service.impl;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.zkjl.wf_clserver.core.dto.LoginDTO;
-import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.entity.User;
-import com.zkjl.wf_clserver.core.repository.AdminsRepository;
-import com.zkjl.wf_clserver.core.repository.SysUserRepository;
+import com.zkjl.wf_clserver.core.repository.kklc.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.MongoManager;
 import org.apache.commons.lang.StringUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -42,45 +40,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageImpl<SysUser> findUser(Integer pageSize,Integer pageNum,String searchStr) {
 		List<SysUser> all = sysUserRepository.findAll();
+		int totalCont = 0;
+		all = all.stream().sorted((a,b) -> b.getCreateDate().compareTo(a.getCreateDate())).collect(Collectors.toList());
 		if(!StringUtils.isBlank(searchStr)){
 			all = all.stream().filter(sysUser -> sysUser.toString().contains(searchStr)).collect(Collectors.toList());
 		}
-		int count = all.size();
-		long totalpage =count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
-		totalpage=totalpage==0?1:totalpage;
-		PageImpl<SysUser> sysUserPage = new PageImpl<>(all);
+		totalCont = all.size();
+		all = all.stream().skip(pageNum*pageSize).limit(pageSize).collect(Collectors.toList());
+		PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+		PageImpl<SysUser> sysUserPage = new PageImpl<>(all,pageRequest,totalCont);
 		return sysUserPage;
-	}
-
-	/** 更新用户信息 */
-	@Override
-	public int updateUser(User user) {
-		int result=0;
-		MongoCollection<Document> collection = MongoManager.getMongoDatabase()
-				.getCollection("stationhistorys");
-		BasicDBObject condition = new BasicDBObject();
-		condition.put("id", user.getId());
-		BasicDBObject updateValue = new BasicDBObject();
-		updateValue.put("username",user.getUserName());
-		updateValue.put("password", user.getPassword());
-		updateValue.put("name", user.getName());
-		updateValue.put("photo", user.getPhone());
-		updateValue.put("police_number", user.getPoliceNumber());
-		updateValue.put("job", user.getJob());
-		updateValue.put("department", user.getDepartment());
-		updateValue.put("create_date", user.getCreateDate());
-		updateValue.put("update_date", user.getUpdateDate());
-		updateValue.put("del_flag", user.getDelFlag());
-		BasicDBObject update = new BasicDBObject("$set", updateValue);
-		try {
-			collection.updateOne(condition, update);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			
-		}
-		result=1;
-		return result;
 	}
 
 	/** 获取分页查询的总数 */
@@ -98,40 +67,20 @@ public class UserServiceImpl implements UserService {
 	/** 获取该用户是否存在 */
 	@Override
 	public boolean ifExist(String username) {
-		BasicDBObject criteria =new BasicDBObject();
-		if(username!=null){
-			Pattern pattern = Pattern.compile("^.*" + username+ ".*$", Pattern.CASE_INSENSITIVE); 
-			criteria.append("username", pattern);
-		}
-		MongoCollection<Document> conllections = MongoManager.getMongoDatabase().getCollection("SysUser");
-		if(conllections.count(criteria)==1){
-			return true;
-		}else{
-			return false;
-		}
-		 
+		return null != sysUserRepository.findByName(username)?true:false;
 	}
 	
 
 	/** 更新用户信息 */
 	@Override
-	public void addUser(User user) {
-		MongoCollection<Document> collection = MongoManager.getMongoDatabase()
-				.getCollection("SysUser");
-		Document doc = new Document();
-		user.preInsert();
-		doc.append("id", user.getId());
-		doc.append("username", user.getUserName());
-		doc.append("password", user.getPassword());
-		doc.append("name", user.getName());
-		doc.append("photo", user.getPhone());
-		doc.append("police_number", user.getPoliceNumber());
-		doc.append("job", user.getJob());
-		doc.append("department", user.getDepartment());
-		doc.append("create_date", user.getCreateDate());
-		doc.append("update_date", user.getUpdateDate());
-		doc.append("del_flag", user.getDelFlag());
-		collection.insertOne(doc);
+	public boolean addUserOrUpdate(SysUser user) {
+		try {
+			user.setCreateDate(new Date());
+			sysUserRepository.save(user);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	/** 根据用户id删除用户 */

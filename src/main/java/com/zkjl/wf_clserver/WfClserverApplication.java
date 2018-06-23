@@ -22,5 +22,4 @@ public class WfClserverApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(WfClserverApplication.class);
 	}
-
 }

@@ -33,8 +33,6 @@ public class CustomCredentialsMatcher extends SimpleCredentialsMatcher {
 
 	private Cache<String, AtomicInteger> passwordRetryCache;
 
-	@Autowired
-	private AdminsRepository adminsRepository;
 
 	public CustomCredentialsMatcher(CacheManager cacheManager) {
 		this.retryLimitCacheName = DEFAULT_CHACHE_NAME;

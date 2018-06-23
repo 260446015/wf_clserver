@@ -30,14 +30,9 @@ public interface UserService {
 	public boolean ifExist(String username);
 
 	/**
-	 * 修改密码
-	 */
-	public int updateUser(User user);
-
-	/**
 	 * 添加用户
 	 */
-	public void addUser(User user);
+	boolean addUserOrUpdate(SysUser user);
 
 	/**
 	 * 删除用户

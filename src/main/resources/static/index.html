@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="sr_btn">
+<input>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var _resources = [];
+    $(function () {
+        var scale1 = 60 / $('body').height();
+        var scale2 = $('body').height() * 0.02 / $('body').height();
+        $('.container').height((1 - (scale1 + scale2) * 2) * 100 + '%');
+        var dataFormat = {'action': 'register', 'data': {'serverhost': '192.168.72.1'}};
+        $.ajax({
+            url: 'http://127.0.0.1:8080/',
+            data: JSON.stringify(dataFormat),
+            type:'post',
+            contentType:'application/json',
+            success: function (res) {
+                if (result.success) {
+                    _resources = result.data;
+                    displayResource();
+                } else {
+                    $('.resource .res_list').append('加载查询资源失败！');
+                }
+            }
+
+        })
+    })
+    $(".sr_btn").click(function () {
+        // window.location = "search_list.html"
+        var data = {
+            'word': "1526262",
+            'wordtype': "idcard",
+            'jobtype': 1,
+            'resources': [1, 2, 3]
+        };
+        $.ajax({
+            url: "/api/createJob",
+            type: "post",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                var jobinfo = result.data.jobinfo;
+                var req = {"job":JSON.stringify(jobinfo),"res":JSON.stringify(_resources)}
+                if (result.data.iscache) {
+                    $.ajax({
+                        url: 'main',
+                        data: JSON.stringify(req),
+                        type: 'post',
+                        contentType: 'application/json',
+                        success: function (res) {
+                            window.location.href = "/main";
+                        }
+                    })
+                } else {
+                    callLocal(jobinfo, result.data['resources']);
+                }
+            }
+        })
+    });
+</script>
+</html>

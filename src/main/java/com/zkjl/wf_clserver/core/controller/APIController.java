@@ -44,10 +44,8 @@ public class APIController extends BaseController {
 	@RequestMapping("/api/createJob")
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		Map<String, Object> resultData = new LinkedHashMap<>();
-//		String userName = this.getCurrentUser(request).getUserName();
-		String userName = "123";
+		String userName = this.getCurrentUser().getName();
 		String ip = this.getClientIP(request);
 		jobBean.setIp(ip);
 		jobBean.setUsername(userName);

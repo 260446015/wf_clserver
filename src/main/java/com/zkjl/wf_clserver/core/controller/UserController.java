@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,36 +75,6 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改密码
-     */
-    @RequestMapping("/modifyPassword")
-    @SystemControllerLog(description = "后台管理-修改资料")
-    @ResponseBody
-    @ApiOperation(value = "用户密码修改", notes = "根据用户id修改用户信息", httpMethod = "POST")
-    public ApiResult modifyPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
-//        String MD5pwd = MD5Util.MD5Encode(user.getPassword(), "UTF-8");
-//        String MD5NewPwd = MD5Util.MD5Encode(user.getNewPassword(), "UTF-8");
-//        user.setPassword(MD5pwd);
-//        user.setNewPassword(MD5NewPwd);
-
-        SysUser login = userService.login(user.getUserName(), user.getPassword());
-        JSONObject result = new JSONObject();
-        if (null != login) {
-            user.setPassword("");
-            int resultTotal = userService.updateUser(user);
-            if (resultTotal > 0) {
-                result.put("success", true);
-            } else {
-                result.put("success", false);
-            }
-        } else {
-            result.put("success", false);
-        }
-        log.info("request: user/modifyPassword , user: " + user.toString());
-        return success(result);
-    }
-
-    /**
      * 退出系统
      *
      * @return
@@ -128,10 +99,10 @@ public class UserController extends BaseController {
     @SystemControllerLog(description = "后台管理-用户列表查询")
     @ResponseBody
     @ApiOperation(value = "用户列表查询")
-    public ApiResult list(Integer pageSize,Integer pageNum,String searchStr) throws Exception {
+    public ApiResult list(Integer pageSize, Integer pageNum, String searchStr) throws Exception {
         PageImpl<SysUser> user;
         try {
-            user = userService.findUser(pageSize,pageNum,searchStr);
+            user = userService.findUser(pageSize, pageNum, searchStr);
         } catch (Exception e) {
             return error("查询用户列表失败");
         }
@@ -145,16 +116,8 @@ public class UserController extends BaseController {
     @SystemControllerLog(description = "后台管理-用户添加")
     @ResponseBody
     @ApiOperation(value = "用户添加", httpMethod = "POST")
-    public ApiResult save(@RequestBody User user) throws Exception {
-        if (user.getId() == null) {
-            boolean ifExist = userService.ifExist(user.getUserName());
-            if (ifExist) {
-                return error("当前用户名已存在不允许添加！");
-            } else {
-                userService.addUser(user);
-            }
-        }
-        return null;
+    public ApiResult save(@RequestBody SysUser user) throws Exception {
+        return success(userService.addUserOrUpdate(user));
     }
 
     /**
