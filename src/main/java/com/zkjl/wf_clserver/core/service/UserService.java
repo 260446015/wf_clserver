@@ -1,13 +1,7 @@
 package com.zkjl.wf_clserver.core.service;
 
-import com.zkjl.wf_clserver.core.dto.LoginDTO;
-import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.SysUser;
-import com.zkjl.wf_clserver.core.entity.User;
 import org.springframework.data.domain.PageImpl;
-
-import java.util.List;
-import java.util.Map;
 
 public interface UserService {
 

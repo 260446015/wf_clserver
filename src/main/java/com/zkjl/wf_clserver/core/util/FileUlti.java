@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,14 +20,17 @@ public class FileUlti {
             String sqlPath="images\\upload\\"+dateformat.format(new Date())+"\\";
 
             File fileDir=new File(basePath+sqlPath);
+
             if (!fileDir.exists()) { //如果不存在 则创建
                 fileDir.mkdirs();
             }
             String path=basePath+sqlPath+myFileName;
             File localFile = new File(path);
             try {
+                String addr = InetAddress.getLocalHost().getHostAddress()+"\\";
                 file.transferTo(localFile);
-                return sqlPath+myFileName;
+
+                return addr+sqlPath+myFileName;
             } catch (IllegalStateException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

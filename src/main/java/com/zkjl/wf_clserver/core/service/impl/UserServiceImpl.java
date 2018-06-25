@@ -3,7 +3,6 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.zkjl.wf_clserver.core.entity.SysUser;
-import com.zkjl.wf_clserver.core.entity.User;
 import com.zkjl.wf_clserver.core.repository.kklc.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.MongoManager;
@@ -12,10 +11,10 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 

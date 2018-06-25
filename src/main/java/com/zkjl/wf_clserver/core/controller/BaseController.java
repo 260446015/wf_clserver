@@ -3,9 +3,7 @@ package com.zkjl.wf_clserver.core.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.SysUser;
-import com.zkjl.wf_clserver.core.entity.User;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,7 @@ public class BaseController {
      * @param request
      * @return
      */
-    public void setCurrentUser(HttpServletRequest request,User userBean){
+    public void setCurrentUser(HttpServletRequest request,SysUser userBean){
         request.getSession().setAttribute("CURRENT_USER", userBean);
     }
 

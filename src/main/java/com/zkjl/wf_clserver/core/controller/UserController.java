@@ -1,18 +1,11 @@
 package com.zkjl.wf_clserver.core.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
-import com.zkjl.wf_clserver.core.dto.LoginDTO;
-import com.zkjl.wf_clserver.core.entity.Admins;
-import com.zkjl.wf_clserver.core.entity.PageBean;
 import com.zkjl.wf_clserver.core.entity.SysUser;
-import com.zkjl.wf_clserver.core.entity.User;
 import com.zkjl.wf_clserver.core.service.UserService;
-import com.zkjl.wf_clserver.core.util.MD5Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -21,18 +14,10 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.lang.annotation.Target;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 用户操作
