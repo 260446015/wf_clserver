@@ -6,6 +6,11 @@
 </head>
 <body class="sr_btn">
 <input>
+<br/>
+<br/>
+<br/>
+<br/>
+<button></button>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -65,5 +70,14 @@
             }
         })
     });
+    $("button").click(function () {
+        $.ajax({
+            type:"post",
+            url:"/login.do?username=zkjl&password=123456",
+            success:function (res) {
+                console.log(res)
+            }
+        })
+    })
 </script>
 </html>

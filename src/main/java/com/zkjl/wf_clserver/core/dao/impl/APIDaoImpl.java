@@ -26,6 +26,10 @@ public class APIDaoImpl implements APIDao {
 
 	@Resource
 	private MongoTemplate mongoTemplate;
+	@Resource(name = "primaryMongoTemplate")
+	private MongoTemplate primaryMongoTemplate;
+	@Resource(name = "secondaryMongoTemplate")
+	private MongoTemplate secondaryMongoTemplate;
 
 	private final String COLL_DATAS = "coll_datas";
 	private final String COLL_USERS = "coll_users";
@@ -41,7 +45,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public boolean saveJob(JobBean jobBean) throws Exception {
 		try {
-			mongoTemplate.insert(jobBean, COLL_JOBS);
+			secondaryMongoTemplate.insert(jobBean, COLL_JOBS);
 			return true;
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
@@ -58,7 +62,7 @@ public class APIDaoImpl implements APIDao {
 		try {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("hash").is(hash));
-			return mongoTemplate.findOne(query, JobBean.class, COLL_JOBS);
+			return secondaryMongoTemplate.findOne(query, JobBean.class, COLL_JOBS);
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
 		}
@@ -71,7 +75,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public Document retrieveData(String jobid, String resid, long version) throws Exception {
 		try {
-			return mongoTemplate.findOne(new Query(Criteria.where("jobid").is(jobid).and("resid").is(resid).and("exetime").gt(version)).with(new Sort(Direction.DESC, "exetime")), Document.class, COLL_DATAS);
+			return secondaryMongoTemplate.findOne(new Query(Criteria.where("jobid").is(jobid).and("resid").is(resid).and("exetime").gt(version)).with(new Sort(Direction.DESC, "exetime")), Document.class, COLL_DATAS);
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
 		}

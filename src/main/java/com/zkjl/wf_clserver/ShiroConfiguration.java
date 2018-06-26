@@ -32,12 +32,10 @@ public class ShiroConfiguration {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
 		//配置访问权限 anon：表示全部放权的资源路径，authc：表示需要认证才可以访问
-		filterChainDefinitionMap.put("/logout", "logout");
+//		filterChainDefinitionMap.put("/logout", "logout");
+		filterChainDefinitionMap.put("/*.html", "anon");
+		filterChainDefinitionMap.put("/api/**", "authc");
 
-		filterChainDefinitionMap.put("/**/*", "anon");
-//		filterChainDefinitionMap.put("/apis/openeyes/*.json", "authc,perms[search]");
-
-//		filterChainDefinitionMap.put("/**/*.html", "authc");
 //		filterChainDefinitionMap.put("/**/*.json", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -46,7 +44,7 @@ public class ShiroConfiguration {
 		filters.put("authc", getMyFormAuthenticationFilter());
 
 		shiroFilterFactoryBean.setSecurityManager(getDefaultWebSecurityManager());
-		shiroFilterFactoryBean.setLoginUrl("/login.do");//测试使用
+		shiroFilterFactoryBean.setLoginUrl("/api/user/login");//测试使用
 		//	shiroFilterFactoryBean.setLoginUrl("http://zhaoshang.huishu.com.cn:9323/login.do");//线上使用
 		shiroFilterFactoryBean.setSuccessUrl("/");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized.do");

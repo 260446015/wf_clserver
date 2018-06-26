@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * 用户操作
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Api(value = "User-API", description = "这是用户接口详细信息的描述")
 public class UserController extends BaseController {
 
@@ -34,18 +34,13 @@ public class UserController extends BaseController {
     /**
      * 登录
      */
-    @GetMapping("/login")
-    @SystemControllerLog(description = "登陆系统")
-    @ApiOperation(value = "用户登录", notes = "根据登录用户的姓名密码进行校验，返回登录数据", httpMethod = "GET")
+    @PostMapping("/login")
+    @ApiOperation(value = "用户登录", notes = "根据登录用户的姓名密码进行校验，返回登录数据", httpMethod = "POST")
     public ApiResult login(String username, String password) {
         try {
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            Subject currentUser = SecurityUtils.getSubject();
-//            token.setRememberMe(true);
-            // 执行登录.
-            currentUser.login(token);
             SysUser login = userService.login(username, password);
-            return success(login);
+            JSONObject jsonObject = JSONObject.parseObject(login.toString());
+            return success(jsonObject);
         } catch (UnknownAccountException uae) {
             System.out.println("账号不存在！" + uae.getMessage());
         } catch (IncorrectCredentialsException ice) {
@@ -70,11 +65,16 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户退出", httpMethod = "GET")
     public String logout() throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
+       /* if (subject.isAuthenticated()) {
             subject.logout();
             return "logout->success";
+        }*/
+        try {
+            subject.logout();
+        } catch (Exception e) {
+            return "logout->error";
         }
-        return "logout-error";
+        return "logout->success";
     }
 
     /**
@@ -118,5 +118,22 @@ public class UserController extends BaseController {
             userService.deleteUser(idsStr[i]);
         }
         return null;
+    }
+
+    /**
+     * 统计用户访问量
+     */
+    @RequestMapping("/visits")
+    @SystemControllerLog(description = "后台管理-当前访问量")
+    @ResponseBody
+    @ApiOperation(value = "当前在线用户/总用户", httpMethod = "GET")
+    public ApiResult userVisits(){
+        JSONObject result;
+        try {
+            result = userService.listActiveSession();
+        } catch (Exception e) {
+            return error("用户在线查询失败");
+        }
+        return success(result);
     }
 }

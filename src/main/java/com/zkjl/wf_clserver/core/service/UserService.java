@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import org.springframework.data.domain.PageImpl;
 
@@ -33,4 +34,5 @@ public interface UserService {
 	 */
 	public void deleteUser(String id);
 
+    JSONObject listActiveSession();
 }

@@ -85,8 +85,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {
-		 if (isLoginRequest(request, response)) {  
-             if (isLoginSubmission(request, response)) {  
+		 if (isLoginRequest(request, response)) {
+			 if (isLoginSubmission(request, response)) {
                  if (LOGGER.isTraceEnabled()) {
 					 LOGGER.trace("Login submission detected.  Attempting to execute login.");
                  }  
@@ -104,10 +104,10 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
              }  
              if(isAjax(request)){  
             	 ShiroUtil.writeResponse((HttpServletResponse)response, "您的登录已失效，请重新登录本系统！");
-             }else{  
-                 this.saveRequestAndRedirectToLogin(request, response);  
+             }else{
+                 this.saveRequestAndRedirectToLogin(request, response);
              }  
-             return false;  
+             return false;  //xiugai
          }  
 	}
    

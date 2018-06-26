@@ -1,20 +1,24 @@
 package com.zkjl.wf_clserver.core.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.zkjl.wf_clserver.core.entity.SysUser;
+import com.zkjl.wf_clserver.core.repository.kklc.LoginCountRepository;
 import com.zkjl.wf_clserver.core.repository.kklc.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.MongoManager;
+import com.zkjl.wf_clserver.core.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private SysUserRepository sysUserRepository;
+	@Resource
+	private SessionDAO sessionDAO;
+	@Resource
+	private LoginCountRepository loginCountRepository;
 	/** 登陆判断 */
 	@Override
 	public SysUser login(String username, String password) {
@@ -39,16 +47,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageImpl<SysUser> findUser(Integer pageSize,Integer pageNum,String searchStr) {
 		List<SysUser> all = sysUserRepository.findAll();
-		int totalCont = 0;
+		int totalCount;
 		all = all.stream().sorted((a,b) -> b.getCreateDate().compareTo(a.getCreateDate())).collect(Collectors.toList());
 		if(!StringUtils.isBlank(searchStr)){
 			all = all.stream().filter(sysUser -> sysUser.toString().contains(searchStr)).collect(Collectors.toList());
 		}
-		totalCont = all.size();
-		all = all.stream().skip(pageNum*pageSize).limit(pageSize).collect(Collectors.toList());
-		PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
-		PageImpl<SysUser> sysUserPage = new PageImpl<>(all,pageRequest,totalCont);
-		return sysUserPage;
+		totalCount = all.size();
+		return (PageImpl<SysUser>) PageUtil.pageBeagin(totalCount,pageNum,pageSize,all);
 	}
 
 	/** 获取分页查询的总数 */
@@ -93,5 +98,12 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-
+	@Override
+	public JSONObject listActiveSession() {
+		JSONObject jsonObject = new JSONObject();
+		Collection<Session> activeSessions = sessionDAO.getActiveSessions();
+		jsonObject.put("activeCount",activeSessions.size());
+		jsonObject.put("allCount",loginCountRepository.findAll().size());
+		return jsonObject;
+	}
 }
