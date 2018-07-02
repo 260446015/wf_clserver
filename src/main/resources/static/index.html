@@ -1,100 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<meta charset="utf-8">
+<title>宝都数据侦查后台管理系统</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/x-admin.css" media="all">
 </head>
-<body class="sr_btn">
-<input>
-<br/>
-<br/>
-<br/>
-<br/>
-<input id="upload" type="file" name="fileName" onchange="uploadKeyload(this)">
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header header header-demo">
+    <div class="layui-main">
+    <div class="admin-logo-box">
+				<a class="logo" href="" title="logo">宝都后台管理系统</a>
+				<div class="larry-side-menu">
+					<i class="fa fa-th-large" aria-hidden="true"></i>
+				</div>
+			</div>
+            <ul class="layui-nav layui-layout-left layui-ygyd-menu" style="position:absolute; left:300px;">
+      <li class="layui-nav-item"><a href="member-list.html">用户管理</a></li>
+      <li class="layui-nav-item"><a href="javascript:;">平台管理</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">系统管理</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">角色管理</a></dd>
+          <dd><a href="">权限设置</a></dd>
+          <dd><a href="sys-log.html">日志管理</a></dd>
+        </dl>
+      </li>
+    </ul>
+
+      <ul class="layui-nav" lay-filter="">
+      <!-- <li class="layui-nav-item">
+                        <a href="" title="消息">
+                            <i class="layui-icon" style="top: 1px;">&#xe63a;</i>
+                        </a>
+                        </li> -->
+        <li class="layui-nav-item"><img src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
+        <li class="layui-nav-item"> <a href="javascript:;">admin</a>
+          <dl class="layui-nav-child">
+            <!-- 二级菜单 -->
+            <dd><a href="">个人信息</a></dd>
+            <dd><a href="">切换帐号</a></dd>
+            <dd><a href="./login.html">退出</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="layui-side layui-bg-black x-side" style="left:-200px;">
+    <div class="layui-side-scroll">
+      <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>会员管理</cite> </a>
+          <dl class="layui-nav-child">
+            <dd class=""> <a href="javascript:;" _href="member-list.html"> <cite>会员列表</cite> </a> </dd>
+          </dl>
+        </li>
+
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe629;</i><cite>平台管理</cite> </a>
+                  <dl class="layui-nav-child">
+                    <dd class=""> <a href="javascript:;" _href="./confs-list.html"> <cite>平台列表</cite> </a> </dd>
+                  </dl>
+                </li>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe629;</i><cite>系统统计</cite> </a>
+          <dl class="layui-nav-child">
+            <dd class=""> <a href="javascript:;" _href="./echart.html"> <cite>统计报表</cite> </a> </dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe614;</i><cite>系统设置</cite> </a>
+          <dl class="layui-nav-child">
+            <dd class=""> <a href="javascript:;" _href="./sys-log.html"> <cite>系统日志</cite> </a> </dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item" style="height: 30px; text-align: center"> </li>
+      </ul>
+    </div>
+  </div>
+  <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 0px;border-left: solid 2px #2299ee;">
+    <ul class="layui-tab-title">
+      <li class="layui-this"> 我的桌面 <i class="layui-icon layui-unselect layui-tab-close">ဆ</i> </li>
+    </ul>
+    <div class="layui-tab-content site-demo site-demo-body">
+      <div class="layui-tab-item layui-show">
+        <iframe frameborder="0" src="./welcome.html" class="x-iframe"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="site-mobile-shade"> </div>
+</div>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script src="./js/x-admin.js"></script>
+
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    var _resources = [];
-    /*$(function () {
-        var scale1 = 60 / $('body').height();
-        var scale2 = $('body').height() * 0.02 / $('body').height();
-        $('.container').height((1 - (scale1 + scale2) * 2) * 100 + '%');
-        var dataFormat = {'action': 'register', 'data': {'serverhost': '192.168.72.1'}};
-        $.ajax({
-            url: 'http://127.0.0.1:8080/',
-            data: JSON.stringify(dataFormat),
-            type:'post',
-            contentType:'application/json',
-            success: function (res) {
-                if (result.success) {
-                    _resources = result.data;
-                    displayResource();
-                } else {
-                    $('.resource .res_list').append('加载查询资源失败！');
-                }
-            }
-
-        })
-    })
-    $(".sr_btn").click(function () {
-        // window.location = "search_list.html"
-        var data = {
-            'word': "1526262",
-            'wordtype': "idcard",
-            'jobtype': 1,
-            'resources': [1, 2, 3]
-        };
-        $.ajax({
-            url: "/api/createJob",
-            type: "post",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            dataType: "json",
-            success: function (result) {
-                console.log(result)
-                var jobinfo = result.data.jobinfo;
-                var req = {"job":JSON.stringify(jobinfo),"res":JSON.stringify(_resources)}
-                if (result.data.iscache) {
-                    $.ajax({
-                        url: 'main',
-                        data: JSON.stringify(req),
-                        type: 'post',
-                        contentType: 'application/json',
-                        success: function (res) {
-                            window.location.href = "/main";
-                        }
-                    })
-                } else {
-                    callLocal(jobinfo, result.data['resources']);
-                }
-            }
-        })
-    });
-    $("button").click(function () {
-        $.ajax({
-            type:"post",
-            url:"/login.do?username=zkjl&password=123456",
-            success:function (res) {
-                console.log(res)
-            }
-        })
-    })*/
-    function uploadKeyload(e) {
-        var formData = new FormData();
-        formData.append("fileName",e.files[0]);
-        $.ajax({
-            url: "/api/file/upload",
-            data: formData,
-            type: "Post",
-            dataType: "json",
-            cache: false,//上传文件无需缓存
-            processData: false,//用于对data参数进行序列化处理 这里必须false
-            contentType: false, //必须
-            success: function (result) {
-                alert("上传" + (result.data == true ?"完成!":"失败!"));
-            },
-        })
-    }
-
-</script>
 </html>

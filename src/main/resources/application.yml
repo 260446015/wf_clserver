@@ -28,11 +28,11 @@ spring:
         heartbeat-frequency : 10000
         local-threshold : 15
       primary:
-          host: 221.1.97.28
+          host: 112.244.72.30
           port: 44335
           database: kklc
       secondary:
-        host: 221.1.97.28
+        host: 112.244.72.30
         port: 44335
         database: plover
 

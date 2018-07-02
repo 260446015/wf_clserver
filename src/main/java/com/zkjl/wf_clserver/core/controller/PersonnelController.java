@@ -4,6 +4,7 @@ import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.service.ContactService;
 import com.zkjl.wf_clserver.core.service.PersonnelInfoService;
 import com.zkjl.wf_clserver.core.util.OriginTest;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class PersonnelController {
 	 */
 	@RequestMapping("/list")
 	@SystemControllerLog(description="智能搜索-一键查询")
+	@ApiOperation(value = "一键查询", httpMethod = "GET")
 	public Map<String, Object> list(HttpServletRequest req,String keyword) throws Exception {
 		Map<String, Object> map=personnelInfoService.search(keyword);
 		return map;
@@ -42,6 +44,7 @@ public class PersonnelController {
 	 */
 	@RequestMapping("/basic/info")
 	@SystemControllerLog(description="人员档案-基本情况")
+	@ApiOperation(value = "基本情况", httpMethod = "GET")
 	public Map<String, Object> getBasicInfo(HttpServletRequest req,String idCard) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		Map<String, Object> dirverMap=personnelInfoService.getDriverByIdCard(idCard);
@@ -58,6 +61,7 @@ public class PersonnelController {
 	 */
 	@RequestMapping("/contact/list")
 	@SystemControllerLog(description="人员档案-联系方式")
+	@ApiOperation(value = "联系方式", httpMethod = "GET")
 	public Map<String, Object> getContactList(HttpServletRequest req,String idCard) throws Exception {
 		Map<String, Object> map=contactService.getListByIdCard(idCard);
 		return map;
@@ -68,6 +72,7 @@ public class PersonnelController {
 	 */
 	@RequestMapping("/neighbor/list")
 	@SystemControllerLog(description="人员档案-邻居关系")
+	@ApiOperation(value = "邻居关系", httpMethod = "GET")
 	public Map<String, Object> getNeighborList(HttpServletRequest req,String address) throws Exception {
 		Map<String, Object> map=new HashMap<>();
 		Map<String,String> addressMap= OriginTest.addressResolution(address);
@@ -83,6 +88,7 @@ public class PersonnelController {
 	 */
 	@RequestMapping("/asset/list")
 	@SystemControllerLog(description="人员档案-物品")
+	@ApiOperation(value = "物品", httpMethod = "GET")
 	public Map<String, Object> getAssetList(HttpServletRequest req,String idCard) throws Exception {
 		Map<String, Object> map=new HashMap<>();
 		Map<String, Object> carMap=personnelInfoService.getCarByIdCard(idCard);

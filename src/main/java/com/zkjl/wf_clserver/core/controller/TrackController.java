@@ -3,6 +3,7 @@ package com.zkjl.wf_clserver.core.controller;
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.dto.req.TrackRQ;
 import com.zkjl.wf_clserver.core.service.TrackService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class TrackController {
 	 */
 	@RequestMapping("/get")
 	@SystemControllerLog(description="人员档案-轨迹信息-分类展示")
+	@ApiOperation(value = "轨迹信息", httpMethod = "GET")
 	public Map<String, Object> get(HttpServletRequest req,String idCard) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		//查询住宿信息
@@ -60,6 +62,7 @@ public class TrackController {
 	 */
 	@RequestMapping("/getTimeAxis")
 	@SystemControllerLog(description="人员档案-轨迹信息-时间轴展示")
+	@ApiOperation(value = "轨迹信息", httpMethod = "GET")
 	public Map<String, Object> getTimeAxis(HttpServletRequest req,TrackRQ trackRQ) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		mapList=trackService.findTrackTimeLine(trackRQ);

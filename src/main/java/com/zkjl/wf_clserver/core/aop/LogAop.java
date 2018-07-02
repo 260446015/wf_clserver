@@ -7,7 +7,6 @@ import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.repository.kklc.LoginCountRepository;
 import com.zkjl.wf_clserver.core.repository.kklc.UserOperationRepository;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
@@ -22,7 +21,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

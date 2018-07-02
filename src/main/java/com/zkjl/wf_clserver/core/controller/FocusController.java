@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +29,7 @@ public class FocusController {
 	 */
 	@GetMapping("/get")
 	@SystemControllerLog(description="人员档案-重点关注信息查询")
+	@ApiOperation(value = "重点关注", httpMethod = "GET")
 	public Map<String, Object> get(String idCard) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		//查询违法犯罪信息

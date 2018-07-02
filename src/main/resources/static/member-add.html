@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>宝都数据侦查后台管理系统</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/x-admin.css" media="all">
+<link rel="stylesheet" href="./lib/layui/css/layui.css"  media="all">
+</head>
+
+<body>
+<div class="x-body">
+  <form id="inputForm" class="layui-form" action="javascript:" method="post">
+  <input type="hidden" id="L_photo_text" name="photo_texts" autocomplete="off" class="layui-form-label">
+   <div class="layui-form-item">
+       <label for="L_photo" class="layui-form-label"><span class="x-red">*</span>头像</label>
+       <div class="layui-input-inline">
+            <div class="site-demo-upbar">
+              <input type="file" id="L_photo" name="photo" autocomplete="off" class="layui-upload-file">
+            </div>
+       </div>
+   </div>
+<div class="layui-form-item">
+                    <label  class="layui-form-label">缩略图
+                    </label>
+                    <img id="LAY_demo_upload" width="120" src="">
+                </div>
+  <div class="layui-form-item">
+        <label for="L_name" class="layui-form-label"> <span class="x-red">*</span>姓名 </label>
+        <div class="layui-input-inline">
+          <input type="text" id="L_name" name="name" required lay-verify="nikename"
+                          autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"> <span class="x-red">*</span>将会成为您唯一的登入名 </div>
+      </div>
+
+      <div class="layui-form-item">
+            <label for="L_phone" class="layui-form-label"> <span class="x-red">*</span>手机号 </label>
+            <div class="layui-input-inline">
+              <input type="text" id="L_phone" name="phone" required lay-verify="phone"
+                              autocomplete="off" class="layui-input">
+            </div>
+          </div>
+
+    <div class="layui-form-item">
+      <label for="L_email" class="layui-form-label"> <span class="x-red">*</span>邮箱 </label>
+      <div class="layui-input-inline">
+        <input type="text" id="L_email" name="email" required lay-verify="email"
+           autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+       <label for="L_qq" class="layui-form-label"> <span class="x-red">*</span>QQ </label>
+       <div class="layui-input-inline">
+          <input type="text" id="L_qq" name="qq" required lay-verify="qq"
+             autocomplete="off" class="layui-input">
+        </div>
+     </div>
+
+     <div class="layui-form-item">
+        <label for="L_policeNumber" class="layui-form-label"> <span class="x-red">*</span>警号 </label>
+            <div class="layui-input-inline">
+               <input type="text" id="L_policeNumber" name="policeNumber" required lay-verify="number"
+                  autocomplete="off" class="layui-input">
+             </div>
+          </div>
+
+      <div class="layui-form-item"><label for="L_job" class="layui-form-label">
+      <span class="x-red">*</span>职位 </label>
+          <div class="layui-input-inline">
+             <input type="text" id="L_job" name="job" required lay-verify=""
+                autocomplete="off" class="layui-input">
+           </div>
+        </div>
+
+       <div class="layui-form-item"><label for="L_department" class="layui-form-label">
+         <span class="x-red">*</span>部门 </label>
+            <div class="layui-input-inline">
+               <input type="text" id="L_department" name="department" required lay-verify=""
+                  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item">
+      <label for="L_password" class="layui-form-label"> <span class="x-red">*</span>密码 </label>
+      <div class="layui-input-inline">
+        <input type="password" id="L_password" name="password" required lay-verify="pass"
+                        autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux"> 6到16个字符 </div>
+    </div>
+    <div class="layui-form-item">
+      <label for="L_repass" class="layui-form-label"> <span class="x-red">*</span>确认密码 </label>
+      <div class="layui-input-inline">
+        <input type="password" id="L_repass" name="repassword" required lay-verify="repass"
+                        autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label for="L_repass" class="layui-form-label"> </label>
+      <input type="submit" class="layui-btn" lay-filter="add" lay-submit=""> 增加 </input>
+    </div>
+  </form>
+</div>
+<script src="./lib/layui/layui.js" charset="utf-8">
+        </script> 
+<script src="./js/x-layui.js" charset="utf-8">
+        </script> 
+<script>
+            layui.use(['form','layer','upload'], function(){
+                $ = layui.jquery;
+              var form = layui.form()
+              ,layer = layui.layer;
+            
+              //自定义验证规则
+              form.verify({
+                nikename: function(value){
+                  if(value.length < 2){
+                    return '昵称至少得2个字符啊';
+                  }
+                }
+                ,password: [/(.+){6,12}$/, '密码必须6到12位']
+                ,repass: function(value){
+                    if($('#L_password').val()!=$('#L_repass').val()){
+                        return '两次密码不一致';
+                    }
+                }
+              });
+
+              //图片上传接口
+                   layui.upload({
+                              url: 'http://localhost:8080/file/uploadImg/' //上传接口
+                              ,success: function(res){ //上传成功后的回调
+                                  console.log(res);
+                                  var url="http://"+res[0].url;
+                                 $('#LAY_demo_upload').attr('src',url);
+                                 document.getElementById("L_photo_text").value=url;
+                              }
+                            });
+
+              //监听提交
+
+              var obj={};
+              form.on('submit(add)', function(data){
+                //发异步，把数据提交给php
+                layer.alert("增加成功", {icon: 6},function () {
+                  obj.name=$("#L_name").val();
+                  obj.photo=$("#L_photo_texts").val();
+                  obj.phone=$("#L_phone").val();
+                  obj.email=$("#L_email").val();
+                  obj.qq=$("#L_qq").val();
+                  obj.policeNumber=$("#L_policeNumber").val();
+                  obj.job=$("#L_job").val();
+                  obj.department=$("#L_department").val();
+                  obj.password=$("#L_password").val();
+                  var param = JSON.stringify(obj);
+                  //alert(param);
+                     $.ajax({
+                         type: "POST",
+                         contentType: "application/json; charset=utf-8",
+                         url: "http://localhost:8080/api/user/save",
+                         data:param,//若这里改成data:{"username":"zsd"}请求会报400
+                         dataType: "json",
+                         success: function(text){
+                           // 获得frame索引
+                           var index = parent.layer.getFrameIndex(window.name);
+                           //关闭当前frame
+                           parent.layer.close(index);
+                           history.go(0);
+                         }
+                         });
+
+                });
+                return false;
+              });
+              
+              
+            });
+        </script>
+</body>
+</html>

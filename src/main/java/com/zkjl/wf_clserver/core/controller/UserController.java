@@ -3,6 +3,7 @@ package com.zkjl.wf_clserver.core.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
+import com.zkjl.wf_clserver.core.dto.req.DefaultPageRQ;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.UserService;
 import io.swagger.annotations.Api;
@@ -12,13 +13,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * 用户操作
@@ -37,11 +39,23 @@ public class UserController extends BaseController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "根据登录用户的姓名密码进行校验，返回登录数据", httpMethod = "POST")
-    public ApiResult login(String username, String password) {
+    public ApiResult login(String username,String password,String mode) {
         try {
             SysUser login = userService.login(username, password);
+            if (login.getIfEnable()==false){
+                return error("该账号已被关闭！");
+            }
             JSONObject jsonObject = JSONObject.parseObject(login.toString());
-            return success(jsonObject);
+            if(mode.equals("front")) {
+                return success(jsonObject);
+            }else if(mode.equals("admin")){
+                if(login.getIfAdmin()){
+                    return success(jsonObject);
+                }else{
+                    return error("用户权限不足！");
+                }
+
+            }
         } catch (UnknownAccountException uae) {
             System.out.println("账号不存在！" + uae.getMessage());
         } catch (IncorrectCredentialsException ice) {
@@ -84,11 +98,46 @@ public class UserController extends BaseController {
     @GetMapping("/list")
     @SystemControllerLog(description = "后台管理-用户列表查询")
     @ResponseBody
-    @ApiOperation(value = "用户列表查询")
+    @ApiOperation(value = "用户列表查询", httpMethod = "GET")
     public ApiResult list(Integer pageSize, Integer pageNum, String searchStr) throws Exception {
         PageImpl<SysUser> user;
         try {
             user = userService.findUser(pageSize, pageNum, searchStr);
+        } catch (Exception e) {
+            return error("查询用户列表失败");
+        }
+        return successPages(user);
+    }
+
+    /**
+     * 根据id查询用户
+     */
+    @ApiOperation(value = "根据id查询用户" , httpMethod = "GET")
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResult getUserById(@RequestParam String id){
+        Optional<SysUser> user;
+        try {
+            user = userService.findById(id);
+        } catch (Exception e) {
+            return error("查询用户列表失败");
+        }
+        return success(user);
+    }
+
+    /**
+     * 查询
+     */
+    @ApiOperation(value = "用户列表查询" , httpMethod = "GET")
+    @RequestMapping(value = "/page/list",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResult findPage(DefaultPageRQ defaultPageRQ,
+                              @RequestParam(required = false) String name,
+                              @RequestParam(required = false) Date beginDate,
+                              @RequestParam(required = false) Date endDate){
+        PageImpl<SysUser> user;
+        try {
+            user = userService.findPage(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), name, beginDate, endDate);
         } catch (Exception e) {
             return error("查询用户列表失败");
         }
@@ -107,6 +156,34 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 管理员修改密码
+     */
+    @PostMapping("/updatePassword")
+    @SystemControllerLog(description = "后台管理-修改密码")
+    @ResponseBody
+    @ApiOperation(value = "修改密码", httpMethod = "POST")
+    public ApiResult updatePassword(@RequestBody SysUser user) throws Exception {
+        Optional<SysUser> opuser=userService.findById(user.getId());
+        SysUser sysuser=opuser.get();
+        sysuser.setPassword(user.getPassword());
+        return success(userService.addUserOrUpdate(sysuser));
+    }
+
+    /**
+     * 管理员更改状态
+     **/
+    @PostMapping("/updateStatus")
+    @SystemControllerLog(description = "后台管理-更改状态")
+    @ResponseBody
+    @ApiOperation(value = "更改状态", httpMethod = "POST")
+    public ApiResult updateStatus(String id) throws Exception {
+        Optional<SysUser> opuser=userService.findById(id);
+        SysUser sysuser=opuser.get();
+        sysuser.setIfEnable(!sysuser.getIfEnable());
+        return success(userService.addUserOrUpdate(sysuser));
+    }
+
+    /**
      * 管理员删除
      */
     @RequestMapping("/delete")
@@ -114,11 +191,12 @@ public class UserController extends BaseController {
     @ResponseBody
     @ApiOperation(value = "用户删除", httpMethod = "GET")
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {
+        ApiResult apiResult=new ApiResult();
         String[] idsStr = ids.split(",");
         for (int i = 0; i < idsStr.length; i++) {
             userService.deleteUser(idsStr[i]);
         }
-        return null;
+        return apiResult;
     }
 
     /**
@@ -128,7 +206,7 @@ public class UserController extends BaseController {
     @SystemControllerLog(description = "后台管理-当前访问量")
     @ResponseBody
     @ApiOperation(value = "当前在线用户/总用户", httpMethod = "GET")
-    public ApiResult userVisits(){
+    public ApiResult userVisits() {
         JSONObject result;
         try {
             result = userService.listActiveSession();
@@ -137,4 +215,6 @@ public class UserController extends BaseController {
         }
         return success(result);
     }
+
+
 }

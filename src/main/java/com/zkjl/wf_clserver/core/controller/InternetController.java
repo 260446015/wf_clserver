@@ -2,6 +2,7 @@ package com.zkjl.wf_clserver.core.controller;
 
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.service.InternetService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class InternetController {
 	 */
 	@RequestMapping("/get")
 	@SystemControllerLog(description="人员档案-互联网信息查询")
+	@ApiOperation(value = "社会信息", httpMethod = "GET")
 	public Map<String, Object> get(HttpServletRequest req,String mobile) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		//查询宽带信息

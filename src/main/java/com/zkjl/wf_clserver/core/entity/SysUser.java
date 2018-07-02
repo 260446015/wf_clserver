@@ -31,6 +31,11 @@ public class SysUser {
     * 
     */
    private String password;
+
+   /** 密码
+    *
+    */
+   private String repassword;
    /** 头像
     * 
     */
@@ -70,11 +75,23 @@ public class SysUser {
     */
    @Field(value = "update_date")
    private Date updateDate;
-   /** 是否删除
-    * 
+   /**
+    * 是否删除
     */
    @Field(value = "del_flag")
    private String delFlag;
+
+   /**
+    * 是否启用
+    */
+   @Field(value = "if_enable")
+   private Boolean ifEnable;
+
+   /**
+    *是否系统管理员
+    */
+   @Field(value = "if_admin")
+   private Boolean ifAdmin;
 
    @Override
    public String toString() {

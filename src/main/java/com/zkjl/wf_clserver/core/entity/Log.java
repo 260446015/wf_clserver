@@ -30,8 +30,9 @@ public class Log {
 	public void preInsert()
 	  {
 	     setId(UuidUtils.creatUUID());
-	    if (this.createDate == null)
-	      this.createDate = new Date();
+	    if (this.createDate == null) {
+			this.createDate = new Date();
+		}
 	  }
 
 	public String getId() {

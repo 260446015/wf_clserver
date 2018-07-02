@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.Date;
+import java.util.Optional;
+
 public interface UserService {
 
 	/**
@@ -11,6 +14,7 @@ public interface UserService {
 	 */
 	SysUser login(String username, String password);
 
+	Optional<SysUser> findById(String id);
 	/**
 	 * 查找用户
 	 */
@@ -34,5 +38,11 @@ public interface UserService {
 	 */
 	public void deleteUser(String id);
 
-    JSONObject listActiveSession();
+	JSONObject listActiveSession();
+
+	/**
+	 * 查找用户
+	 */
+	PageImpl<SysUser> findPage(Integer pageSize, Integer pageNum, String name, Date beginDate, Date endDate);
+
 }

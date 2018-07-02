@@ -2,6 +2,7 @@ package com.zkjl.wf_clserver.core.controller;
 
 import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.service.SocialService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class SocialController {
 	 */
 	@RequestMapping("/get")
 	@SystemControllerLog(description="人员档案-社会信息查询")
+	@ApiOperation(value = "社会信息", httpMethod = "GET")
 	public Map<String, Object> get(HttpServletRequest req,String idCard) throws Exception {
 		Map<String, Object> mapList=new HashMap<>();
 		//查询银行信息

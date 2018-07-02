@@ -343,7 +343,7 @@ public class PersonnelInfoServiceImpl implements PersonnelInfoService {
 		dataMap.put("list", dataList);
 		return dataMap;
 	}
-	
+	@Override
 	public Map<String, Object> getNeighborByAddress(String address){
 		Client client = EsUtil.getTransportClient();
 		SearchRequestBuilder nearbydatasBuilder=client.prepareSearch("lbs").setTypes("PersonnelInfo");

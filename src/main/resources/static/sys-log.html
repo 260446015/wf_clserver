@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            宝都数据侦查后台管理系统
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+    </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>系统日志</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body" style="padding: 20px 20px 100px 20px;">
+            <form class="layui-form x-center" action="javascript:" style="width:80%">
+                <div class="layui-form-pane" style="margin-top: 15px;">
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                      <input class="layui-input beginDate" placeholder="开始日" id="LAY_demorange_s">
+                    </div>
+                    <div class="layui-input-inline">
+                      <input class="layui-input endDate" placeholder="截止日" id="LAY_demorange_e">
+                    </div>
+                    <div class="layui-input-inline">
+                      <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input name">
+                    </div>
+                    <div class="layui-input-inline" style="width:80px">
+                        <button class="layui-btn searchLog"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                    </div>
+                  </div>
+                </div> 
+            </form>
+            <xblock><button id="btnDelete" data-url="http://localhost:8080/api/log/delete" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span id="dataNum" class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <input id="selectAll" type="checkbox" name="" value="">
+                        </th>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            内容
+                        </th>
+                        <th>
+                            用户名
+                        </th>
+                        <th>
+                            客户端IP
+                        </th>
+                        <th>
+                            时间
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="layui-table-data" id="contentTable">
+
+                </tbody>
+            </table>
+             <div id="page"></div>
+        </div>
+        <script src="./js/jquery.min.js" charset="utf-8"></script>
+        <script src="./lib/layui/layui.js" charset="utf-8"></script>
+        <script src="./js/x-layui.js" charset="utf-8"></script>
+        <script src="./SweetAlert/sweetalert.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./SweetAlert/sweetalert.css">
+        <script>
+            layui.use(['laydate','element','laypage','layer'], function(){
+                $ = layui.jquery;//jquery
+			  laydate = layui.laydate;//日期插件	
+              lement = layui.element();//面包导航
+			  laypage = layui.laypage;//分页
+              layer = layui.layer;//弹出层
+			  
+			  //以上模块根据需要引入
+
+              function setPageNo(count) {
+                laypage({
+                   cont: 'page'
+                  ,pages: count
+                  ,first: '首页'
+                  ,last: '尾页'
+                  ,prev: '<em><</em>'
+                  ,next: '<em>></em>'
+                  ,jump: function(obj, first){
+                    if(!first){
+                      getloglist(obj.curr-1,"",null,null);
+                    }
+                  }
+                });
+              }
+              getloglist(0,"",null,null);
+              function getloglist(pageval,name,beginDate,endDate) {
+                 var ctx="http://localhost:8080/api/log/page/list?pageSize=10"
+                 if(pageval !=null){
+                    ctx+="&pageNum="+pageval
+                 }
+                 if(name !=''){
+                    ctx+="&name="+name
+                 }
+                 if(beginDate !=null){
+                    ctx+="&beginDate="+beginDate
+                 }
+                 if(endDate !=null){
+                    ctx+="&endDate="+endDate
+                 }
+                 $.ajax({
+                    url: ctx,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                    success: function (res) {
+                      console.log(res);
+                      $(".layui-table-data").empty();
+                      if(res.code!=0){
+                         return layer.msg(res.message,{anim:6});
+                      }
+                      if(0 === pageval){
+                        count = res.data.totalPage;
+                        setPageNo(count);
+                        document.getElementById("dataNum").innerHTML='共有数据：'+res.data.totalNumber+' 条';
+                      }
+                      $.each(res.data.dataList,function (i,item) {
+                          console.log(item);
+                          var id=item.id;
+                          var list = "<tr>" +
+                          "<td><input  type='checkbox' value='"+item.id+"' name='id'></td>"+
+                          "<td>"+(i+1)+"</td>" +
+                          "<td>"+item.description+"</td>" +
+                          "<td>"+item.name+"</td>" +
+                          "<td>"+item.ip+"</td>" +
+                          "<td>"+item.createDate+"</td>" +
+
+                          "<td class='td-manage manage"+(i+1)+"'>"+
+                          "<a title='删除' href='javascript:;' onclick='log_del(this,'1')' style='text-decoration:none'><i class='layui-icon'>&#xe640;</i></a></td>"
+                                               +"</tr>";
+
+                           $(".layui-table-data").append(list);
+
+                       });
+                     }
+                       });
+              };
+           
+			//起始日期
+			var start = {
+                min: '1900-01-01 23:59:59'
+                ,max: '2099-06-16 23:59:59'
+                ,istoday: false
+                ,choose: function(datas){
+                  end.min = datas; //开始日选好后，重置结束日的最小日期
+                  end.start = datas //将结束日的初始值设定为开始日
+                }
+              };
+              
+              var end = {
+                min: '1900-01-01 23:59:59'
+                ,max: '2099-06-16 23:59:59'
+                ,istoday: false
+                ,choose: function(datas){
+                  start.max = datas; //结束日选好后，重置开始日的最大日期
+                }
+              };
+              
+              document.getElementById('LAY_demorange_s').onclick = function(){
+                start.elem = this;
+                laydate(start);
+              }
+              document.getElementById('LAY_demorange_e').onclick = function(){
+                end.elem = this
+                laydate(end);
+              }
+
+
+              $(".searchLog").click(function () {
+                 var bdate=$(".beginDate").val();
+                 var edate=$(".endDate").val();
+                 console.log(bdate+"------"+edate)
+                 if(bdate!='' && edate!=''){
+                   var beginDate= new Date(Date.parse(bdate.replace(/-/g,"/"))).toGMTString();
+                   var endDate= new Date(Date.parse(edate.replace(/-/g,"/"))).toGMTString();
+                   getloglist(0,$(".name").val(),beginDate,endDate);
+                 }else{
+                   getloglist(0,$(".name").val(),null,null);
+                 }
+              });
+              
+            });
+// 全选
+	var $selectAll = $("#selectAll");
+	var $deleteButton = $("#btnDelete");
+	$selectAll.click( function() {
+	var $listTable = $("#contentTable");
+		var $this = $(this);
+		var $enabledIds = $listTable.find("input[name='id']:enabled");
+		if ($this.prop("checked")) {
+			$enabledIds.prop("checked", true);
+		} else {
+			$enabledIds.prop("checked", false);
+		}
+	});
+              
+            //批量删除提交
+             function delAll () {
+                    //捉到所有被选中的，发异步进行删除
+                     var $this = $(this);
+                     if ($this.hasClass("disabled")) {
+                        return false;
+                     }
+                     var $checkedIds = $("#contentTable input[name='ids']:enabled:checked");
+                     var ids = [];
+                     if($('input[name="id"]').is(':checked')){
+                        $("input[name='id']:checked").each(function() {
+                           ids.push($(this).val());
+                     });
+                     layer.confirm('确认要删除吗？',function(index){
+                        $.ajax({
+                            url : $deleteButton.data("url"),
+                            type : 'post',
+                            data : {
+                              "ids" : ids.join(",")
+                            },
+                            success : function(data) {
+                              layer.msg('已删除!',{icon:1,time:1000});
+
+                            },
+                        });
+                        history.go(0);
+                     });
+                     }else{
+                        layer.msg('删除操作失败了!',{icon:2,time:1000});
+                        return false
+                     }
+             }
+           
+            /*-删除*/
+            function log_del(obj,id){
+                layer.confirm('确认要删除吗？',function(index){
+                //发异步删除数据
+                $.ajax({
+                   url : $deleteButton.data("url"),
+                   type : 'post',
+                   data : {
+                      "ids" : id
+                   },
+                   success : function(data) {
+                     $(obj).parents("tr").remove();
+                     layer.msg('已删除!',{icon:1,time:1000});
+                   },
+                });
+                });
+            }
+            </script>
+            
+    </body>
+</html>
