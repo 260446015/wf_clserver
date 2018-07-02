@@ -2,10 +2,31 @@ server:
   port: 8080
 spring:
   data:
-#    elasticsearch:
-#      cluster-nodes: 47.93.10.136:44336
-#      cluster-name: elasticsearch
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
+      cluster-name: elasticsearch
+      repositories:
+        enable: true
     mongodb:
+      option:
+        min-connection-per-host: 0
+        max-connection-per-host : 100
+        threads-allowed-to-block-for-connection-multiplier : 5
+        server-selection-timeout : 30000
+        max-wait-time : 120000
+        max-connection-idle-time : 0
+        max-connection-life-time : 0
+        connect-timeout : 10000
+        socket-timeout : 0
+        socket-keep-alive : false
+        ssl-enabled : false
+        ssl-invalid-host-name-allowed : false
+        always-use-m-beans : false
+        heartbeat-socket-timeout : 20000
+        heartbeat-connect-timeout : 20000
+        min-heartbeat-frequency : 500
+        heartbeat-frequency : 10000
+        local-threshold : 15
       primary:
           host: 221.1.97.28
           port: 44335

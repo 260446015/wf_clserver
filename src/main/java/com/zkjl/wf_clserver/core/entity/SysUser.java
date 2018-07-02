@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

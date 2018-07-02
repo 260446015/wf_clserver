@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver;
 
+import com.spring4all.mongodb.EnableMongoPlus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan(basePackages = "com.zkjl.wf_clserver")
 @EnableAspectJAutoProxy
+@EnableMongoPlus
 public class WfClserverApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

@@ -10,12 +10,12 @@
 <br/>
 <br/>
 <br/>
-<button></button>
+<input id="upload" type="file" name="fileName" onchange="uploadKeyload(this)">
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var _resources = [];
-    $(function () {
+    /*$(function () {
         var scale1 = 60 / $('body').height();
         var scale2 = $('body').height() * 0.02 / $('body').height();
         $('.container').height((1 - (scale1 + scale2) * 2) * 100 + '%');
@@ -78,6 +78,23 @@
                 console.log(res)
             }
         })
-    })
+    })*/
+    function uploadKeyload(e) {
+        var formData = new FormData();
+        formData.append("fileName",e.files[0]);
+        $.ajax({
+            url: "/api/file/upload",
+            data: formData,
+            type: "Post",
+            dataType: "json",
+            cache: false,//上传文件无需缓存
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+            success: function (result) {
+                alert("上传" + (result.data == true ?"完成!":"失败!"));
+            },
+        })
+    }
+
 </script>
 </html>

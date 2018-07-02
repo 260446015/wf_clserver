@@ -34,7 +34,7 @@ public class ShiroConfiguration {
 		//配置访问权限 anon：表示全部放权的资源路径，authc：表示需要认证才可以访问
 //		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/*.html", "anon");
-		filterChainDefinitionMap.put("/api/**", "authc");
+		filterChainDefinitionMap.put("/api/**", "anon");
 
 //		filterChainDefinitionMap.put("/**/*.json", "authc");
 
