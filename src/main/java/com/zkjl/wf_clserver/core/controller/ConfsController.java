@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,6 +44,21 @@ public class ConfsController extends BaseController {
             return error("查询平台列表失败");
         }
         return successPages(confs);
+    }
+    /**
+     * 查询
+     */
+    @ApiOperation(value = "平台查询" , httpMethod = "GET")
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResult findPage(){
+        List<Confs> confs;
+        try {
+            confs = confsService.findAll();
+        } catch (Exception e) {
+            return error("查询平台列表失败");
+        }
+        return success(confs);
     }
 
     /**

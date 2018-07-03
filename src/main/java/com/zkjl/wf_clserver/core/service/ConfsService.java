@@ -3,6 +3,7 @@ package com.zkjl.wf_clserver.core.service;
 import com.zkjl.wf_clserver.core.entity.Confs;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ConfsService {
@@ -20,6 +21,8 @@ public interface ConfsService {
      * 查找平台
      */
     PageImpl<Confs> findConfs(Integer pageSize, Integer pageNum, String searchStr);
+
+    List<Confs> findAll();
 
     public Optional<Confs> get(String id);
 }

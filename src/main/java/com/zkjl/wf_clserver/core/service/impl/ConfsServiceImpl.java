@@ -64,4 +64,9 @@ public class ConfsServiceImpl implements ConfsService {
         totalCount = all.size();
         return (PageImpl<Confs>) PageUtil.pageBeagin(totalCount, pageNum, pageSize, all);
     }
+
+    @Override
+    public List<Confs> findAll(){
+       return confsRepository.findAll();
+    }
 }
