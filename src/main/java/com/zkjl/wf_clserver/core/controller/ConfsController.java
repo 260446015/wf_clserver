@@ -72,7 +72,7 @@ public class ConfsController extends BaseController {
         try {
             confs = confsService.get(id);
         } catch (Exception e) {
-            return error("查询用户列表失败");
+            return error("查询平台列表失败");
         }
         return success(confs);
     }
@@ -81,9 +81,9 @@ public class ConfsController extends BaseController {
      * 添加或修改
      */
     @PostMapping("/save")
-    @SystemControllerLog(description = "后台管理-用户添加")
+    @SystemControllerLog(description = "后台管理-平台添加")
     @ResponseBody
-    @ApiOperation(value = "用户添加", httpMethod = "POST")
+    @ApiOperation(value = "平台添加", httpMethod = "POST")
     public ApiResult save(@RequestBody Confs confs) throws Exception {
         return success(confsService.addConfsOrUpdate(confs));
     }
@@ -91,7 +91,7 @@ public class ConfsController extends BaseController {
     /**
      * 删除
      */
-    @ApiOperation(value = "用户删除", httpMethod = "GET")
+    @ApiOperation(value = "平台删除", httpMethod = "GET")
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {
