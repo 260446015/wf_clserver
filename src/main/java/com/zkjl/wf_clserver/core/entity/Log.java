@@ -5,164 +5,172 @@ import com.zkjl.wf_clserver.core.util.UuidUtils;
 
 import java.util.Date;
 
-/** 用户实体类 */
+/**
+ * 用户实体类
+ */
 public class Log {
-	private String id; // 主键
-	private String sysUserId; // 操作人
-	private String category; // 操作类型
-	private String description; // 操作描述
-	private String ip; // 操作ip
-	private String name; // 操作人姓名
-	private String type; //日志类型(info:入库,error:错误)
-	private Date createDate;
-	private String delFlag;
-	private String requestUri;//请求的Uri
-	
-	public Log() {
-		this.delFlag = "0";
-	}
-	
-	public Log(String id) {
-		super();
-		this.delFlag = "0";
-	}
-	 
-	public void preInsert()
-	  {
-	     setId(UuidUtils.creatUUID());
-	    if (this.createDate == null) {
-			this.createDate = new Date();
-		}
-	  }
+    private String id; // 主键
+    private String sysUserId; // 操作人
+    private String category; // 操作类型
+    private String description; // 操作描述
+    private String args;//参数
+    private String ip; // 操作ip
+    private String name; // 操作人姓名
+    private String type; //日志类型(info:入库,error:错误)
+    private Date createDate;
+    private String delFlag;
+    private String requestUri;//请求的Uri
 
-	public String getId() {
-		return id;
-	}
+    public Log() {
+        this.delFlag = "0";
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Log(String id) {
+        super();
+        this.delFlag = "0";
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void preInsert() {
+        setId(UuidUtils.creatUUID());
+        if (this.createDate == null) {
+            this.createDate = new Date();
+        }
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * @return the sysUserId
-	 */
-	public String getSysUserId() {
-		return sysUserId;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	/**
-	 * @param sysUserId the sysUserId to set
-	 */
-	public void setSysUserId(String sysUserId) {
-		this.sysUserId = sysUserId;
-	}
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    /**
+     * @return the sysUserId
+     */
+    public String getSysUserId() {
+        return sysUserId;
+    }
 
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * @param sysUserId the sysUserId to set
+     */
+    public void setSysUserId(String sysUserId) {
+        this.sysUserId = sysUserId;
+    }
 
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
 
-	/**
-	 * @return the ip
-	 */
-	public String getIp() {
-		return ip;
-	}
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	/**
-	 * @param ip the ip to set
-	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return the createDate
-	 */
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	public Date getCreateDate() {
-		return createDate;
-	}
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @param createDate the createDate to set
-	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    /**
+     * @return the ip
+     */
+    public String getIp() {
+        return ip;
+    }
 
-	/**
-	 * @return the delFlag
-	 */
-	public String getDelFlag() {
-		return delFlag;
-	}
+    /**
+     * @param ip the ip to set
+     */
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	/**
-	 * @param delFlag the delFlag to set
-	 */
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
+    /**
+     * @return the createDate
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	/**
-	 * @return the requestUri
-	 */
-	public String getRequestUri() {
-		return requestUri;
-	}
+    /**
+     * @param createDate the createDate to set
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	/**
-	 * @param requestUri the requestUri to set
-	 */
-	public void setRequestUri(String requestUri) {
-		this.requestUri = requestUri;
-	}
+    /**
+     * @return the delFlag
+     */
+    public String getDelFlag() {
+        return delFlag;
+    }
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+    /**
+     * @param delFlag the delFlag to set
+     */
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
 
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	
+    /**
+     * @return the requestUri
+     */
+    public String getRequestUri() {
+        return requestUri;
+    }
+
+    /**
+     * @param requestUri the requestUri to set
+     */
+    public void setRequestUri(String requestUri) {
+        this.requestUri = requestUri;
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getArgs() {
+        return args;
+    }
+
+    public void setArgs(String args) {
+        this.args = args;
+    }
 }

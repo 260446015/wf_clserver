@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -55,10 +56,12 @@ public class LogAop {
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         System.out.println("当前session:"+ SecurityUtils.getSubject().getSession().getId());
         if (null != annotation && null != user) {
+            targetMethod.getGenericReturnType();
             Log log = new Log();
             String ip = getIpAddr(request);
             log.setIp(ip);
             log.setDescription(annotation.description());
+            log.setArgs(Arrays.toString(joinPoint.getArgs()));
             String name = user.getName();
             log.setName(name);
             log.setCreateDate(Calendar.getInstance().getTime());

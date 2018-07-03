@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.util;
 
+import com.zkjl.wf_clserver.core.exception.CustomerException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
@@ -33,15 +34,18 @@ public class POIUtils {
 	 * @param file
 	 * @throws IOException
 	 */
-	public static List<String[]> readExcel(MultipartFile file) throws IOException{
+	public static List<List<String[]>> readExcel(MultipartFile file) throws IOException, CustomerException {
 		//检查文件
-		checkFile(file);
+//		checkFile(file);
 		//获得Workbook工作薄对象
 		Workbook workbook = getWorkBook(file);
-		//创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
-		List<String[]> list = new ArrayList<String[]>();
+		//根据每个sheet返回不同sheet的结合
+        List<List<String[]>> bySheet = new ArrayList<>();
+
 		if(workbook != null){
 			for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
+                //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
+                List<String[]> list = new ArrayList<>();
 				//获得当前sheet工作表
 				Sheet sheet = workbook.getSheetAt(sheetNum);
 				if(sheet == null){
@@ -51,99 +55,44 @@ public class POIUtils {
 				int firstRowNum  = sheet.getFirstRowNum();
 				//获得当前sheet的结束行
 				int lastRowNum = sheet.getLastRowNum();
+				//获取标题总列数
+				int totalCell = 0;
 				//循环除了第一行的所有行
-				for(int rowNum = firstRowNum+1;rowNum <= lastRowNum;rowNum++){
+				for(int rowNum = firstRowNum;rowNum <= lastRowNum;rowNum++){
+
 					//获得当前行
 					Row row = sheet.getRow(rowNum);
 					if(row == null){
 						continue;
 					}
+					if(rowNum == 0){
+						totalCell = row.getPhysicalNumberOfCells();
+					}
+					if(totalCell == 0){
+						throw new RuntimeException("第一行不为标题");
+					}
 					//获得当前行的开始列
 					int firstCellNum = row.getFirstCellNum();
 					//获得当前行的列数
-					int lastCellNum = row.getPhysicalNumberOfCells();
-					String[] cells = new String[row.getPhysicalNumberOfCells()];
+//					int lastCellNum = row.getPhysicalNumberOfCells();
+					String[] cells = new String[totalCell];
 					//循环当前行
-					for(int cellNum = firstCellNum; cellNum < lastCellNum;cellNum++){
+					for(int cellNum = firstCellNum; cellNum < totalCell;cellNum++){
 						Cell cell = row.getCell(cellNum);
 						cells[cellNum] = getCellValue(cell);
 					}
+					if(cells.length <= 1){
+						throw new CustomerException("Excel导入应指定第一行为标题，从第二行开始为内容。请确定格式!!!");
+					}
 					list.add(cells);
 				}
+				bySheet.add(list);
 			}
 			workbook.close();
 		}
-		return list;
+		return bySheet;
 	}
 
-	/**
-	 * 读入excel文件，解析后返回每一个sheet页
-	 * @param file
-	 * @throws IOException
-	 */
-	public static List<String[]> readExcelBySheet(MultipartFile file,int sheetIndex,int startIndex) throws IOException{
-		//检查文件
-		checkFile(file);
-		//获得Workbook工作薄对象
-		Workbook workbook = getWorkBook(file);
-		//创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
-		List<String[]> list = new ArrayList<String[]>();
-		if(workbook != null){
-				//获得当前sheet工作表
-			Sheet sheet = workbook.getSheetAt(sheetIndex);
-			if(sheet == null){
-				return null;
-			}
-			//获得当前sheet的开始行
-			int firstRowNum  = sheet.getFirstRowNum();
-			//获得当前sheet的结束行
-			int lastRowNum = sheet.getLastRowNum();
-			//循环除了第一行的所有行
-			for(int rowNum = startIndex;rowNum <= lastRowNum;rowNum++){
-				//获得当前行
-				Row row = sheet.getRow(rowNum);
-				if(row == null){
-					continue;
-				}
-				//获得当前行的开始列
-				int firstCellNum = row.getFirstCellNum();
-				//获得当前行的列数
-				int lastCellNum = row.getPhysicalNumberOfCells();
-				String[] cells = new String[row.getPhysicalNumberOfCells()];
-				//循环当前行
-				for(int cellNum = firstCellNum; cellNum < lastCellNum;cellNum++){
-					Cell cell = row.getCell(cellNum);
-					cells[cellNum] = getCellValue(cell);
-				}
-				if(cells.length <= 1){
-					continue;
-				}
-				list.add(cells);
-			}
-		}
-		workbook.close();
-		return list;
-	}
-
-
-	public static void checkFile(MultipartFile file) throws IOException{
-		//判断文件是否存在
-		if(null == file){
-			logger.error("文件不存在！");
-			throw new FileNotFoundException("文件不存在！");
-		}
-		//获得文件名
-		String fileName = file.getOriginalFilename();
-		//判断文件是否是excel文件
-		if(!fileName.endsWith(xls) && !fileName.endsWith(xlsx)){
-			if(fileName.endsWith(txt)){
-				logger.info("正在对txt文件进行读取");
-			}else {
-				logger.error(fileName + "不是excel文件或txt文件");
-				throw new IOException(fileName + "不是excel文件或txt文件");
-			}
-		}
-	}
 	public static Workbook getWorkBook(MultipartFile file) {
 		//获得文件名
 		String fileName = file.getOriginalFilename();
@@ -207,11 +156,11 @@ public class POIUtils {
 		BufferedReader reader = null;
 		try {
 			inputStream = file.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(inputStream));
+			reader = new BufferedReader(new InputStreamReader(inputStream,"gbk"));//传参
 			String line = "";
 			while ((line = reader.readLine())!= null){
                 String data = line;
-                String[] split1 = data.split(split);
+                String[] split1 = data.split(split);//传参
                 if(split1.length <= 1){
                     continue;
                 }
@@ -232,40 +181,5 @@ public class POIUtils {
 			}
 		}
 		return datas;
-	}
-
-
-	public static String[] readExcelTitle(MultipartFile file,int sheetIndex) {
-		Workbook wb = getWorkBook(file);
-
-		Sheet sheet = wb.getSheetAt(sheetIndex);
-		Row row = sheet.getRow(0);
-		// 标题总列数
-		int colNum = row.getPhysicalNumberOfCells();
-		System.out.println("colNum:" + colNum);
-		String[] title = new String[colNum];
-		for (int i = 0; i < colNum; i++) {
-			title[i] = getCellValue(row.getCell(i));
-		}
-		return title;
-	}
-
-	public static List<String[]> readExcelTitleAll(MultipartFile file,int readLine) {
-		Workbook wb = getWorkBook(file);
-		List<String[]> titles = new ArrayList<>();
-		int numberOfSheets = wb.getNumberOfSheets();
-		for (int i = 0; i < numberOfSheets; i++) {
-			Sheet sheet = wb.getSheetAt(i);
-			Row row = sheet.getRow(readLine);
-			// 标题总列数
-			int colNum = row.getPhysicalNumberOfCells();
-			System.out.println("colNum:" + colNum);
-			String[] title = new String[colNum];
-			for (int j = 0; j < colNum; j++) {
-				title[j] = getCellValue(row.getCell(j));
-			}
-			titles.add(title);
-		}
-		return titles;
 	}
 }
