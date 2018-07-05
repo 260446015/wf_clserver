@@ -6,6 +6,7 @@ import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
 import org.apache.shiro.SecurityUtils;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -117,11 +118,12 @@ public abstract class UploadAbstractService {
     }
 
     protected List<FileUploadEntity> saveUploadData(List<FileUploadEntity> list) {
-        List<String> ids = list.stream().map(action -> action.getId()).collect(Collectors.toList());
-        List<FileUploadEntity> datas = fileUploadEntityRepository.findAllByIdNotIn(ids);
-        if(datas.size() > 0){
-            executorService.execute(() -> fileUploadEntityRepository.saveAll(datas));
-        }
-        return datas;
+//        List<String> ids = list.stream().map(action -> action.getId()).collect(Collectors.toList());
+//        List<FileUploadEntity> datas = fileUploadEntityRepository.findByIdIn(ids);
+//        if(datas.size() > 0){
+//            executorService.execute(() -> fileUploadEntityRepository.saveAll(datas));
+//        }
+        fileUploadEntityRepository.saveAll(list);
+        return null;
     }
 }
