@@ -1,17 +1,16 @@
 package com.zkjl.wf_clserver.core.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.CollDatas;
 import com.zkjl.wf_clserver.core.entity.CollDatasInner;
 import com.zkjl.wf_clserver.core.repository.plover.CollDatasRepository;
-import com.zkjl.wf_clserver.core.repository.plover.JobBeanRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +35,19 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected void analysisSameAddress(List<List<CollDatas>> datas) {
-
+        if (datas.size() == 0) {
+            throw new RuntimeException();
+        }
+        List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
+        System.out.print("yunsoux同住址"+kindDatas);
+        String address1 = kindDatas.get(0).get(0).getData().getData()[0][7];
+        String address2 = kindDatas.get(1).get(0).getData().getData()[0][7];
+        System.out.println("address1:"+address1);
+        System.out.println("address2:"+address2);
+        if(address1.equals(address2)){
+            System.out.println("含有相同住址");
+        }
+        System.out.println("!!!!!!!!!!");
     }
 
     @Override
@@ -46,7 +57,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected void analysisSameWork(List<List<CollDatas>> datas) {
-        String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][7];
+        String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
         List<CollDatasInner> collDatasInners2 = kindDatas.get(1);
         String[][] data = collDatasInners2.get(0).getData().getData();
@@ -63,6 +74,21 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected void analysisSameViolation(List<List<CollDatas>> datas) {
+        String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
+        System.out.println("同车违章"+idcard);
+        List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
+        System.out.println("同车违章"+kindDatas);
+        List<CollDatasInner> collDatasInners2 = kindDatas.get(1);
+        String[][] data = collDatasInners2.get(0).getData().getData();
+        List<String> ids = new ArrayList<>();
+        for (int i = 0; i < data.length; i++) {
+            String[] datum = data[i];
+            String id = datum[7];
+            ids.add(id);
+        }
+        if(ids.contains(idcard)){
+            System.out.println("1同车违章");
+        }
 
     }
 
@@ -87,6 +113,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
+        System.out.print("yunsoux户号"+kindDatas);
         String account1 = kindDatas.get(0).get(0).getData().getData()[0][7];
         String account2 = kindDatas.get(1).get(0).getData().getData()[0][7];
         System.out.println("account1:"+account1);

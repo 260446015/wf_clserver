@@ -44,10 +44,13 @@
             },
             success: function (res) {
                 console.log(res);
+
                 if(res.code!=0){
                     return layer.msg(res.message,{anim:6});
                 }
-
+                var storage = window.localStorage;
+                storage.setItem("name",res.data.name);
+                storage.setItem("photo",res.data.photo);
             }
         });
     };

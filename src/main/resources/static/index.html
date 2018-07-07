@@ -33,24 +33,29 @@
           <dd><a href="sys-log.html">日志管理</a></dd>
         </dl>
       </li>
+
     </ul>
 
       <ul class="layui-nav" lay-filter="">
+
       <!-- <li class="layui-nav-item">
                         <a href="" title="消息">
                             <i class="layui-icon" style="top: 1px;">&#xe63a;</i>
                         </a>
                         </li> -->
-        <li class="layui-nav-item"><img src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
-        <li class="layui-nav-item"> <a href="javascript:;">admin</a>
+        <li class="layui-nav-item"><img id="u_photo" src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
+        <li class="layui-nav-item"> <a id="u_name" href="javascript:;">admin</a>
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
             <dd><a href="">个人信息</a></dd>
             <dd><a href="">切换帐号</a></dd>
-            <dd><a href="./login.html">退出</a></dd>
+            <dd id="logout"><a href="javascript:;">退出</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>
+        <li class="layui-nav-item lockcms">
+          <a href="javascript:;"><i class="iconfont icon-lock1"></i><cite>锁屏</cite></a>
+        </li>
       </ul>
     </div>
   </div>
@@ -97,6 +102,28 @@
 </div>
 <script src="./lib/layui/layui.js" charset="utf-8"></script>
 <script src="./js/x-admin.js"></script>
+<script>
+layui.use(['element'], function(){
+$ = layui.jquery;
+var name = localStorage.getItem("name");//获取b的值
+var photo = localStorage.getItem("photo");//获取a的值
+document.getElementById("u_name").innerHTML=name;
+$('#u_photo').attr('src',photo);
 
+$("#logout").click(function () {
+$.ajax({
+    type: "GET",
+    contentType: "application/json; charset=utf-8",
+    url: "http://localhost:8080/api/user/logout",
+    success: function(text){
+      localStorage.removeItem("name");//清除c的值
+      localStorage.removeItem("photo");//清除c的值
+      window.location.href="login.html";
+
+    }
+});
+});
+});
+</script>
 </body>
 </html>
