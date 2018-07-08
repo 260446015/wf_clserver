@@ -9,7 +9,18 @@
 .site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
 /* 头部 */
-.layui-layout-admin .header{height: 55px; border-bottom: 5px solid #2299ee;  background-color: #393D49; color: #fff;}
+.layui-layout-admin .header{height: 55px; border-bottom: 5px solid #2299ee;  background-color: #23262E;}
+.component {float: left; width: 200px;height: 30px;margin-top: 15px;position: relative;left: 272px;top: -100%;}
+.component .layui-input {height: 30px;line-height: 30px;font-size: 12px;border: none;transition: all 0.3s;}
+.component .layui-icon {position: absolute;right: 8px;top: 8px;color: #000;}
+.component .layui-form-select .layui-edge, .top_menu .layui-nav-item[mobile] {
+    display: none;
+}
+.weather {
+    color: #fff;
+    float: left;
+    margin: 15px 0 0 50px;
+}
 .header-demo .layui-nav .layui-this:after, .header-demo .layui-nav-bar { background-color: #393D49;}
 .layui-layout-admin .layui-side{ top: 60px;}
 
@@ -89,9 +100,9 @@ background:none;}
 .menu a.this::after{content: ''; position: absolute; left: 0; bottom: -1px; width: 100%; height: 5px; background-color: #2299ee;}
 
 .header-index{background-color: #080018; border: none;}
-.logo{left: 40px;font-size: 28px;color: #fff;line-height: 56px;margin-left:10px;}
+.logo{left: 40px;font-size: 20px;color: #fff;line-height: 56px;margin-left:10px;}
 .admin-logo-box{width:240px;height:57px;position:relative}
-.larry-side-menu{position:absolute;cursor:pointer;z-index:19940201;left:240px;color:#fff;text-align:center;width:30px;height:30px;background-color:#29e;line-height:30px;top:23%}
+.larry-side-menu{position:absolute;cursor:pointer;z-index:19940201;left:185px;color:#fff;text-align:center;width:30px;height:30px;background-color:#29e;line-height:30px;top:23%}
 .larry-side-menu:hover{background-color:#0c7fd1}
 
 .layui-larry-menu{width:auto;height:60px;position:absolute;left:245px;top:0}

@@ -12,6 +12,25 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="./css/x-admin.css" media="all">
 </head>
+<style>
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+ /* WebKit browsers */
+color: #fff;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+/* Mozilla Firefox 4 to 18 */
+color: #fff;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+ /* Mozilla Firefox 19+ */
+color: #fff;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+ /* Internet Explorer 10+ */
+color: #fff;
+}
+</style>
+
 <body>
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header header header-demo">
@@ -21,20 +40,39 @@
 				<div class="larry-side-menu">
 					<i class="fa fa-th-large" aria-hidden="true"></i>
 				</div>
-			</div>
-            <ul class="layui-nav layui-layout-left layui-ygyd-menu" style="position:absolute; left:300px;">
-      <li class="layui-nav-item"><a href="member-list.html">用户管理</a></li>
-      <li class="layui-nav-item"><a href="javascript:;">平台管理</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">系统管理</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">角色管理</a></dd>
-          <dd><a href="">权限设置</a></dd>
-          <dd><a href="sys-log.html">日志管理</a></dd>
-        </dl>
-      </li>
+				<!-- 搜索 -->
+                        <div class="layui-form component">
+                        	<select name="modules" lay-verify="required" lay-search="">
+                        	<option value="">直接选择或搜索选择</option>
+                        	<option value="1">layer</option>
+                        	<option value="2">form</option>
+                        	<option value="3">layim</option>
+                        	<option value="4">element</option>
+                        	<option value="5">laytpl</option>
+                        	<option value="6">upload</option>
+                        	<option value="7">laydate</option>
+                        	<option value="8">laypage</option>
+                        	<option value="9">flow</option>
+                        	<option value="10">util</option>
+                        	<option value="11">code</option>
+                        	<option value="12">tree</option>
+                        	<option value="13">layedit</option>
+                        	<option value="14">nav</option>
+                        	<option value="15">tab</option>
+                        	<option value="16">table</option>
+                        	<option value="17">select</option>
+                        	<option value="18">checkbox</option>
+                        	<option value="19">switch</option>
+                        	<option value="20">radio</option>
+                        </select>
+                        <i class="layui-icon">&#xe615;</i>
+                        </div>
 
-    </ul>
+
+			</div>
+
+
+
 
       <ul class="layui-nav" lay-filter="">
 
@@ -47,8 +85,6 @@
         <li class="layui-nav-item"> <a id="u_name" href="javascript:;">admin</a>
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
-            <dd><a href="">个人信息</a></dd>
-            <dd><a href="">切换帐号</a></dd>
             <dd id="logout"><a href="javascript:;">退出</a></dd>
           </dl>
         </li>
@@ -118,12 +154,16 @@ $.ajax({
     success: function(text){
       localStorage.removeItem("name");//清除c的值
       localStorage.removeItem("photo");//清除c的值
+      localStorage.removeItem("password");//清除c的值
       window.location.href="login.html";
 
     }
 });
 });
 });
+
+
 </script>
+
 </body>
 </html>

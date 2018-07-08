@@ -58,8 +58,9 @@ layui.config({
 		layer = layui.layer,
 		element = layui.element();
 		$ = layui.jquery;
-var name = localStorage.getItem("name");//获取b的值
-   var photo = localStorage.getItem("photo");//获取a的值
+   var name = localStorage.getItem("name");//获取name的值
+   var photo = localStorage.getItem("photo");//获取photo的值
+   var password = localStorage.getItem("password");//获取password的值
 	//锁屏
 	function lockPage(){
 		layer.open({
@@ -93,7 +94,7 @@ var name = localStorage.getItem("name");//获取b的值
 			layer.msg("请输入解锁密码！");
 			$(this).siblings(".admin-header-lock-input").focus();
 		}else{
-			if($(this).siblings(".admin-header-lock-input").val() == "123456"){
+			if($(this).siblings(".admin-header-lock-input").val() == password){
 				window.sessionStorage.setItem("lockcms",false);
 				$(this).siblings(".admin-header-lock-input").val('');
 				layer.closeAll("page");
