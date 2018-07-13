@@ -41,6 +41,7 @@ public class LogServiceImpl implements LogService {
 		doc.append("sysUserId", log.getSysUserId());
 		doc.append("create_date", log.getCreateDate());
 		doc.append("del_flag", log.getDelFlag());
+		doc.append("args",log.getArgs());
 		collection.insertOne(doc);
 
 	}
@@ -64,6 +65,7 @@ public class LogServiceImpl implements LogService {
 			log.setIp(doc.getString("ip"));
 			log.setDescription(doc.getString("description"));
 			log.setCreateDate(doc.getDate("createDate"));
+			log.setArgs(doc.getString("args"));
 			all.add(log);
 		}
 		int totalCont = 0;

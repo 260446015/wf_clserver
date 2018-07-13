@@ -2,7 +2,6 @@ package com.zkjl.wf_clserver.core.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
-import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.dto.req.DefaultPageRQ;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.UserService;
@@ -76,7 +75,6 @@ public class UserController extends BaseController {
      * @throws Exception
      */
     @GetMapping("/logout")
-    @SystemControllerLog(description = "退出系统")
     @ApiOperation(value = "用户退出", httpMethod = "GET")
     public String logout() throws Exception {
         Subject subject = SecurityUtils.getSubject();
@@ -96,7 +94,6 @@ public class UserController extends BaseController {
      * 查询
      */
     @GetMapping("/list")
-    @SystemControllerLog(description = "后台管理-用户列表查询")
     @ResponseBody
     @ApiOperation(value = "用户列表查询", httpMethod = "GET")
     public ApiResult list(Integer pageSize, Integer pageNum, String searchStr) throws Exception {
@@ -148,7 +145,6 @@ public class UserController extends BaseController {
      * 管理员添加或修改
      */
     @PostMapping("/save")
-    @SystemControllerLog(description = "后台管理-用户添加")
     @ResponseBody
     @ApiOperation(value = "用户添加", httpMethod = "POST")
     public ApiResult save(@RequestBody SysUser user) throws Exception {
@@ -159,7 +155,6 @@ public class UserController extends BaseController {
      * 管理员修改密码
      */
     @PostMapping("/updatePassword")
-    @SystemControllerLog(description = "后台管理-修改密码")
     @ResponseBody
     @ApiOperation(value = "修改密码", httpMethod = "POST")
     public ApiResult updatePassword(@RequestBody SysUser user) throws Exception {
@@ -173,7 +168,6 @@ public class UserController extends BaseController {
      * 管理员更改状态
      **/
     @PostMapping("/updateStatus")
-    @SystemControllerLog(description = "后台管理-更改状态")
     @ResponseBody
     @ApiOperation(value = "更改状态", httpMethod = "POST")
     public ApiResult updateStatus(String id) throws Exception {
@@ -187,7 +181,6 @@ public class UserController extends BaseController {
      * 管理员删除
      */
     @RequestMapping("/delete")
-    @SystemControllerLog(description = "后台管理-用户删除")
     @ResponseBody
     @ApiOperation(value = "用户删除", httpMethod = "GET")
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {

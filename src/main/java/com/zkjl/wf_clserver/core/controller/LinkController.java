@@ -37,7 +37,6 @@ public class LinkController extends BaseController {
      * 链接添加或修改
      */
     @PostMapping("/save")
-    @SystemControllerLog(description = "后台管理-链接添加或修改")
     @ApiOperation(value = "链接添加", httpMethod = "POST")
     public ApiResult save(@RequestBody Link link) throws Exception {
         return success(linkService.saveOrUpdate(link));
@@ -47,7 +46,6 @@ public class LinkController extends BaseController {
      * 链接删除
      */
     @GetMapping("/delete")
-    @SystemControllerLog(description = "后台管理-链接删除")
     @ApiOperation(value = "链接删除", httpMethod = "GET")
     public ApiResult delete(String ids) throws Exception {
         return success(linkService.delete(ids));
