@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author ydw
@@ -36,7 +39,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameMember(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameMember",null);
+        jsonObject.put("sameMember", null);
         return jsonObject;
     }
 
@@ -46,16 +49,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameAddress",null);
+        jsonObject.put("sameAddress", null);
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
             String address1 = kindDatas.get(0).get(0).get("data").toString();
             String address2 = kindDatas.get(1).get(0).get("data").toString();
-            if(address1.equals(address2)){
-                jsonObject.put("sameAddress",address1);
+            if (address1.equals(address2)) {
+                jsonObject.put("sameAddress", address1);
             }
         } catch (Exception e) {
-            logger.error("查询同住址出现异常:",e.getMessage());
+            logger.error("查询同住址出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -63,49 +66,70 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSamePhone(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone",null);
+        jsonObject.put("samePhone", null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameWork(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameWork",null);
+        jsonObject.put("sameWork", null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameViolation",null);
+        jsonObject.put("sameViolation", null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameInet(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameInet",null);
+        jsonObject.put("sameInet", null);
+        try {
+            List<List<Document>> kindDatas = getKindDatas(datas, "sdgayjs", "山东警务云上网同记录");
+            Map map = (Map) kindDatas.get(0).get(0).get("data");
+            List<List> data = (List) map.get("data");
+            String name = (String) data.get(0).get(4);
+            Map map2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<List> data2 = (List) map2.get("data");
+            List<List> collect = data2.stream().filter(action -> action.get(6).toString().equals(name)).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
+            String name2 = (String) data2.get(0).get(4);
+            List<List> collect2 = data.stream().filter(action -> action.get(6).toString().equals(name2)).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
+            System.out.println(collect);
+            System.out.println(collect2);
+            List list = new ArrayList();
+            list.add(collect);
+            list.add(collect2);
+            map.put("data", list);
+            jsonObject.put("sameInet", map);
+        } catch (Exception e) {
+            logger.error("解析同上网出现异常:",e.getMessage());
+        }
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameRoom(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameRoom",null);
+        jsonObject.put("sameRoom", null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameCase(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameCase",null);
+        jsonObject.put("sameCase", null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameAccount(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameAccount",null);
+        jsonObject.put("sameAccount", null);
+        JSONArray jsonArray = new JSONArray();
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
@@ -114,12 +138,22 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             List<ArrayList> list2 = (List) data2.get("data");
             String account1 = (String) list1.get(0).get(7);
             String account2 = (String) list2.get(0).get(7);
-            if(account1.equals(account2)){
-                jsonObject.put("sameAccount",list1);
+            if (account1.equals(account2)) {
+                data1.put("source", "yunsou");
+                jsonArray.add(data1);
+                try {
+                    List<List<Document>> qiandu = getKindDatas(datas, "sdgayjs", "新常口同户亲属关系");
+                    Map qianduMap = (Map) qiandu.get(0).get(0).get("data");
+                    qianduMap.put("source", "sdgayjs");
+                    jsonArray.add(qianduMap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
-            logger.error("解析同户号出现异常",e.getMessage());
+            logger.error("解析同户号云搜出现异常", e.getMessage());
         }
+        jsonObject.put("sameAccount", jsonArray);
         return jsonObject;
     }
 
