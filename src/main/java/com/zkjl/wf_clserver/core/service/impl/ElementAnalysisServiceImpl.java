@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ydw
@@ -104,11 +105,18 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameAccount",null);
         try {
-            getKindDatas(datas,"sdgayjs","新常住人口");
-//            datas.stream().filter()
-            System.out.println(datas);
+            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            String account1 = (String) list1.get(0).get(7);
+            String account2 = (String) list2.get(0).get(7);
+            if(account1.equals(account2)){
+                jsonObject.put("sameAccount",list1);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("解析同户号出现异常",e.getMessage());
         }
         return jsonObject;
     }
