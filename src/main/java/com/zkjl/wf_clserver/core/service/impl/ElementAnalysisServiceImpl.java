@@ -35,7 +35,9 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected JSONObject analysisSameMember(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameMember",null);
+        return jsonObject;
     }
 
     @Override
