@@ -29,7 +29,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);
 
     @Override
-    public ApiResult analysis(String jobId1, String jobId2) {
+    public JSONObject analysis(String jobId1, String jobId2) {
         return super.analysis(jobId1, jobId2);
     }
 

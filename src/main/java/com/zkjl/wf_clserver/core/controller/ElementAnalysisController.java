@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import io.swagger.annotations.ApiOperation;
@@ -22,10 +23,8 @@ public class ElementAnalysisController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "同要素关联分析")
-    public ApiResult analysis(String jobId1, String jobId2) throws Exception {
+    public ApiResult analysis(String word1, String word2) throws Exception {
 
-        elementAnalysisService.analysis(jobId1, jobId2);
-
-        return null;
+        return success(elementAnalysisService.analysis(word1, word2));
     }
 }

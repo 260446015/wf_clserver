@@ -15,18 +15,19 @@ import java.util.stream.Collectors;
  * Created on 2018/6/27
  */
 public abstract class AnalysisAbstractService {
-    protected ApiResult analysis(String jobId1, String jobId2) {
+    protected JSONObject analysis(String jobId1, String jobId2) {
+        JSONObject result = new JSONObject();
         List<List<CollDatas>> cacheDatasByJobId = getCacheDatasByJobId(jobId1, jobId2);
-        analysisSameAccount(cacheDatasByJobId);
-        analysisSameCase(cacheDatasByJobId);
-        analysisSameRoom(cacheDatasByJobId);
-        analysisSameInet(cacheDatasByJobId);
-        analysisSameViolation(cacheDatasByJobId);
-        analysisSameWork(cacheDatasByJobId);
-        analysisSamePhone(cacheDatasByJobId);
-        analysisSameAddress(cacheDatasByJobId);
-        analysisSameMember(cacheDatasByJobId);
-        return null;
+        result.putAll(analysisSameAccount(cacheDatasByJobId));
+        result.putAll(analysisSameCase(cacheDatasByJobId));
+        result.putAll(analysisSameRoom(cacheDatasByJobId));
+        result.putAll(analysisSameInet(cacheDatasByJobId));
+        result.putAll(analysisSameViolation(cacheDatasByJobId));
+        result.putAll(analysisSameWork(cacheDatasByJobId));
+        result.putAll(analysisSamePhone(cacheDatasByJobId));
+        result.putAll(analysisSameAddress(cacheDatasByJobId));
+        result.putAll(analysisSameMember(cacheDatasByJobId));
+        return result;
     }
 
     protected List<List<CollDatasInner>> getKindDatas(List<List<CollDatas>> datas, String platKind, String label) {

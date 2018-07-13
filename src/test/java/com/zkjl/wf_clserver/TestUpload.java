@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver;
 
+import com.alibaba.fastjson.JSONObject;
 import com.monitorjbl.xlsx.StreamingReader;
 import com.zkjl.wf_clserver.core.util.POIUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -50,5 +51,14 @@ public class TestUpload {
         String s = "124";
     }
 
+    @Test
+    public void test4(){
+        JSONObject obj = new JSONObject();
+        JSONObject obj2 = new JSONObject();
+        obj2.put("name","123");
+        obj.putAll(obj2);
+        System.out.println(obj2);
+
+    }
 
 }
