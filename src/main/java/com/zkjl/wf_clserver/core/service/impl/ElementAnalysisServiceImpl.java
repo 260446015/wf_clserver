@@ -109,7 +109,9 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     workList.add((ArrayList) datum);
                 }
             }
-            jsonObject.put("sameWork",workList);
+            if(workList.size()>0){
+                jsonObject.put("sameWork",workList);
+            }
         } catch (Exception e) {
             logger.error("查询同机构出现异常:",e.getMessage());
         }
