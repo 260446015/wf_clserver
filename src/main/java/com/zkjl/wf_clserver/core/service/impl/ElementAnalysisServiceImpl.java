@@ -39,37 +39,64 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected JSONObject analysisSameAddress(List<List<Document>> datas) {
-        return null;
+        if (datas.size() == 0) {
+            throw new RuntimeException();
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameAddress",null);
+        try {
+            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
+            String address1 = kindDatas.get(0).get(0).get("data").toString();
+            String address2 = kindDatas.get(1).get(0).get("data").toString();
+            if(address1.equals(address2)){
+                jsonObject.put("sameAddress",address1);
+            }
+        } catch (Exception e) {
+            logger.error("查询同住址出现异常:",e.getMessage());
+        }
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSamePhone(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("samePhone",null);
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameWork(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameWork",null);
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameViolation",null);
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameInet(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameInet",null);
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameRoom(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameRoom",null);
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameCase(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameCase",null);
+        return jsonObject;
     }
 
     @Override
