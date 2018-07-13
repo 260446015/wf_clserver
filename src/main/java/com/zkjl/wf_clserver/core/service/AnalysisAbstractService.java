@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
  * Created on 2018/6/27
  */
 public abstract class AnalysisAbstractService {
-    protected JSONObject analysis(String jobId1, String jobId2) {
+    protected JSONObject analysis(String word1, String word2) {
         JSONObject result = new JSONObject();
-        List<List<CollDatas>> cacheDatasByJobId = getCacheDatasByJobId(jobId1, jobId2);
+        List<List<CollDatas>> cacheDatasByJobId = getCacheDatasByJobId(word1, word2);
         result.putAll(analysisSameAccount(cacheDatasByJobId));
         result.putAll(analysisSameCase(cacheDatasByJobId));
         result.putAll(analysisSameRoom(cacheDatasByJobId));

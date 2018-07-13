@@ -9,6 +9,6 @@ import com.zkjl.wf_clserver.core.common.ApiResult;
  */
 public interface ElementAnalysisService {
 
-    JSONObject analysis(String jobId1, String jobId2);
+    JSONObject analysis(String word1, String word2);
 
 }
