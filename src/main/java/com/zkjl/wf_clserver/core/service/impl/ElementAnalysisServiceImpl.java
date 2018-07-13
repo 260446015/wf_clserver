@@ -189,8 +189,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     protected JSONObject analysisSameAccount(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameAccount", null);
-        JSONArray jsonArray = new JSONArray();
         try {
+            JSONArray jsonArray = new JSONArray();
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
@@ -210,10 +210,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     e.printStackTrace();
                 }
             }
+            if(jsonArray.size() != 0){
+                jsonObject.put("sameAccount", jsonArray);
+            }
         } catch (Exception e) {
             logger.error("解析同户号云搜出现异常", e.getMessage());
         }
-        jsonObject.put("sameAccount", jsonArray);
         return jsonObject;
     }
 
