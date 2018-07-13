@@ -74,7 +74,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected JSONObject analysisSameAccount(List<List<Document>> datas) {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameAccount",null);
+        try {
+            getKindDatas(datas,"sdgayjs","新常住人口");
+//            datas.stream().filter()
+            System.out.println(datas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
 
