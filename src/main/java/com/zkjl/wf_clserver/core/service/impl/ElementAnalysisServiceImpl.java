@@ -2,6 +2,7 @@ package com.zkjl.wf_clserver.core.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import org.bson.Document;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,16 +49,20 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameAddress", null);
+        jsonObject.put("sameAddress",null);
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
-            String address1 = kindDatas.get(0).get(0).get("data").toString();
-            String address2 = kindDatas.get(1).get(0).get("data").toString();
-            if (address1.equals(address2)) {
-                jsonObject.put("sameAddress", address1);
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            String address1=list1.get(0).get(7).toString();
+            String address2=list2.get(0).get(7).toString();
+            if(address1.equals(address2)){
+                jsonObject.put("sameAddress",address1);
             }
         } catch (Exception e) {
-            logger.error("查询同住址出现异常:", e.getMessage());
+            logger.error("查询同住址出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -66,21 +70,77 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSamePhone(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone", null);
+        jsonObject.put("samePhone",null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameWork(List<List<Document>> datas) {
+        if (datas.size() == 0) {
+            throw new RuntimeException();
+        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameWork", null);
+        jsonObject.put("sameWork",null);
+        try {
+            List<ArrayList> workList=Lists.newArrayList();
+            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
+            List<String> idCardList=getIdCardList(datas);
+            String idcard=idCardList.get(1);
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<String> ids = new ArrayList<>();
+            for (int i = 0; i < list1.size(); i++) {
+                List datum = list1.get(i);
+                String id = (String) datum.get(0);
+                ids.add(id);
+                if(id.equals(idcard)){
+                    workList.add((ArrayList) datum);
+                }
+            }
+
+            List<List<Document>> qdkindDatas = getKindDatas(datas, "sdgayjs", "同单位");
+
+            Map data = (Map) qdkindDatas.get(0).get(0).get("data");
+            List<ArrayList> list = (List) data.get("data");
+            for (int i = 0; i < list.size(); i++) {
+                List datum = list.get(i);
+                String id = (String) datum.get(1);
+                if(id.equals(idcard)){
+                    workList.add((ArrayList) datum);
+                }
+            }
+            jsonObject.put("sameWork",workList);
+        } catch (Exception e) {
+            logger.error("查询同机构出现异常:",e.getMessage());
+        }
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameViolation", null);
+        jsonObject.put("sameViolation",null);
+        if (datas.size() == 0) {
+            throw new RuntimeException();
+        }
+        try {
+            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
+            List<String> idCardList=getIdCardList(datas);
+            String idcard=idCardList.get(1);
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<String> ids = new ArrayList<>();
+            for (int i = 0; i < list1.size(); i++) {
+                List datum = list1.get(i);
+                String id = (String) datum.get(7);
+                ids.add(id);
+                if(id.equals(idcard)){
+                    jsonObject.put("sameViolation",datum);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("查询同车违章出现异常:",e.getMessage());
+        }
         return jsonObject;
     }
 
@@ -114,14 +174,14 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameRoom(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameRoom", null);
+        jsonObject.put("sameRoom",null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameCase(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameCase", null);
+        jsonObject.put("sameCase",null);
         return jsonObject;
     }
 
@@ -166,6 +226,28 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         list.add(documents);
         list.add(documents2);
         return list;
+    }
+
+    public List<String> getIdCardList(List<List<Document>> datas) {
+        List<String> idList= Lists.newArrayList();
+        if (datas.size() == 0) {
+            throw new RuntimeException();
+        }
+        try {
+            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "全国人口基本信息");
+
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            String idcard=list1.get(0).get(0).toString();
+            idList.add(idcard);
+            String idcard2=list2.get(0).get(0).toString();
+            idList.add(idcard2);
+        } catch (Exception e) {
+            logger.error("查询身份证号出现异常:",e.getMessage());
+        }
+        return idList;
     }
 
 }
