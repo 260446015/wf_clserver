@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public boolean delete(String ids) {
         try {
-            String basePath = "D:\\图片虚拟目录\\";
+            /*String basePath = "D:\\图片虚拟目录\\";
             String[] idsArr = ids.split(",");
             for (int i = 0; i < idsArr.length; i++) {
                 String id = idsArr[i];
@@ -49,7 +50,10 @@ public class LinkServiceImpl implements LinkService {
                 String images = url.substring(url.indexOf("images"));
                 File file = new File(uploadpath+images);
                 FileUtils.deleteDirectory(file);
-            }
+            }*/
+            String[] idArr = ids.split(",");
+            Iterable<Link> allById = linkRepository.findAllById(Arrays.asList(idArr));
+            linkRepository.deleteAll(allById);
         } catch (Exception e) {
             return false;
         }

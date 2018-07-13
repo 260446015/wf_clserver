@@ -4,9 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.CollDatas;
 import com.zkjl.wf_clserver.core.entity.CollDatasInner;
+import com.zkjl.wf_clserver.core.entity.CollDatasInnerInner;
 import com.zkjl.wf_clserver.core.repository.plover.CollDatasRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +26,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Resource
     private CollDatasRepository collDatasRepository;
+
+    private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);
 
     @Override
     public ApiResult analysis(String jobId1, String jobId2) {
@@ -115,17 +120,22 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
-        List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
-        System.out.print("yunsoux户号"+kindDatas);
-        String account1 = kindDatas.get(0).get(0).getData().getData()[0][7];
-        String account2 = kindDatas.get(1).get(0).getData().getData()[0][7];
-        System.out.println("account1:"+account1);
-        System.out.println("account2:"+account2);
-        if(account1.equals(account2)){
-            System.out.println("含有相同户号");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameAccount",null);
+        try {
+            List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
+            System.out.print("yunsoux户号"+kindDatas);
+            String account1 = kindDatas.get(0).get(0).getData().getData()[0][7];
+            String account2 = kindDatas.get(1).get(0).getData().getData()[0][7];
+            System.out.println("account1:"+account1);
+            System.out.println("account2:"+account2);
+            if(account1.equals(account2)){
+                jsonObject.put("sameAccount",kindDatas.get(0));
+            }
+        } catch (Exception e) {
+            logger.error("查询同户号出现异常:",e.getMessage());
         }
-        System.out.println("!!!!!!!!!!");
-        return null;
+        return jsonObject;
     }
 
     @Override
