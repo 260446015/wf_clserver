@@ -11,16 +11,15 @@ import java.util.List;
 
 /**
  * @author ydw
- * Created on 2018/7/2
+ * Created on 2018/7/10
  */
 @Service
-public class TxtUpload extends UploadAbstractService {
+public class WordUpload extends UploadAbstractService{
     @Override
     protected List<List<String[]>> analysisGetUploadContent(Object... args) throws CustomerException {
         MultipartFile file = (MultipartFile) args[0];
-        String split = (String) args[1];
         List<List<String[]>> result = new ArrayList<>();
-        List<String[]> list = POIUtils.readTxt(file, split);
+        List<String[]> list = POIUtils.readWord(file);
         result.add(list);
         return result;
     }

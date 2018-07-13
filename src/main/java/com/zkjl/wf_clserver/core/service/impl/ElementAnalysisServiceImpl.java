@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.CollDatas;
 import com.zkjl.wf_clserver.core.entity.CollDatasInner;
@@ -29,12 +30,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     }
 
     @Override
-    protected void analysisSameMember(List<List<CollDatas>> datas) {
-
+    protected JSONObject analysisSameMember(List<List<CollDatas>> datas) {
+        return null;
     }
 
     @Override
-    protected void analysisSameAddress(List<List<CollDatas>> datas) {
+    protected JSONObject analysisSameAddress(List<List<CollDatas>> datas) {
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
@@ -48,15 +49,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             System.out.println("含有相同住址");
         }
         System.out.println("!!!!!!!!!!");
+        return null;
     }
 
     @Override
-    protected void analysisSamePhone(List<List<CollDatas>> datas) {
-
+    protected JSONObject analysisSamePhone(List<List<CollDatas>> datas) {
+        return null;
     }
 
     @Override
-    protected void analysisSameWork(List<List<CollDatas>> datas) {
+    protected JSONObject analysisSameWork(List<List<CollDatas>> datas) {
         String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
         List<CollDatasInner> collDatasInners2 = kindDatas.get(1);
@@ -70,10 +72,11 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         if(ids.contains(idcard)){
             System.out.println("同一个单位");
         }
+        return null;
     }
 
     @Override
-    protected void analysisSameViolation(List<List<CollDatas>> datas) {
+    protected JSONObject analysisSameViolation(List<List<CollDatas>> datas) {
         String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
         System.out.println("同车违章"+idcard);
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
@@ -89,26 +92,26 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         if(ids.contains(idcard)){
             System.out.println("1同车违章");
         }
-
+        return null;
     }
 
     @Override
-    protected void analysisSameInet(List<List<CollDatas>> datas) {
-
+    protected JSONObject analysisSameInet(List<List<CollDatas>> datas) {
+        return null;
     }
 
     @Override
-    protected void analysisSameRoom(List<List<CollDatas>> datas) {
-
+    protected JSONObject analysisSameRoom(List<List<CollDatas>> datas) {
+        return null;
     }
 
     @Override
-    protected void analysisSameCase(List<List<CollDatas>> datas) {
-
+    protected JSONObject analysisSameCase(List<List<CollDatas>> datas) {
+        return null;
     }
 
     @Override
-    protected void analysisSameAccount(List<List<CollDatas>> datas) {
+    protected JSONObject analysisSameAccount(List<List<CollDatas>> datas) {
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
@@ -122,7 +125,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             System.out.println("含有相同户号");
         }
         System.out.println("!!!!!!!!!!");
-
+        return null;
     }
 
     @Override

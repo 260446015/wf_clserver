@@ -1,7 +1,10 @@
 package com.zkjl.wf_clserver.core.util;
 
+import com.monitorjbl.xlsx.StreamingReader;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -107,7 +110,10 @@ public class POIUtils {
 				workbook = new HSSFWorkbook(is);
 			}else if(fileName.endsWith(xlsx)){
 				//2007
-				workbook = new XSSFWorkbook(is);
+				workbook = StreamingReader.builder()
+						.rowCacheSize(100)  //缓存到内存中的行数，默认是10
+						.bufferSize(4096)  //读取资源时，缓存到内存的字节大小，默认是1024
+						.open(is);
 			}
 		} catch (IOException e) {
 			logger.info(e.getMessage());
@@ -150,7 +156,7 @@ public class POIUtils {
 		return cellValue;
 	}
 
-	public static List<String[]> readTxt(MultipartFile file,String split) {
+	public static List<String[]> readTxt(MultipartFile file,String split) throws CustomerException {
 		List<String[]> datas = new ArrayList<>();
 		InputStream inputStream = null;
 		BufferedReader reader = null;
@@ -162,7 +168,7 @@ public class POIUtils {
                 String data = line;
                 String[] split1 = data.split(split);//传参
                 if(split1.length <= 1){
-                    continue;
+                    throw new CustomerException("请指定正确的分隔符");
                 }
                 datas.add(split1);
             }
@@ -179,6 +185,30 @@ public class POIUtils {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		return datas;
+	}
+
+	/**
+	 * 读取word
+	 */
+	public static List<String[]> readWord(MultipartFile file) throws CustomerException {
+		List<String[]> datas = new ArrayList<>();
+		try {
+			WordExtractor extractor = new WordExtractor(file.getInputStream());
+			//输出word文档所有的文本
+			System.out.println(extractor.getText());
+			System.out.println(extractor.getTextFromPieces());
+			String[] rowText = extractor.getText().split("\n");
+			for (int i = 0; i < rowText.length; i++) {
+				String[] rowSplit = rowText[i].split("\t");
+				if(rowSplit.length <= 1){
+					continue;
+				}
+				datas.add(rowSplit);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return datas;
 	}

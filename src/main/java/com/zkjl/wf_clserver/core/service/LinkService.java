@@ -10,5 +10,5 @@ public interface LinkService {
 
     boolean saveOrUpdate(Link link);
 
-     void delete(String id);
+     boolean delete(String id);
 }

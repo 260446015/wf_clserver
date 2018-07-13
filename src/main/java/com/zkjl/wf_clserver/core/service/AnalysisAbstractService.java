@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.CollDatas;
 import com.zkjl.wf_clserver.core.entity.CollDatasInner;
@@ -46,47 +47,47 @@ public abstract class AnalysisAbstractService {
     /**
      * 同会员
      */
-    protected abstract void analysisSameMember(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameMember(List<List<CollDatas>> datas);
 
     /**
      * 同住址
      */
-    protected abstract void analysisSameAddress(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameAddress(List<List<CollDatas>> datas);
 
     /**
      * 同手机号
      */
-    protected abstract void analysisSamePhone(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSamePhone(List<List<CollDatas>> datas);
 
     /**
      * 同单位
      */
-    protected abstract void analysisSameWork(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameWork(List<List<CollDatas>> datas);
 
     /**
      * 同车违章
      */
-    protected abstract void analysisSameViolation(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameViolation(List<List<CollDatas>> datas);
 
     /**
      * 同上网
      */
-    protected abstract void analysisSameInet(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameInet(List<List<CollDatas>> datas);
 
     /**
      * 同住
      */
-    protected abstract void analysisSameRoom(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameRoom(List<List<CollDatas>> datas);
 
     /**
      * 同案
      */
-    protected abstract void analysisSameCase(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameCase(List<List<CollDatas>> datas);
 
     /**
      * 同户
      */
-    protected abstract void analysisSameAccount(List<List<CollDatas>> datas);
+    protected abstract JSONObject analysisSameAccount(List<List<CollDatas>> datas);
 
     /**
      * 获取数据库中缓存数据

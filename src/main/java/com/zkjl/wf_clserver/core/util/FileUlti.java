@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.util;
 
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,29 +14,14 @@ public class FileUlti {
 
     public static String uploadImg(HttpServletRequest request,MultipartFile file) {
         if (null != file) {
-            SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
-            String myFileName = file.getOriginalFilename();// 文件原名称
-            String basePath = "D:\\Apache24\\Apache\\htdocs\\";
-            //String pat=FileProperties.getFilePath()+"/src/main/webapp/";//获取文件保存路径
-            String sqlPath="images\\upload\\"+dateformat.format(new Date())+"\\";
-
-            File fileDir=new File(basePath+sqlPath);
-
-            if (!fileDir.exists()) { //如果不存在 则创建
-                fileDir.mkdirs();
-            }
-            String path=basePath+sqlPath+myFileName;
-            File localFile = new File(path);
+            String filePath = "";
             try {
-                String addr = InetAddress.getLocalHost().getHostAddress()+"\\";
+                String myFileName = file.getOriginalFilename();
+                filePath = "D:\\图片虚拟目录\\"+myFileName;
+                File localFile = new File(filePath);
                 file.transferTo(localFile);
-
-                return addr+sqlPath+myFileName;
-            } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
+                return "/static/upload/"+myFileName;
+            }catch (IOException e){
                 e.printStackTrace();
             }
         }else{

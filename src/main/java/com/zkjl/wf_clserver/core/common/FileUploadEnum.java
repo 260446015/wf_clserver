@@ -2,13 +2,14 @@ package com.zkjl.wf_clserver.core.common;
 
 import com.zkjl.wf_clserver.core.service.upload.impl.ExcelUpload;
 import com.zkjl.wf_clserver.core.service.upload.impl.TxtUpload;
+import com.zkjl.wf_clserver.core.service.upload.impl.WordUpload;
 
 /**
  * @author ydw
  * Created on 2018/7/2
  */
 public enum FileUploadEnum {
-    TXT("txt", TxtUpload.class),EXCEL("excel", ExcelUpload.class);
+    TXT("txt", TxtUpload.class),EXCEL("excel", ExcelUpload.class),WORD("word", WordUpload.class);
 
     private String type;
     private Class<?> clazz;

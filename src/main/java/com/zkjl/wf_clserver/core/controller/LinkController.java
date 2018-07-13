@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/link")
 @Api(value = "Link-API", description = "这是超级链接详细信息的描述")
-public class LinkController extends BaseController{
+public class LinkController extends BaseController {
     @Resource
     private LinkService linkService;
 
@@ -28,8 +28,8 @@ public class LinkController extends BaseController{
     @GetMapping("/findAll")
     @SystemControllerLog(description = "查询超链接")
     @ApiOperation(value = "查询超链接", httpMethod = "GET")
-    public ApiResult findAll()throws Exception{
-        List<Link> links=linkService.findAll();
+    public ApiResult findAll() throws Exception {
+        List<Link> links = linkService.findAll();
         return success(links);
     }
 
@@ -46,15 +46,11 @@ public class LinkController extends BaseController{
     /**
      * 链接删除
      */
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     @SystemControllerLog(description = "后台管理-链接删除")
-    @ApiOperation(value = "链接删除", httpMethod = "POST")
-    public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {
-        String[] idsStr = ids.split(",");
-        for (int i = 0; i < idsStr.length; i++) {
-            linkService.delete(idsStr[i]);
-        }
-        return null;
+    @ApiOperation(value = "链接删除", httpMethod = "GET")
+    public ApiResult delete(String ids) throws Exception {
+        return success(linkService.delete(ids));
     }
 
 }

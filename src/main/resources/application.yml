@@ -35,4 +35,14 @@ spring:
         host: 192.168.1.104
         port: 27017
         database: plover
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,\
+                        classpath:/static/,classpath:/public/,file:${web.uploadpath}
+web:
+  uploadpath : D:/图片虚拟目录/
+
+
+
 

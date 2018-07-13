@@ -69,7 +69,8 @@ public class FileServiceImpl implements FileService {
 
     }
 
-    private String checkFile(MultipartFile file) throws IOException {
+    private String checkFile(MultipartFile file) throws IOException, CustomerException {
+        String fileType = null;
         //判断文件是否存在
         if (null == file) {
             logger.error("文件不存在！");
@@ -80,14 +81,21 @@ public class FileServiceImpl implements FileService {
         //判断文件是否是excel文件
         if (!fileName.endsWith(xls) && !fileName.endsWith(xlsx)) {
             if (fileName.endsWith(txt) || fileName.endsWith(CSV)) {
-                logger.info("正在对非excel文件进行读取");
-                return txt;
-            } else {
-                logger.error(fileName + "不是excel文件或txt文件");
-                throw new IOException(fileName + "不是excel文件或txt文件");
+                logger.info("正在对txt文件进行读取");
+                fileType = txt;
             }
         }
-        return "excel";
+        if(fileName.endsWith("doc") || fileName.endsWith("docx")){
+            fileType = "word";
+        }
+        if(fileName.endsWith(xls) || fileName.endsWith(xlsx)){
+            fileType = "excel";
+        }
+        if(fileType == null){
+            logger.error(fileName + "不是excel文件或txt文件");
+            throw new CustomerException(fileName + "不是excel文件或txt文件");
+        }
+        return fileType;
     }
 
     @Override

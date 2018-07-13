@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * Created on 2018/6/27
  */
 @RestController
-@RequestMapping(name = "analysis")
+@RequestMapping(name = "/api/analysis")
 public class ElementAnalysisController extends BaseController {
 
     @Resource

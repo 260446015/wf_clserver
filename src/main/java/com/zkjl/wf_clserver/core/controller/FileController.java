@@ -19,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Validator;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/file")
@@ -43,22 +40,22 @@ public class FileController extends BaseController {
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     @SystemControllerLog(description = "图片上传")
     @ResponseBody
-    public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+    public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response,MultipartFile multipartFile) throws IOException {
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
         List<Map<String, Object>> mapList = new ArrayList<>();
-        List multipartFiles = multipartRequest
-                .getFiles("file");// 得到所有的文件
-        for (int i = 0; i < multipartFiles.size(); i++) {
+//        List multipartFiles = multipartRequest
+//                .getFiles("file");// 得到所有的文件
+//        for (int i = 0; i < multipartFiles.size(); i++) {
             Map<String, Object> map = new HashMap<>();
-            MultipartFile multipartFile = (MultipartFile) multipartFiles.get(i);
-            if (multipartFile.getSize() <= 0L) {
-                return null;
-            }
+//            MultipartFile multipartFile = (MultipartFile) multipartFiles.get(i);
+//            if (multipartFile.getSize() <= 0L) {
+//                return null;
+//            }
             String fileUrl = FileUlti.uploadImg(req, multipartFile);
             map.put("url", fileUrl);
             mapList.add(map);
-        }
+//        }
         return mapList;
     }
 
@@ -99,4 +96,5 @@ public class FileController extends BaseController {
         }
         return successPages(page);
     }
+
 }

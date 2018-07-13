@@ -6,10 +6,8 @@ import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
 import org.apache.shiro.SecurityUtils;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -19,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 /**
  * @author ydw
@@ -34,6 +30,7 @@ public abstract class UploadAbstractService {
     private static final String xlsx = "xlsx";
     private static final String txt = "txt";
     private static final String CSV = "CSV";
+    private static final String doc = "doc";
 
     @Resource
     FileUploadEntityRepository fileUploadEntityRepository;
@@ -48,7 +45,8 @@ public abstract class UploadAbstractService {
         return saveUploadData(uploadEntitis);
     }
 
-    public static String checkFile(MultipartFile file) throws IOException {
+    public static String checkFile(MultipartFile file) throws IOException, CustomerException {
+        String fileType = null;
         //判断文件是否存在
         if (null == file) {
             logger.error("文件不存在！");
@@ -59,14 +57,21 @@ public abstract class UploadAbstractService {
         //判断文件是否是excel文件
         if (!fileName.endsWith(xls) && !fileName.endsWith(xlsx)) {
             if (fileName.endsWith(txt) || fileName.endsWith(CSV)) {
-                logger.info("正在对非excel文件进行读取");
-                return txt;
-            } else {
-                logger.error(fileName + "不是excel文件或txt文件");
-                throw new IOException(fileName + "不是excel文件或txt文件");
+                logger.info("正在对txt文件进行读取");
+                fileType = txt;
             }
         }
-        return "excel";
+        if(fileName.endsWith(doc) || fileName.endsWith("docx")){
+            fileType = "word";
+        }
+        if(fileName.endsWith(xls) || fileName.endsWith(xlsx)){
+            fileType = "excel";
+        }
+        if(fileType == null){
+            logger.error(fileName + "不是excel文件或txt文件");
+            throw new CustomerException(fileName + "不是excel文件或txt文件");
+        }
+        return fileType;
     }
 
     protected abstract List<List<String[]>> analysisGetUploadContent(Object... args) throws CustomerException;
@@ -84,7 +89,11 @@ public abstract class UploadAbstractService {
                 String[] content = datasBySheet.get(j);
                 JSONObject data = new JSONObject();
                 for (int k = 0; k < title.length; k++) {
-                    data.put(title[k],content[k]);
+                    try {
+                        data.put(title[k],content[k]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        data.put(title[k],"");
+                    }
                 }
                 result.add(data);
             }
@@ -107,7 +116,7 @@ public abstract class UploadAbstractService {
                 SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
                 username = user.getName();
             } catch (Exception e) {
-                throw new RuntimeException("用户未登录");
+//                throw new RuntimeException("用户未登录");
             }
             entity.setUsername(username);
             entity.generatId();
@@ -120,9 +129,7 @@ public abstract class UploadAbstractService {
     protected List<FileUploadEntity> saveUploadData(List<FileUploadEntity> list) {
 //        List<String> ids = list.stream().map(action -> action.getId()).collect(Collectors.toList());
 //        List<FileUploadEntity> datas = fileUploadEntityRepository.findByIdIn(ids);
-//        if(datas.size() > 0){
-//            executorService.execute(() -> fileUploadEntityRepository.saveAll(datas));
-//        }
+
         fileUploadEntityRepository.saveAll(list);
         return null;
     }
