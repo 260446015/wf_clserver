@@ -93,6 +93,13 @@ public class SysUser {
    @Field(value = "if_admin")
    private Boolean ifAdmin;
 
+   /**
+    *用户角色
+    * 1:表示一般用户，2：表示负责上传角色
+    */
+   @Field(value = "role")
+   private String role;
+
    @Override
    public String toString() {
       return JSONObject.toJSONString(this);

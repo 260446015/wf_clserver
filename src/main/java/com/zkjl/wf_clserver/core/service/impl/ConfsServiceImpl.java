@@ -2,7 +2,7 @@ package com.zkjl.wf_clserver.core.service.impl;
 
 import com.zkjl.wf_clserver.core.entity.Confs;
 import com.zkjl.wf_clserver.core.entity.SysUser;
-import com.zkjl.wf_clserver.core.repository.plover.ConfsRepository;
+import com.zkjl.wf_clserver.core.repository.kklc.ConfsRepository;
 import com.zkjl.wf_clserver.core.service.ConfsService;
 import com.zkjl.wf_clserver.core.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -29,7 +29,6 @@ public class ConfsServiceImpl implements ConfsService {
     public boolean addConfsOrUpdate(Confs confs){
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         try {
-            confs.setSystemuser(user.getName());
             confs.setCreateDate(new Date());
             confsRepository.save(confs);
         } catch (Exception e) {

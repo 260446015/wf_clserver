@@ -1,4 +1,4 @@
-package com.zkjl.wf_clserver.core.repository.plover;
+package com.zkjl.wf_clserver.core.repository.kklc;
 
 import com.zkjl.wf_clserver.core.entity.Confs;
 import org.springframework.data.mongodb.repository.MongoRepository;

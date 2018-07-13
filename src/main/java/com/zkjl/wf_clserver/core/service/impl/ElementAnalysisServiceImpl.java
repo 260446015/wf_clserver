@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.entity.CollDatas;
 import com.zkjl.wf_clserver.core.entity.CollDatasInner;
-import com.zkjl.wf_clserver.core.entity.CollDatasInnerInner;
 import com.zkjl.wf_clserver.core.repository.plover.CollDatasRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
@@ -44,17 +43,21 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameAddress",null);
+        try {
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
-        System.out.print("yunsoux同住址"+kindDatas);
         String address1 = kindDatas.get(0).get(0).getData().getData()[0][7];
         String address2 = kindDatas.get(1).get(0).getData().getData()[0][7];
         System.out.println("address1:"+address1);
         System.out.println("address2:"+address2);
         if(address1.equals(address2)){
-            System.out.println("含有相同住址");
+            jsonObject.put("sameAddress",address1);
         }
-        System.out.println("!!!!!!!!!!");
-        return null;
+        } catch (Exception e) {
+            logger.error("查询同住址出现异常:",e.getMessage());
+        }
+        return jsonObject;
     }
 
     @Override
@@ -64,6 +67,9 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Override
     protected JSONObject analysisSameWork(List<List<CollDatas>> datas) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameWork",null);
+        try {
         String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
         List<CollDatasInner> collDatasInners2 = kindDatas.get(1);
@@ -73,15 +79,24 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             String[] datum = data[i];
             String id = datum[0];
             ids.add(id);
+            if(id.equals(idcard)){
+                jsonObject.put("sameWork",datum);
+            }
         }
-        if(ids.contains(idcard)){
-            System.out.println("同一个单位");
+        /*if(ids.contains(idcard)){
+            jsonObject.put("sameWork",kindDatas.get(0));
+        }*/
+        } catch (Exception e) {
+            logger.error("查询同机构出现异常:",e.getMessage());
         }
-        return null;
+        return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameViolation(List<List<CollDatas>> datas) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameWork",null);
+        try {
         String idcard = datas.get(0).get(0).getData().get(0).getData().getData()[0][0];
         System.out.println("同车违章"+idcard);
         List<List<CollDatasInner>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
@@ -93,11 +108,17 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             String[] datum = data[i];
             String id = datum[7];
             ids.add(id);
+            if(id.equals(idcard)){
+                jsonObject.put("sameViolation",datum);
+            }
         }
         if(ids.contains(idcard)){
-            System.out.println("1同车违章");
+            System.out.println("同车违章");
         }
-        return null;
+        } catch (Exception e) {
+            logger.error("查询同车违章出现异常:",e.getMessage());
+        }
+        return jsonObject;
     }
 
     @Override

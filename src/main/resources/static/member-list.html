@@ -71,6 +71,9 @@
                             加入时间
                         </th>
                         <th>
+                            用户角色(1:一般用户角色，2:上传人员角色)
+                        </th>
+                        <th>
                             状态
                          </th>
                         <th>
@@ -154,7 +157,6 @@ document.getElementById("dataNum").innerHTML='共有数据：'+res.data.totalNum
                                 console.log(item);
                                 var id=item.id;
                                 var ifEnable=item.ifEnable;
-                                console.log(typeof ifEnable);
                                 var list = "<tr>" +
                                 "<td><input  type='checkbox' value='"+item.id+"' name='id'></td>"+
                                 "<td>"+(i+1)+"</td>" +
@@ -163,8 +165,8 @@ document.getElementById("dataNum").innerHTML='共有数据：'+res.data.totalNum
                                 "<td>"+item.email+"</td>" +
                                 "<td>"+item.department+"</td>" +
                                 "<td>"+item.createDate+"</td>" +
+                                "<td>"+item.role+"</td>"+
                                 "<td class='td-status status"+(i+1)+"'></td>"+
-
                                 "<td class='td-manage manage"+(i+1)+"'>"+
                                 "<a title='编辑' href='javascript:;' onclick='member_edit(&quot;编辑&quot;,&quot;member-edit.html&quot;,&quot;"+id+"&quot;,&quot;&quot;,&quot;510&quot;)' class='ml-5' style='text-decoration:none'><i class='layui-icon'>&#xe642;</i></a><a style='text-decoration:none'  onclick='member_password(&quot;修改密码&quot;,&quot;member-password.html&quot;,&quot;"+id+"&quot;,&quot;600&quot;,&quot;400&quot;)' href='javascript:;' title='修改密码'><i class='layui-icon'>&#xe631;</i></a><a title='删除' href='javascript:;' onclick='member_del(this,&quot;"+id+"&quot;)' style='text-decoration:none'><i class='layui-icon'>&#xe640;</i></a></td>"
                                  +"</tr>";

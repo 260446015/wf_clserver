@@ -36,14 +36,21 @@
                           </div>
 
                     <div class="layui-form-item">
-                      <label for="L_username" class="layui-form-label"> <span class="x-red">*</span>平台用户名 </label>
+                                      <label for="L_systemuser" class="layui-form-label"> <span class="x-red">*</span>平台用户名</label>
+                                      <div class="layui-input-inline">
+                                        <input type="text" id="L_systemuser" name="systemuser" required autocomplete="off" class="layui-input">
+                                      </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                      <label for="L_username" class="layui-form-label"> <span class="x-red">*</span>资源用户名 </label>
                       <div class="layui-input-inline">
                         <input type="text" id="L_username" name="username" required autocomplete="off" class="layui-input">
                       </div>
                     </div>
 
                     <div class="layui-form-item">
-                       <label for="L_password" class="layui-form-label"> <span class="x-red">*</span>平台密码 </label>
+                       <label for="L_password" class="layui-form-label"> <span class="x-red">*</span>资源密码 </label>
                        <div class="layui-input-inline">
                           <input type="password" id="L_password" name="password" required autocomplete="off" class="layui-input">
                         </div>
@@ -85,6 +92,7 @@
                   document.getElementById("L_name").value=res.data.platformName;
                   document.getElementById("L_username").value=res.data.username;
                   document.getElementById("L_password").value=res.data.password;
+                  document.getElementById("L_systemuser").value=res.data.systemuser;
                   }
 });
 }
@@ -99,6 +107,7 @@
                   obj.platformName=$("#L_name").val();
                   obj.username=$("#L_username").val();
                   obj.password=$("#L_password").val();
+                  obj.systemuser=$("#L_systemuser").val();
                   var param = JSON.stringify(obj);
                     $.ajax({
                        type: "POST",

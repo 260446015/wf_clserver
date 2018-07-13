@@ -40,50 +40,45 @@
       </div>
 
       <div class="layui-form-item">
-            <label for="L_phone" class="layui-form-label"> <span class="x-red">*</span>手机号 </label>
+            <label for="L_phone" class="layui-form-label"> 手机号 </label>
             <div class="layui-input-inline">
-              <input type="text" id="L_phone" name="phone" required lay-verify="phone"
-                              autocomplete="off" class="layui-input">
+              <input type="text" id="L_phone" name="phone" autocomplete="off" class="layui-input">
             </div>
           </div>
 
     <div class="layui-form-item">
-      <label for="L_email" class="layui-form-label"> <span class="x-red">*</span>邮箱 </label>
+      <label for="L_email" class="layui-form-label"> 邮箱 </label>
       <div class="layui-input-inline">
-        <input type="text" id="L_email" name="email" required lay-verify="email"
-           autocomplete="off" class="layui-input">
+        <input type="text" id="L_email" name="email" autocomplete="off" class="layui-input">
       </div>
     </div>
 
     <div class="layui-form-item">
-       <label for="L_qq" class="layui-form-label"> <span class="x-red">*</span>QQ </label>
+       <label for="L_qq" class="layui-form-label"> QQ </label>
        <div class="layui-input-inline">
-          <input type="text" id="L_qq" name="qq" required lay-verify="qq"
-             autocomplete="off" class="layui-input">
+          <input type="text" id="L_qq" name="qq" autocomplete="off" class="layui-input">
         </div>
      </div>
 
      <div class="layui-form-item">
-        <label for="L_policeNumber" class="layui-form-label"> <span class="x-red">*</span>警号 </label>
+        <label for="L_policeNumber" class="layui-form-label"> 警号 </label>
             <div class="layui-input-inline">
-               <input type="text" id="L_policeNumber" name="policeNumber" required lay-verify="number"
+               <input type="text" id="L_policeNumber" name="policeNumber"
                   autocomplete="off" class="layui-input">
              </div>
           </div>
 
       <div class="layui-form-item"><label for="L_job" class="layui-form-label">
-      <span class="x-red">*</span>职位 </label>
+      职位 </label>
           <div class="layui-input-inline">
-             <input type="text" id="L_job" name="job" required lay-verify=""
-                autocomplete="off" class="layui-input">
+             <input type="text" id="L_job" name="job" autocomplete="off" class="layui-input">
            </div>
         </div>
 
        <div class="layui-form-item"><label for="L_department" class="layui-form-label">
-         <span class="x-red">*</span>部门 </label>
+         部门 </label>
             <div class="layui-input-inline">
-               <input type="text" id="L_department" name="department" required lay-verify=""
-                  autocomplete="off" class="layui-input">
+               <input type="text" id="L_department" name="department" required autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -101,6 +96,18 @@
         <input type="password" id="L_repass" name="repassword" required lay-verify="repass"
                         autocomplete="off" class="layui-input">
       </div>
+    </div>
+    <div class="layui-form-item">
+                        <label for="role" class="layui-form-label">
+                            <span class="x-red">*</span>角色
+                        </label>
+                        <div class="layui-input-inline">
+                          <select id="role" name="role">
+                            <option value="">请选择角色</option>
+                            <option value="1">一般用户</option>
+                            <option value="2">信息上传用户</option>
+                          </select>
+                        </div>
     </div>
     <div class="layui-form-item">
       <label for="L_repass" class="layui-form-label"> </label>
@@ -159,6 +166,7 @@
                   obj.job=$("#L_job").val();
                   obj.department=$("#L_department").val();
                   obj.password=$("#L_password").val();
+                  obj.role=$("#role").val();
                   var param = JSON.stringify(obj);
                   //alert(param);
                      $.ajax({

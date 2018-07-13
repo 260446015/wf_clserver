@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
             sysUser.setQq(doc.getString("qq"));
             sysUser.setCreateDate(doc.getDate("create_date"));
             sysUser.setIfEnable(doc.getBoolean("if_enable"));
+            sysUser.setRole(doc.getString("role"));
             all.add(sysUser);
         }
 
@@ -150,6 +151,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addUserOrUpdate(SysUser user) {
         try {
+            if(StringUtils.isBlank(user.getId())){
+                user.setIfEnable(true);
+            }
             user.setIfAdmin(false);
             user.setCreateDate(new Date());
             sysUserRepository.save(user);

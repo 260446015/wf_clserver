@@ -203,7 +203,6 @@ public class UserController extends BaseController {
      * 统计用户访问量
      */
     @RequestMapping("/visits")
-    @SystemControllerLog(description = "后台管理-当前访问量")
     @ResponseBody
     @ApiOperation(value = "当前在线用户/总用户", httpMethod = "GET")
     public ApiResult userVisits() {

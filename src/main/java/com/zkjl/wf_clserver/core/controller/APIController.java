@@ -1,6 +1,7 @@
 package com.zkjl.wf_clserver.core.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.entity.JobBean;
 import com.zkjl.wf_clserver.core.entity.ResourceBean;
 import com.zkjl.wf_clserver.core.entity.ResultData;
@@ -42,6 +43,7 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/createJob")
+	@SystemControllerLog(description = "创建爬虫任务")
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
 		Map<String, Object> resultData = new LinkedHashMap<>();
@@ -81,6 +83,7 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/updateJob")
+	@SystemControllerLog(description = "更新爬虫任务")
 	public @ResponseBody
 	ResultData updateJob(HttpServletRequest request, @RequestBody JobBean jobBean) throws Exception {
 		Map<String, Object> resultData = new LinkedHashMap<>();
@@ -111,6 +114,7 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/retrieveData")
+	@SystemControllerLog(description = "获取爬虫返回数据")
 	public @ResponseBody
 	ResultData retrieveData(@RequestBody String data) throws Exception {
 		JSONObject json = JSONObject.parseObject(data);

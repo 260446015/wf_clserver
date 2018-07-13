@@ -98,6 +98,18 @@
                       </div>
                       <div class="layui-form-mid layui-word-aux"> 6到16个字符 </div>
                     </div>
+                    <div class="layui-form-item">
+                                            <label for="L_role" class="layui-form-label">
+                                                <span class="x-red">*</span>角色
+                                            </label>
+                                            <div class="layui-input-inline">
+                                              <select id="L_role" class="L_role" name="role">
+                                                <option value="">请选择角色</option>
+                                                <option value="1">一般用户</option>
+                                                <option value="2">信息上传用户</option>
+                                              </select>
+                                            </div>
+                        </div>
 
                 <div class="layui-form-item">
                     <label for="L_sign" class="layui-form-label">
@@ -140,6 +152,14 @@
                   document.getElementById("L_job").value=res.data.job;
                   document.getElementById("L_department").value=res.data.department;
                   document.getElementById("L_password").value=res.data.password;
+
+                  var roleobj = document.getElementById("L_role");
+
+                  $.each(roleobj.options, function (i, n) {
+                    if (n.value == res.data.role) {
+                       n.selected = true;
+                  }
+                 });
                   $('#LAY_demo_upload').attr('src',res.data.photo);
 
                   }
@@ -161,6 +181,7 @@
                   obj.job=$("#L_job").val();
                   obj.department=$("#L_department").val();
                   obj.password=$("#L_password").val();
+                  obj.role=$("#L_role").val();
                   var param = JSON.stringify(obj);
                     $.ajax({
                        type: "POST",
