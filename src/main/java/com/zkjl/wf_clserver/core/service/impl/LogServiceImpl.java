@@ -53,7 +53,7 @@ public class LogServiceImpl implements LogService {
 		} else if (beginDate != null && endDate != null) {
 			basicDBObject.append("createDate", new BasicDBObject("$gte", beginDate ).append("$lte", endDate));
 		}
-		FindIterable<Document> docIte = conllections.find(basicDBObject);
+		FindIterable<Document> docIte = conllections.find(basicDBObject).sort(new BasicDBObject().append("createDate", -1));;
 		Iterator<Document> it = docIte.iterator();
 		List<Log> all = new ArrayList<Log>();
 		while (it.hasNext()) {
