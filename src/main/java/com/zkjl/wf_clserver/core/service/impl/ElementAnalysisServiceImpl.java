@@ -49,11 +49,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         jsonObject.put("sameAddress",null);
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
-            String address1 = kindDatas.get(0).get(0).get("data").toString();
-            String address2 = kindDatas.get(1).get(0).get("data").toString();
-            if(address1.equals(address2)){
-                jsonObject.put("sameAddress",address1);
-            }
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            String address1=list1.get(0).get(7).toString();
+            String address2=list2.get(0).get(7).toString();
         } catch (Exception e) {
             logger.error("查询同住址出现异常:",e.getMessage());
         }
