@@ -2,21 +2,19 @@ package com.zkjl.wf_clserver.core.service.upload;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.entity.FileUploadEntity;
-import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 /**
  * @author ydw
@@ -37,63 +35,32 @@ public abstract class UploadAbstractService {
     @Resource
     private ExecutorService executorService;
 
-    public List<FileUploadEntity> upload(MultipartFile file) throws IOException, CustomerException {
-        String checkFile = checkFile(file);
-        List<List<String[]>> datas = analysisGetUploadContent(file,"`");
+    public JSONObject upload(MultipartFile file, HttpServletRequest request) throws IOException, CustomerException {
+//        String checkFile = checkFile(file);
+        String split = request.getParameter("spliter");
+        String textType = request.getParameter("textType");
+        List<List<String[]>> datas = analysisGetUploadContent(file, split);
         List<JSONObject> jsonObjects = analysisGetUploadJson(datas);
-        List<FileUploadEntity> uploadEntitis = getUploadEntitis(jsonObjects, getFileName(file));
+        List<FileUploadEntity> uploadEntitis = getUploadEntitis(jsonObjects, getFileName(file),textType);
         return saveUploadData(uploadEntitis);
-    }
-
-    public static String checkFile(MultipartFile file) throws IOException, CustomerException {
-        String fileType = null;
-        //判断文件是否存在
-        if (null == file) {
-            logger.error("文件不存在！");
-            throw new FileNotFoundException("文件不存在！");
-        }
-        //获得文件名
-        String fileName = file.getOriginalFilename();
-        //判断文件是否是excel文件
-        if (!fileName.endsWith(xls) && !fileName.endsWith(xlsx)) {
-            if (fileName.endsWith(txt) || fileName.endsWith(CSV)) {
-                logger.info("正在对txt文件进行读取");
-                fileType = txt;
-            }
-        }
-        if(fileName.endsWith(doc) || fileName.endsWith("docx")){
-            fileType = "word";
-        }
-        if(fileName.endsWith(xls) || fileName.endsWith(xlsx)){
-            fileType = "excel";
-        }
-        if(fileType == null){
-            logger.error(fileName + "不是excel文件或txt文件");
-            throw new CustomerException(fileName + "不是excel文件或txt文件");
-        }
-        return fileType;
     }
 
     protected abstract List<List<String[]>> analysisGetUploadContent(Object... args) throws CustomerException;
 
-    protected List<JSONObject> analysisGetUploadJson(List<List<String[]>> datas){
+    protected List<JSONObject> analysisGetUploadJson(List<List<String[]>> datas) {
         List<JSONObject> result = new ArrayList<>();
         for (int i = 0; i < datas.size(); i++) {
             List<String[]> datasBySheet = datas.get(i);
             String[] title = {};
             for (int j = 0; j < datasBySheet.size(); j++) {
-                if(j == 0){
+                if (j == 0) {
                     title = datasBySheet.get(0);
                     continue;
                 }
                 String[] content = datasBySheet.get(j);
                 JSONObject data = new JSONObject();
                 for (int k = 0; k < title.length; k++) {
-                    try {
-                        data.put(title[k],content[k]);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        data.put(title[k],"");
-                    }
+                    data.put(title[k], content[k]);
                 }
                 result.add(data);
             }
@@ -101,36 +68,64 @@ public abstract class UploadAbstractService {
         return result;
     }
 
-    private String getFileName(MultipartFile file){
+    private String getFileName(MultipartFile file) {
         return file.getOriginalFilename();
     }
 
-    private List<FileUploadEntity> getUploadEntitis(List<JSONObject> datas, String source) {
+    private List<FileUploadEntity> getUploadEntitis(List<JSONObject> datas, String source,String textType) {
         List<FileUploadEntity> resultList = new ArrayList<>();
         datas.forEach(action -> {
             FileUploadEntity entity = new FileUploadEntity();
             entity.setContent(action.toJSONString());
             entity.setCreateTime(Calendar.getInstance().getTime());
-            String username = "";
+            String username = "张仁泉";
             try {
-                SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-                username = user.getName();
+//                SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+//                username = user.getName();
             } catch (Exception e) {
 //                throw new RuntimeException("用户未登录");
             }
             entity.setUsername(username);
             entity.generatId();
             entity.setSource(source);
+            entity.setContentType(textType);
             resultList.add(entity);
         });
         return resultList;
     }
 
-    protected List<FileUploadEntity> saveUploadData(List<FileUploadEntity> list) {
-//        List<String> ids = list.stream().map(action -> action.getId()).collect(Collectors.toList());
-//        List<FileUploadEntity> datas = fileUploadEntityRepository.findByIdIn(ids);
-
-        fileUploadEntityRepository.saveAll(list);
-        return null;
+    protected JSONObject saveUploadData(List<FileUploadEntity> list) {
+        int remaider = list.size() % 50;
+        int number = list.size() / 50;
+        int offset = 0;
+        List<List<FileUploadEntity>> subList = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            List<FileUploadEntity> datas;
+            if(remaider > 0){
+                datas = list.subList(i * number + offset,(i+1)*number+offset+1);
+                remaider--;
+                offset++;
+            }else{
+                datas = list.subList(i*number+offset,(i+1)*number+offset);
+            }
+            subList.add(datas);
+        }
+//        long beginCount = fileUploadEntityRepository.count();
+        for (List<FileUploadEntity> datas : subList) {
+            executorService.execute(() -> fileUploadEntityRepository.saveAll(datas));
+        }
+//        executorService.shutdown();
+//        try {
+//            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        long endCount = fileUploadEntityRepository.count();
+        List<FileUploadEntity> collect = list.stream().limit(10).collect(Collectors.toList());
+        collect.forEach(action -> action.setContent(action.getContent().replaceAll("\"","'")));
+        JSONObject result = new JSONObject();
+//        result.put("successCount",endCount - beginCount);
+        result.put("successData",collect);
+        return result;
     }
 }
