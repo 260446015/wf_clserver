@@ -1,8 +1,5 @@
 package com.zkjl.wf_clserver.core.security;
 
-import com.zkjl.wf_clserver.core.entity.Admins;
-import com.zkjl.wf_clserver.core.repository.AdminsRepository;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -10,13 +7,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.security.interfaces.RSAPrivateKey;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -93,7 +86,6 @@ public class CustomCredentialsMatcher extends SimpleCredentialsMatcher {
 			LOGGER.error("私钥解密失败", e);
 			return null;
 		}
-		List<Admins> byUsername = adminsRepository.findByUsername(utoken.getUsername());
 		if (byUsername.size() == 0) {
 			return null;
 		}
