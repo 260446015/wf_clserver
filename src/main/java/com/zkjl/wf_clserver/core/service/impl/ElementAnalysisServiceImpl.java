@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
+import com.zkjl.wf_clserver.core.util.OriginTest;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -135,14 +136,32 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
-            List<String> ids = new ArrayList<>();
             for (int i = 0; i < list1.size(); i++) {
                 List datum = list1.get(i);
                 String id = (String) datum.get(7);
-                ids.add(id);
                 if(id.equals(idcard)){
                     data1.put("source", "yunsou");
                     jsonArray.add(data1);
+                }
+            }
+
+            List<List<Document>> jtkindDatas = getKindDatas(datas, "jtlhy", "公安部驾驶人基本信息");
+            Map data = (Map) jtkindDatas.get(0).get(0).get("data");
+            List<ArrayList> list = (List) data1.get("data");
+            String address=list1.get(0).get(5).toString();
+            Map<String,String> strMap=OriginTest.addressResolution(address);
+            String province=strMap.get("province");
+
+            List<List<Document>> jtlhykindDatas = getKindDatas(datas, "jtlhy", province+"交通违法关联信息");
+            Map dataJtlhy = (Map) jtkindDatas.get(0).get(0).get("data");
+            List<ArrayList> jtlhyList = (List) dataJtlhy.get("data");
+            List<String> idList = new ArrayList<>();
+            for (int i = 0; i < jtlhyList.size(); i++) {
+                List datum = list1.get(i);
+                String id = (String) datum.get(8);
+                if(id.equals(idcard)){
+                    dataJtlhy.put("source", "jtlhy");
+                    jsonArray.add(dataJtlhy);
                 }
             }
             if(jsonArray.size() != 0){
