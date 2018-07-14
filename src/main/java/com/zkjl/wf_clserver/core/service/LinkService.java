@@ -1,14 +1,13 @@
 package com.zkjl.wf_clserver.core.service;
 
 import com.zkjl.wf_clserver.core.entity.Link;
-
-import java.util.List;
+import org.springframework.data.domain.PageImpl;
 
 public interface LinkService {
 
-     List<Link> findAll();
+    PageImpl<Link> findAll(String search, Integer pageNum, Integer pageSize);
 
-    boolean saveOrUpdate(Link link);
+    Link saveOrUpdate(Link link);
 
-     boolean delete(String id);
+    boolean delete(String ids);
 }
