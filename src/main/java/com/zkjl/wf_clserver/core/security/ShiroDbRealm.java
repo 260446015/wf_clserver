@@ -1,6 +1,5 @@
 package com.zkjl.wf_clserver.core.security;
 
-import com.zkjl.wf_clserver.core.entity.Admins;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -9,7 +8,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
