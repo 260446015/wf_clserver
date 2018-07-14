@@ -81,7 +81,6 @@ public class ConfsController extends BaseController {
      * 添加或修改
      */
     @PostMapping("/save")
-    @SystemControllerLog(description = "后台管理-平台添加")
     @ResponseBody
     @ApiOperation(value = "平台添加", httpMethod = "POST")
     public ApiResult save(@RequestBody Confs confs) throws Exception {
