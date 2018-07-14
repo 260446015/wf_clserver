@@ -3,60 +3,58 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.zkjl.wf_clserver.core.entity.Link;
 import com.zkjl.wf_clserver.core.repository.kklc.LinkRepository;
 import com.zkjl.wf_clserver.core.service.LinkService;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import com.zkjl.wf_clserver.core.util.PageUtil;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service("linkService")
 public class LinkServiceImpl implements LinkService {
     @Autowired
     private LinkRepository linkRepository;
+    private static Logger logger = LoggerFactory.getLogger(LinkServiceImpl.class);
 
-    @Value("${web.uploadpath}")
-    private String uploadpath;
 
     @Override
-    public List<Link> findAll() {
-        return linkRepository.findAll();
+    public PageImpl<Link> findAll(String search, Integer pageNum, Integer pageSize) {
+        List<Link> result;
+        if (StringUtils.isBlank(search)) {
+            result = linkRepository.findAll(new Sort(Sort.Direction.DESC, "hotCount", "createDate"));
+        }else{
+            result = linkRepository.findByName(search);
+        }
+        return (PageImpl<Link>) PageUtil.pageBeagin(result.size(),pageNum,pageSize,result);
     }
+
     @Override
-    public boolean saveOrUpdate(Link link) {
+    public Link saveOrUpdate(Link link) {
         try {
             link.setCreateDate(new Date());
-            linkRepository.save(link);
+            return linkRepository.save(link);
         } catch (Exception e) {
-            return false;
+            logger.error("保存超链接出错",e.getMessage());
         }
-        return true;
+        return null;
     }
+
     @Override
     public boolean delete(String ids) {
+        boolean flag = false;
         try {
-            /*String basePath = "D:\\图片虚拟目录\\";
-            String[] idsArr = ids.split(",");
-            for (int i = 0; i < idsArr.length; i++) {
-                String id = idsArr[i];
-                Link one = linkRepository.findById(id).get();
-                if(one == null) continue;
-                String url = one.getUrl();
-                String images = url.substring(url.indexOf("images"));
-                File file = new File(uploadpath+images);
-                FileUtils.deleteDirectory(file);
-            }*/
             String[] idArr = ids.split(",");
+//            String basePath
             Iterable<Link> allById = linkRepository.findAllById(Arrays.asList(idArr));
             linkRepository.deleteAll(allById);
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
-        return true;
+        return flag;
     }
 }
