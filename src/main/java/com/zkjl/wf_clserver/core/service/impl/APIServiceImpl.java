@@ -2,7 +2,6 @@ package com.zkjl.wf_clserver.core.service.impl;
 
 import com.zkjl.wf_clserver.core.dao.APIDao;
 import com.zkjl.wf_clserver.core.entity.JobBean;
-import com.zkjl.wf_clserver.core.entity.PageBean;
 import com.zkjl.wf_clserver.core.entity.ResourceBean;
 import com.zkjl.wf_clserver.core.entity.ResultData;
 import com.zkjl.wf_clserver.core.service.APIService;
