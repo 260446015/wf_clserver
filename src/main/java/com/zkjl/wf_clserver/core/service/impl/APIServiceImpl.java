@@ -6,6 +6,7 @@ import com.zkjl.wf_clserver.core.entity.PageBean;
 import com.zkjl.wf_clserver.core.entity.ResourceBean;
 import com.zkjl.wf_clserver.core.entity.ResultData;
 import com.zkjl.wf_clserver.core.service.APIService;
+import com.zkjl.wf_clserver.core.util.GzipUtil;
 import com.zkjl.wf_clserver.core.util.MD5Util;
 import com.zkjl.wf_clserver.core.util.ResultFactory;
 import org.apache.commons.lang.StringUtils;
@@ -52,5 +53,12 @@ public class APIServiceImpl implements APIService {
 		return apiDao.userConf(username);
 	}
 
+	@Override
+	public ResultData saveMaterial(String data) throws Exception {
+		String result = GzipUtil.Decompress(data);
+		Document doc = Document.parse(result);
+		boolean exeresult = apiDao.saveMaterial(doc);
+		return ResultFactory.createSuccess(exeresult);
+	}
 
 }

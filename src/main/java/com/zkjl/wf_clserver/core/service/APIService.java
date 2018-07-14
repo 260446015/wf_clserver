@@ -18,6 +18,8 @@ public interface APIService {
 
 	ResultData retrieveData(String jobid, String resid, long version) throws Exception;
 
+	ResultData saveMaterial(String data) throws Exception;
+
 	
 	
 	

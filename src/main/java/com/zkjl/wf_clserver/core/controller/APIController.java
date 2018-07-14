@@ -125,4 +125,19 @@ public class APIController extends BaseController {
 		return apiService.retrieveData(json.getString("jobid"), json.getString("resid"),version);
 	}
 
+
+    /**
+     * 给采集程序提供数据上传接口
+     *
+     * @param data
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/api/material")
+    public @ResponseBody
+    ResultData material(@RequestBody String data) throws Exception {
+        System.out.println(data);
+        return apiService.saveMaterial(data);
+    }
+
 }

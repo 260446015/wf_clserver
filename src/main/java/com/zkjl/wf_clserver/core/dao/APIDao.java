@@ -59,6 +59,14 @@ public interface APIDao {
 	 */
 	Document retrieveData(String jobid, String resid, long version) throws Exception;
 
+	/**
+	 * 保存采集器上传的数据
+	 * @param doc
+	 * @return
+	 * @throws Exception
+	 */
+	boolean saveMaterial(Document doc) throws Exception;
+
 	
 
 	

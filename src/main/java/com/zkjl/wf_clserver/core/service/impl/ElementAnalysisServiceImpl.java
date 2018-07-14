@@ -203,14 +203,27 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameRoom(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameRoom",null);
+        jsonObject.put("sameRoom", null);
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameCase(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameCase",null);
+        jsonObject.put("sameCase", null);
+        try {
+            List<List<Document>> kindDatas = getKindDatas(datas, "sdzfpt", "案件基本信息");
+
+             kindDatas.get(0);
+            System.out.println("-----");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return jsonObject;
     }
 

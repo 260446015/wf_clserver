@@ -24,8 +24,6 @@ import java.util.regex.Pattern;
 @Repository
 public class APIDaoImpl implements APIDao {
 
-	@Resource
-	private MongoTemplate mongoTemplate;
 	@Resource(name = "primaryMongoTemplate")
 	private MongoTemplate primaryMongoTemplate;
 	@Resource(name = "secondaryMongoTemplate")
@@ -89,7 +87,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public List<ResourceBean> userConf(String username) throws Exception {
 		try {
-			List<Document> docList = mongoTemplate.find(new Query(Criteria.where("systemuser").is(username)), Document.class, COLL_CONFS);
+			List<Document> docList = primaryMongoTemplate.find(new Query(Criteria.where("systemuser").is(username)), Document.class, COLL_CONFS);
 			List<ResourceBean> resultList = new ArrayList<ResourceBean>();
 			for (Document doc : docList) {
 				ResourceBean resourceBean = new ResourceBean();
@@ -99,6 +97,21 @@ public class APIDaoImpl implements APIDao {
 				resultList.add(resourceBean);
 			}
 			return resultList;
+		} catch (Exception e) {
+			throw new CustomerException(ExceptionCode.EX_BUS);
+		}
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.zkjl.plover.web.dao.APIDao#saveMaterial(org.bson.Document)
+	 */
+	@Override
+	public boolean saveMaterial(Document doc) throws Exception {
+		try {
+			secondaryMongoTemplate.insert(doc, COLL_DATAS);
+			return true;
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
 		}
