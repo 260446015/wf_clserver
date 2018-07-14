@@ -49,20 +49,20 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameAddress", null);
+        jsonObject.put("sameAddress",null);
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<ArrayList> list2 = (List) data2.get("data");
-            String address1 = list1.get(0).get(7).toString();
-            String address2 = list2.get(0).get(7).toString();
-            if (address1.equals(address2)) {
-                jsonObject.put("sameAddress", address1);
+            String address1=list1.get(0).get(7).toString();
+            String address2=list2.get(0).get(7).toString();
+            if(address1.equals(address2)){
+                jsonObject.put("sameAddress",address1);
             }
         } catch (Exception e) {
-            logger.error("查询同住址出现异常:", e.getMessage());
+            logger.error("查询同住址出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -70,7 +70,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSamePhone(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone", null);
+        jsonObject.put("samePhone",null);
         return jsonObject;
     }
 
@@ -80,12 +80,13 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameWork", null);
+        jsonObject.put("sameWork",null);
         try {
-            List<ArrayList> workList = Lists.newArrayList();
+            JSONArray jsonArray = new JSONArray();
+            List<ArrayList> workList=Lists.newArrayList();
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
-            List<String> idCardList = getIdCardList(datas);
-            String idcard = idCardList.get(1);
+            List<String> idCardList=getIdCardList(datas);
+            String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<String> ids = new ArrayList<>();
@@ -93,8 +94,9 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 List datum = list1.get(i);
                 String id = (String) datum.get(0);
                 ids.add(id);
-                if (id.equals(idcard)) {
-                    workList.add((ArrayList) datum);
+                if(id.equals(idcard)){
+                    data1.put("source", "yunsou");
+                    jsonArray.add(data1);
                 }
             }
 
@@ -105,15 +107,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             for (int i = 0; i < list.size(); i++) {
                 List datum = list.get(i);
                 String id = (String) datum.get(1);
-                if (id.equals(idcard)) {
-                    workList.add((ArrayList) datum);
+                if(id.equals(idcard)){
+                    data.put("source", "sdgayjs");
+                    jsonArray.add(data);
                 }
             }
             if(workList.size()>0){
-                jsonObject.put("sameWork",workList);
+                jsonObject.put("sameWork",jsonArray);
             }
         } catch (Exception e) {
-            logger.error("查询同机构出现异常:", e.getMessage());
+            logger.error("查询同机构出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -121,14 +124,15 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameViolation", null);
+        jsonObject.put("sameViolation",null);
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
         try {
+            JSONArray jsonArray = new JSONArray();
             List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
-            List<String> idCardList = getIdCardList(datas);
-            String idcard = idCardList.get(1);
+            List<String> idCardList=getIdCardList(datas);
+            String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<String> ids = new ArrayList<>();
@@ -136,12 +140,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 List datum = list1.get(i);
                 String id = (String) datum.get(7);
                 ids.add(id);
-                if (id.equals(idcard)) {
-                    jsonObject.put("sameViolation", datum);
+                if(id.equals(idcard)){
+                    data1.put("source", "yunsou");
+                    jsonArray.add(data1);
                 }
             }
+            if(jsonArray.size() != 0){
+                jsonObject.put("sameViolation", jsonArray);
+            }
         } catch (Exception e) {
-            logger.error("查询同车违章出现异常:", e.getMessage());
+            logger.error("查询同车违章出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -152,17 +160,14 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         jsonObject.put("sameInet", null);
         try {
             List<List<Document>> kindDatas = getKindDatas(datas, "sdgayjs", "山东警务云上网同记录");
-            List<String> idCardList = getIdCardList(datas);
-            String id1 = idCardList.get(0);
-            String id2 = idCardList.get(1);
             Map map = (Map) kindDatas.get(0).get(0).get("data");
             List<List> data = (List) map.get("data");
             String name = (String) data.get(0).get(4);
             Map map2 = (Map) kindDatas.get(1).get(0).get("data");
             List<List> data2 = (List) map2.get("data");
-            List<List> collect = data2.stream().filter(action -> action.get(6).toString().equals(name) && (action.get(5).toString().equals(id1) || action.get(5).toString().equals(id2))).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
+            List<List> collect = data2.stream().filter(action -> action.get(6).toString().equals(name)).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
             String name2 = (String) data2.get(0).get(4);
-            List<List> collect2 = data.stream().filter(action -> action.get(6).toString().equals(name2) && (action.get(5).toString().equals(id1) || action.get(5).toString().equals(id2))).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
+            List<List> collect2 = data.stream().filter(action -> action.get(6).toString().equals(name2)).sorted((a, b) -> b.get(1).toString().compareTo(a.get(1).toString())).collect(Collectors.toList());
             System.out.println(collect);
             System.out.println(collect2);
             List list = new ArrayList();
@@ -171,7 +176,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             map.put("data", list);
             jsonObject.put("sameInet", map);
         } catch (Exception e) {
-            logger.error("解析同上网出现异常:", e.getMessage());
+            logger.error("解析同上网出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -179,14 +184,14 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameRoom(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameRoom", null);
+        jsonObject.put("sameRoom",null);
         return jsonObject;
     }
 
     @Override
     protected JSONObject analysisSameCase(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameCase", null);
+        jsonObject.put("sameCase",null);
         return jsonObject;
     }
 
@@ -215,7 +220,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     e.printStackTrace();
                 }
             }
-            if (jsonArray.size() != 0) {
+            if(jsonArray.size() != 0){
                 jsonObject.put("sameAccount", jsonArray);
             }
         } catch (Exception e) {
@@ -236,7 +241,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     }
 
     public List<String> getIdCardList(List<List<Document>> datas) {
-        List<String> idList = Lists.newArrayList();
+        List<String> idList= Lists.newArrayList();
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
@@ -247,12 +252,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<ArrayList> list2 = (List) data2.get("data");
-            String idcard = list1.get(0).get(0).toString();
+            String idcard=list1.get(0).get(0).toString();
             idList.add(idcard);
-            String idcard2 = list2.get(0).get(0).toString();
+            String idcard2=list2.get(0).get(0).toString();
             idList.add(idcard2);
         } catch (Exception e) {
-            logger.error("查询身份证号出现异常:", e.getMessage());
+            logger.error("查询身份证号出现异常:",e.getMessage());
         }
         return idList;
     }
