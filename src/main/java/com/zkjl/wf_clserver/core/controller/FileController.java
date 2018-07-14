@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -41,22 +42,22 @@ public class FileController extends BaseController {
      */
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     @ResponseBody
-    public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response,MultipartFile multipartFile) throws IOException {
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+    public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response) throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
         List<Map<String, Object>> mapList = new ArrayList<>();
-//        List multipartFiles = multipartRequest
-//                .getFiles("file");// 得到所有的文件
-//        for (int i = 0; i < multipartFiles.size(); i++) {
+        List multipartFiles = multipartRequest
+                .getFiles("file");// 得到所有的文件
+        for (int i = 0; i < multipartFiles.size(); i++) {
             Map<String, Object> map = new HashMap<>();
-//            MultipartFile multipartFile = (MultipartFile) multipartFiles.get(i);
-//            if (multipartFile.getSize() <= 0L) {
-//                return null;
-//            }
+            MultipartFile multipartFile = (MultipartFile) multipartFiles.get(i);
+            if (multipartFile.getSize() <= 0L) {
+                return null;
+            }
             String fileUrl = FileUlti.uploadImg(req, multipartFile);
             map.put("url", fileUrl);
             mapList.add(map);
-//        }
+        }
         return mapList;
     }
 
@@ -66,18 +67,32 @@ public class FileController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @SystemControllerLog(description = "Excel数据上传")
+    @SystemControllerLog(description = "Excel上传")
     @ResponseBody
-    public ApiResult uploadExcel(@RequestParam("fileName") MultipartFile file) {
-        try {
-            fileService.upload(file);
-        } catch (IOException e) {
-            return error("导入失败:"+e.getMessage());
-        } catch (CustomerException e) {
-            return error("导入失败:"+e.getMessage());
+    public ApiResult uploadExcel(HttpServletRequest req, HttpServletResponse response) {
+        String uploadid = req.getParameter("uploadid");
+        if ("1".equals(uploadid)) {
+            return success("等待uploadid改变");
         }
-
-        return success("导入成功!");
+        String split = req.getParameter("spliter");
+        try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+            List multipartFiles = multipartRequest
+                    .getFiles("file");// 得到所有的文件
+            MultipartFile multipartFile = null;
+            for (int i = 0; i < multipartFiles.size(); i++) {
+                multipartFile = (MultipartFile) multipartFiles.get(i);
+                if (multipartFile.getSize() <= 0L) {
+                    return null;
+                }
+            }
+            return success(fileService.upload(multipartFile, req));
+        } catch (IOException e) {
+            return error("导入失败:" + e.getMessage());
+        } catch (CustomerException e) {
+            return error("导入失败:" + e.getMessage());
+        }
+//        return success("导入成功!");
     }
 
     /**
@@ -86,7 +101,6 @@ public class FileController extends BaseController {
      * @throws Exception
      */
     @GetMapping(value = "/upload")
-    @SystemControllerLog(description = "社会上传数据查询接口")
     @ResponseBody
     public ApiResult search(String search, int pageNum, int pageSize) {
         PageImpl<FileUploadEntity> page = null;
@@ -98,4 +112,15 @@ public class FileController extends BaseController {
         return successPages(page);
     }
 
+    @DeleteMapping(value = "{source}")
+    @ResponseBody
+    public ApiResult delete(@PathVariable String source){
+        boolean flag = false;
+        try {
+            flag = fileService.delete(source);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return success(flag);
+    }
 }
