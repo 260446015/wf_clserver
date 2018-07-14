@@ -1,7 +1,6 @@
 package com.zkjl.wf_clserver.core.controller;
 
 import com.zkjl.wf_clserver.core.common.ApiResult;
-import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.dto.req.DefaultPageRQ;
 import com.zkjl.wf_clserver.core.entity.Log;
 import com.zkjl.wf_clserver.core.service.LogService;
@@ -49,7 +48,6 @@ public class LogController extends BaseController {
      * 管理员删除
      */
     @RequestMapping("/delete")
-    @SystemControllerLog(description = "日志删除")
     @ResponseBody
     @ApiOperation(value = "用户删除", httpMethod = "GET")
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {

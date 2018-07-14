@@ -1,7 +1,7 @@
 package com.zkjl.wf_clserver.core.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
+import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +22,7 @@ public class ElementAnalysisController extends BaseController {
     private ElementAnalysisService elementAnalysisService;
 
     @GetMapping
+    @SystemControllerLog(description="同要素关联分析")
     @ApiOperation(value = "同要素关联分析")
     public ApiResult analysis(String word1, String word2) throws Exception {
 

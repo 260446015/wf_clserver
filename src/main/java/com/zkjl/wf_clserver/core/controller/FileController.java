@@ -12,14 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Validator;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/file")
@@ -38,7 +40,6 @@ public class FileController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
-    @SystemControllerLog(description = "图片上传")
     @ResponseBody
     public List<Map<String, Object>> upload(HttpServletRequest req, HttpServletResponse response,MultipartFile multipartFile) throws IOException {
 //        response.setHeader("Access-Control-Allow-Origin", "*");
@@ -65,7 +66,7 @@ public class FileController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @SystemControllerLog(description = "Excel上传")
+    @SystemControllerLog(description = "Excel数据上传")
     @ResponseBody
     public ApiResult uploadExcel(@RequestParam("fileName") MultipartFile file) {
         try {
@@ -85,7 +86,7 @@ public class FileController extends BaseController {
      * @throws Exception
      */
     @GetMapping(value = "/upload")
-    @SystemControllerLog(description = "查询接口")
+    @SystemControllerLog(description = "社会上传数据查询接口")
     @ResponseBody
     public ApiResult search(String search, int pageNum, int pageSize) {
         PageImpl<FileUploadEntity> page = null;
