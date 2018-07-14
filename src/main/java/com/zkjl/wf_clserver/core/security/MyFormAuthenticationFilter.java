@@ -102,23 +102,10 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 				 LOGGER.trace("Attempting to access a path which requires authentication.  Forwarding to the " +
                          "Authentication url [" + getLoginUrl() + "]");  
              }  
-//             if(isAjax(request)){
-            	 ShiroUtil.writeResponse((HttpServletResponse)response, "您的登录已失效，请重新登录本系统！");
-//             }else{
-//                 this.saveRequestAndRedirectToLogin(request, response);
-//             }
+			 ShiroUtil.writeResponse((HttpServletResponse)response, "您的登录已失效，请重新登录本系统！");
              return false;  //xiugai
          }  
 	}
-   
-	private static boolean isAjax(ServletRequest request){
-		String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
-		if("XMLHttpRequest".equalsIgnoreCase(header)){  
-			return Boolean.TRUE;  
-		}  
-		return Boolean.FALSE;  
-	}  
-	
-	
+
 	
 }
