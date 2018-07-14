@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Validator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +28,6 @@ import java.util.Map;
 @Api(value = "File-API", description = "这是文件上传接口详细信息的描述")
 public class FileController extends BaseController {
 
-    protected Validator validator;
     @Resource
     private FileService fileService;
     private static Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -54,7 +52,7 @@ public class FileController extends BaseController {
             if (multipartFile.getSize() <= 0L) {
                 return null;
             }
-            String fileUrl = FileUlti.uploadImg(req, multipartFile);
+            String fileUrl = fileService.uploadImg(req, multipartFile);
             map.put("url", fileUrl);
             mapList.add(map);
         }
