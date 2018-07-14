@@ -15,4 +15,5 @@ public interface SysUserRepository extends MongoRepository<SysUser,String> {
     SysUser findByName(String username);
 
 
+    SysUser findByUsernameAndPassword(String username, String password);
 }
