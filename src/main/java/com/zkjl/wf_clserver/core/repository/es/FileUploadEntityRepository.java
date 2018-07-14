@@ -10,7 +10,9 @@ import java.util.List;
  * Created on 2018/6/30
  */
 public interface FileUploadEntityRepository extends ElasticsearchRepository<FileUploadEntity,String> {
-    List<FileUploadEntity> findByIdNotIn(List<String> ids);
+    List<FileUploadEntity> findAllByIdNotIn(List<String> ids);
 
-    List<FileUploadEntity> findByIdIn(List<String> ids);
+    List<FileUploadEntity> findBySource(String source);
+
+    List<FileUploadEntity> deleteBySource(String source);
 }
