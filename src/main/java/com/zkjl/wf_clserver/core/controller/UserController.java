@@ -5,6 +5,7 @@ import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.dto.req.DefaultPageRQ;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.UserService;
+import com.zkjl.wf_clserver.core.util.IpUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Optional;
 
@@ -38,13 +40,14 @@ public class UserController extends BaseController {
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录", notes = "根据登录用户的姓名密码进行校验，返回登录数据", httpMethod = "POST")
-    public ApiResult login(String username,String password,String mode) {
+    public ApiResult login(String username, String password, String mode, HttpServletRequest request) {
         try {
             SysUser login = userService.login(username, password);
             if (login.getIfEnable()==false){
                 return error("该账号已被关闭！");
             }
             JSONObject jsonObject = JSONObject.parseObject(login.toString());
+            jsonObject.put("ip", IpUtils.getIpAddr(request));
             if(mode.equals("front")) {
                 return success(jsonObject);
             }else if(mode.equals("admin")){
