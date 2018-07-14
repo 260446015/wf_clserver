@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
+import com.zkjl.wf_clserver.core.util.KindDataUtil;
 import com.zkjl.wf_clserver.core.util.OriginTest;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -52,7 +53,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameAddress",null);
         try {
-            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同住址");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同住址");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
@@ -85,7 +86,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         try {
             JSONArray jsonArray = new JSONArray();
             List<ArrayList> workList=Lists.newArrayList();
-            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同机构");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同机构");
             List<String> idCardList=getIdCardList(datas);
             String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
@@ -101,7 +102,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 }
             }
 
-            List<List<Document>> qdkindDatas = getKindDatas(datas, "sdgayjs", "同单位");
+            List<List<Document>> qdkindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "同单位");
 
             Map data = (Map) qdkindDatas.get(0).get(0).get("data");
             List<ArrayList> list = (List) data.get("data");
@@ -131,7 +132,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         }
         try {
             JSONArray jsonArray = new JSONArray();
-            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同车违章");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同车违章");
             List<String> idCardList=getIdCardList(datas);
             String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
@@ -145,14 +146,14 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 }
             }
 
-            List<List<Document>> jtkindDatas = getKindDatas(datas, "jtlhy", "公安部驾驶人基本信息");
+            List<List<Document>> jtkindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", "公安部驾驶人基本信息");
             Map data = (Map) jtkindDatas.get(0).get(0).get("data");
             List<ArrayList> list = (List) data1.get("data");
             String address=list1.get(0).get(5).toString();
             Map<String,String> strMap=OriginTest.addressResolution(address);
             String province=strMap.get("province");
 
-            List<List<Document>> jtlhykindDatas = getKindDatas(datas, "jtlhy", province+"交通违法关联信息");
+            List<List<Document>> jtlhykindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", province+"交通违法关联信息");
             Map dataJtlhy = (Map) jtkindDatas.get(0).get(0).get("data");
             List<ArrayList> jtlhyList = (List) dataJtlhy.get("data");
             List<String> idList = new ArrayList<>();
@@ -178,7 +179,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameInet", null);
         try {
-            List<List<Document>> kindDatas = getKindDatas(datas, "sdgayjs", "山东警务云上网同记录");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "山东警务云上网同记录");
             Map map = (Map) kindDatas.get(0).get(0).get("data");
             List<List> data = (List) map.get("data");
             String name = (String) data.get(0).get(4);
@@ -217,7 +218,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameCase", null);
         try {
-            List<List<Document>> kindDatas = getKindDatas(datas, "sdzfpt", "案件基本信息");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdzfpt", "案件基本信息");
 
              kindDatas.get(0);
             System.out.println("-----");
@@ -233,7 +234,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         jsonObject.put("sameAccount", null);
         try {
             JSONArray jsonArray = new JSONArray();
-            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "同户号");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同户号");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
@@ -244,7 +245,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 data1.put("source", "yunsou");
                 jsonArray.add(data1);
                 try {
-                    List<List<Document>> qiandu = getKindDatas(datas, "sdgayjs", "新常口同户亲属关系");
+                    List<List<Document>> qiandu = KindDataUtil.getKindDatas(datas, "sdgayjs", "新常口同户亲属关系");
                     Map qianduMap = (Map) qiandu.get(0).get(0).get("data");
                     qianduMap.put("source", "sdgayjs");
                     jsonArray.add(qianduMap);
@@ -278,7 +279,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         try {
-            List<List<Document>> kindDatas = getKindDatas(datas, "yunsou", "全国人口基本信息");
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "全国人口基本信息");
 
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
