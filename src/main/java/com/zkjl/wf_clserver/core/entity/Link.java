@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.File;
 import java.util.Date;
 
 /** 链接表
@@ -17,51 +18,61 @@ public class Link {
     * 
     */
    @Id
-   public String id;
+   private String id;
    /** 链接名称
     * 
     */
-   public String name;
+   private String name;
    /** 链接类型
     * 
     */
-   public String category;
+   private String category;
    /** 链接地址
     * 
     */
-   public String url;
+   private String url;
+   /**
+    * 类型
+    */
+   @Field(value = "path_type")
+   private String pathType;
    /** 发布时间
-    * 
+    *
     */
    @Field(value = "publish_date")
-   public Date publishDate;
+   private String publishDate;
    /** 是否启用
-    * 
+    *  1代表启用，-1代表禁用
     */
    @Field(value = "if_open")
-   public String ifOpen;
+   private int ifOpen;
    /** logo图标
     * 
     */
-   public String logo;
+   private String logo;
    /** 备注
     * 
     */
-   public String remark;
+   private String remark;
    /** 创建时间
     * 
     */
    @Field(value = "create_date")
-   public Date createDate;
+   private Date createDate;
    /** 更新时间
     * 
     */
    @Field(value = "update_date")
-   public Date updateDate;
+   private Date updateDate;
    /** 是否删除
     * 
     */
    @Field(value = "del_flag")
-   public String delFlag;
+   private String delFlag;
+   /**
+    * 点击量
+    */
+   @Field(value = "hot_count")
+   private int hotCount;
 
 }
