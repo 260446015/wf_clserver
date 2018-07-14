@@ -26,25 +26,7 @@ public class LogServiceImpl implements LogService {
 	@Resource(name = "primaryMongoTemplate")
 	private MongoTemplate primaryMongoTemplate;
 
-	@Override
-	public void createLog(Log log) {
-		MongoCollection<Document> collection = MongoManager.getMongoDatabase()
-				.getCollection("SysLog");
-		Document doc = new Document();
-		log.preInsert();
-		doc.append("id", log.getId());
-		doc.append("name", log.getName());
-		doc.append("sysUserId", log.getSysUserId());
-		doc.append("category", log.getCategory());
-		doc.append("description", log.getDescription());
-		doc.append("ip", log.getIp());
-		doc.append("sysUserId", log.getSysUserId());
-		doc.append("create_date", log.getCreateDate());
-		doc.append("del_flag", log.getDelFlag());
-		doc.append("args",log.getArgs());
-		collection.insertOne(doc);
 
-	}
 	@Override
 	public PageImpl<Log> findPage(Integer pageSize, Integer pageNum, String username, Date beginDate, Date endDate){
 		MongoCollection<Document> conllections = primaryMongoTemplate.getCollection("log");
