@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.util.MD5Util;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -21,10 +22,17 @@ public class FileUploadEntity implements Serializable {
     private String content;
     private String source;
     private String username;
+    private String contentType;
     private Date createTime;
     private Date updateTime;
 
+
     public void generatId() {
-        this.id = MD5Util.encrypt(this.content + this.source);
+        this.id = MD5Util.encrypt(this.content);
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }
