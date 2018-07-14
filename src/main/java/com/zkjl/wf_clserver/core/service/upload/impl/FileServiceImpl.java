@@ -9,37 +9,30 @@ import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
 import com.zkjl.wf_clserver.core.service.upload.FileService;
 import com.zkjl.wf_clserver.core.service.upload.UploadAbstractService;
 import com.zkjl.wf_clserver.core.util.PageUtil;
-import org.apache.commons.collections4.IterableUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
-import org.elasticsearch.search.sort.ScoreSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author ydw
@@ -61,12 +54,11 @@ public class FileServiceImpl implements FileService {
     private static final String CSV = "CSV";
 
     @Override
-    public void upload(MultipartFile file) throws IOException, CustomerException {
+    public JSONObject upload(MultipartFile file, HttpServletRequest request) throws IOException, CustomerException {
         String checkFile = checkFile(file);
         Class<?> targetService = FileUploadEnum.getTargetService(checkFile);
         UploadAbstractService uploadService = (UploadAbstractService) beanNameContext.getBean(targetService);
-        uploadService.upload(file);
-
+        return uploadService.upload(file, request);
     }
 
     private String checkFile(MultipartFile file) throws IOException, CustomerException {
@@ -126,18 +118,17 @@ public class FileServiceImpl implements FileService {
             //获取高亮结果
             Set<String> set = highlightFields.keySet();
             for (String str : set) {
-//              System.out.println("key="+str+" value="+highlightFields.get(str));
 
                 HighlightField highLight = highlightFields.get(str);
                 String name = highLight.getName();
-
-                Text[] texts = highLight.getFragments();
-                for (int l = 0; l < texts.length; l++) {
-                    Text text = texts[l];
-                    System.out.println(name + "=" + text);
-                    entity.setContent(text.toString());
+                if("content".equals(name)){
+                    Text[] texts = highLight.getFragments();
+                    for (int l = 0; l < texts.length; l++) {
+                        Text text = texts[l];
+                        System.out.println(name + "=" + text);
+                        entity.setContent(text.toString().replaceAll("\"","'"));
+                    }
                 }
-
             }
 
             datas.add(entity);
@@ -145,5 +136,16 @@ public class FileServiceImpl implements FileService {
         PageImpl<FileUploadEntity> page = new PageImpl<>(datas);
         PageUtil.pageBeagin(datas.size(), pageNum, pageSize, datas);
         return page;
+    }
+
+    @Override
+    public boolean delete(String source) {
+        try {
+            fileUploadEntityRepository.deleteBySource(source);
+        } catch (Exception e) {
+            logger.error("删除文件上传失败:",e.getMessage());
+            return false;
+        }
+        return true;
     }
 }
