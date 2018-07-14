@@ -206,9 +206,17 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameRoom", null);
         try {
-
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "山东警务云宾馆同房间");
+            List<String> idCardList = getIdCardList(datas);
+            String idCard1 = idCardList.get(0);
+            Map tfjMap2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<List> tfjList2 = (List) tfjMap2.get("data");
+            tfjList2 = tfjList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a, b) -> b.get(2).toString().compareTo(a.get(2).toString())).collect(Collectors.toList());
+            tfjMap2.put("source","sdgayjs");
+            tfjMap2.put("data",tfjList2);
+            jsonObject.put("sameRoom", tfjMap2);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("解析山东警务云宾馆同房间出现异常:",e.getMessage());
         }
         return jsonObject;
     }
@@ -223,7 +231,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
              kindDatas.get(0);
             System.out.println("-----");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("解析案件基本信息出现异常:",e.getMessage());
         }
         return jsonObject;
     }
