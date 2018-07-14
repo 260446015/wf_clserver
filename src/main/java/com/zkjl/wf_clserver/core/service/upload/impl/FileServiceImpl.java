@@ -21,12 +21,15 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +50,8 @@ public class FileServiceImpl implements FileService {
     private FileUploadEntityRepository fileUploadEntityRepository;
     @Resource
     private Client client;
+    @Value(value = "${web.uploadpath}")
+    private String uploadPath;
 
     private static final String xls = "xls";
     private static final String xlsx = "xlsx";
@@ -147,5 +152,20 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String uploadImg(HttpServletRequest req, MultipartFile multipartFile) {
+        String filePath = "";
+        String myFileName = multipartFile.getOriginalFilename();// 文件原名称
+        try {
+            filePath = uploadPath + "/"+myFileName;
+            filePath = filePath.replaceAll("\\/+","/");
+            File localFile = new File(filePath);
+            multipartFile.transferTo(localFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return myFileName;
     }
 }
