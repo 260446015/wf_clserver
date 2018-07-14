@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * 用户日志操作
@@ -28,16 +27,13 @@ public class LogController extends BaseController {
     /**
      * 查询
      */
-    @ApiOperation(value = "日志列表查询" , httpMethod = "GET")
-    @RequestMapping(value = "/page/list",method = RequestMethod.GET)
+    @ApiOperation(value = "日志列表查询" , httpMethod = "POST")
+    @RequestMapping(value = "/page/list",method = RequestMethod.POST)
     @ResponseBody
-    public ApiResult findPage(DefaultPageRQ defaultPageRQ,
-                              @RequestParam(required = false) String name,
-                              @RequestParam(required = false) Date beginDate,
-                              @RequestParam(required = false) Date endDate){
+    public ApiResult findPage(@RequestBody DefaultPageRQ defaultPageRQ){
         PageImpl<Log> log;
         try {
-            log = logService.findPage(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), name, beginDate, endDate);
+            log = logService.findPage(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), defaultPageRQ.getName(), defaultPageRQ.getBeginDate(), defaultPageRQ.getEndDate());
         } catch (Exception e) {
             return error("查询用户列表失败");
         }
