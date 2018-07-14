@@ -20,4 +20,6 @@ public interface FileService {
     PageImpl<FileUploadEntity> search(String search, int pageNum, int pageSize);
 
     boolean delete(String source);
+
+    String uploadImg(HttpServletRequest req, MultipartFile multipartFile);
 }
