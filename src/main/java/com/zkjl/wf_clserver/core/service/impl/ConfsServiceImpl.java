@@ -29,6 +29,7 @@ public class ConfsServiceImpl implements ConfsService {
     public boolean addConfsOrUpdate(Confs confs){
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         try {
+            confs.setSystemuser(user.getUsername());
             confs.setCreateDate(new Date());
             confsRepository.save(confs);
         } catch (Exception e) {
