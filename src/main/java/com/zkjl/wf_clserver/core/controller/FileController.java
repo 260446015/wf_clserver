@@ -5,7 +5,6 @@ import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.entity.FileUploadEntity;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.service.upload.FileService;
-import com.zkjl.wf_clserver.core.util.FileUlti;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
