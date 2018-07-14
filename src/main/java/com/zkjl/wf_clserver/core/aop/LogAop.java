@@ -62,7 +62,7 @@ public class LogAop {
             log.setIp(ip);
             log.setDescription(annotation.description());
             log.setArgs(Arrays.toString(joinPoint.getArgs()));
-            String name = user.getName();
+            String name = user.getUsername();
             log.setName(name);
             log.setCreateDate(Calendar.getInstance().getTime());
             log.setIp(ip);
@@ -80,7 +80,7 @@ public class LogAop {
             SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
             loginCount.setCreateTime(Calendar.getInstance().getTime());
             loginCount.setIp(getIpAddr(request));
-            loginCount.setName(user.getName());
+            loginCount.setName(user.getUsername());
             loginCountRepository.save(loginCount);
         } catch (Exception e) {
             e.printStackTrace();

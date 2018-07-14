@@ -47,7 +47,7 @@ public class APIController extends BaseController {
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
 		Map<String, Object> resultData = new LinkedHashMap<>();
-		String userName = this.getCurrentUser().getName();
+		String userName = this.getCurrentUser().getUsername();
 		String ip = this.getClientIP(request);
 		jobBean.setIp(ip);
 		jobBean.setUsername(userName);
@@ -87,7 +87,7 @@ public class APIController extends BaseController {
 	public @ResponseBody
 	ResultData updateJob(HttpServletRequest request, @RequestBody JobBean jobBean) throws Exception {
 		Map<String, Object> resultData = new LinkedHashMap<>();
-		String userName = this.getCurrentUser().getName();
+		String userName = this.getCurrentUser().getUsername();
 		String ip = this.getClientIP(request);
 		jobBean.setIp(ip);
 		jobBean.setUsername(userName);
