@@ -23,4 +23,13 @@ public class KindDataUtil {
         resultDatas.add(document2);
         return resultDatas;
     }
+
+    public static List<Document> getKindData(List<Document> datas, String platKind, String label) {
+        List<Document> datas1 = datas.stream().filter(action -> action.getString("resid").equals(platKind)).collect(Collectors.toList());
+        List<Document> document1 = (List<Document>) datas1.get(0).get("data");
+        if(!StringUtils.isBlank(label)){
+            document1 = document1.stream().filter(action -> action.getString("label").equals(label)).collect(Collectors.toList());
+        }
+        return document1;
+    }
 }
