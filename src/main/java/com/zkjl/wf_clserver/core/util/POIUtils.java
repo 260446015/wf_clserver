@@ -2,25 +2,19 @@ package com.zkjl.wf_clserver.core.util;
 
 import com.monitorjbl.xlsx.StreamingReader;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -38,54 +32,31 @@ public class POIUtils {
 	 * @throws IOException
 	 */
 	public static List<List<String[]>> readExcel(MultipartFile file) throws IOException, CustomerException {
-		//检查文件
-//		checkFile(file);
 		//获得Workbook工作薄对象
 		Workbook workbook = getWorkBook(file);
 		//根据每个sheet返回不同sheet的结合
         List<List<String[]>> bySheet = new ArrayList<>();
-
+		String reg = "^.*\\d{6}.*$";
 		if(workbook != null){
 			for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
-                //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
-                List<String[]> list = new ArrayList<>();
-				//获得当前sheet工作表
+				List<String[]> list = new ArrayList<>();
 				Sheet sheet = workbook.getSheetAt(sheetNum);
-				if(sheet == null){
-					continue;
-				}
-				//获得当前sheet的开始行
-				int firstRowNum  = sheet.getFirstRowNum();
-				//获得当前sheet的结束行
-				int lastRowNum = sheet.getLastRowNum();
-				//获取标题总列数
-				int totalCell = 0;
-				//循环除了第一行的所有行
-				for(int rowNum = firstRowNum;rowNum <= lastRowNum;rowNum++){
+				Boolean flag = null;
+                for (Row row : sheet){
+					String[] cells = new String[row.getLastCellNum()];
 
-					//获得当前行
-					Row row = sheet.getRow(rowNum);
-					if(row == null){
-						continue;
+					for (int i = 0; i < row.getLastCellNum(); i++) {
+						Cell cell = row.getCell(i);
+						cells[i] = (cell == null?" ":cell.getStringCellValue());
 					}
-					if(rowNum == 0){
-						totalCell = row.getPhysicalNumberOfCells();
+					if(flag == null){
+						flag = Arrays.toString(cells).matches(reg);
 					}
-					if(totalCell == 0){
-						throw new RuntimeException("第一行不为标题");
-					}
-					//获得当前行的开始列
-					int firstCellNum = row.getFirstCellNum();
-					//获得当前行的列数
-//					int lastCellNum = row.getPhysicalNumberOfCells();
-					String[] cells = new String[totalCell];
-					//循环当前行
-					for(int cellNum = firstCellNum; cellNum < totalCell;cellNum++){
-						Cell cell = row.getCell(cellNum);
-						cells[cellNum] = getCellValue(cell);
+					if (flag){
+						throw new CustomerException("导入数据中第一行必须为标题栏，而不是正文!");
 					}
 					if(cells.length <= 1){
-						throw new CustomerException("Excel导入应指定第一行为标题，从第二行开始为内容。请确定格式!!!");
+						continue;
 					}
 					list.add(cells);
 				}
@@ -110,10 +81,8 @@ public class POIUtils {
 				workbook = new HSSFWorkbook(is);
 			}else if(fileName.endsWith(xlsx)){
 				//2007
-				workbook = StreamingReader.builder()
-						.rowCacheSize(100)  //缓存到内存中的行数，默认是10
-						.bufferSize(4096)  //读取资源时，缓存到内存的字节大小，默认是1024
-						.open(is);
+//				workbook = new XSSFWorkbook(is);
+				workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(is);
 			}
 		} catch (IOException e) {
 			logger.info(e.getMessage());
@@ -164,11 +133,27 @@ public class POIUtils {
 			inputStream = file.getInputStream();
 			reader = new BufferedReader(new InputStreamReader(inputStream,"gbk"));//传参
 			String line = "";
+			String reg = "^.*\\d{6}.*$";
+			Boolean flag = null;
 			while ((line = reader.readLine())!= null){
                 String data = line;
-                String[] split1 = data.split(split);//传参
+                if(flag == null){
+                	flag = data.matches(reg);
+				}
+                if(flag){
+                	throw new CustomerException("导入数据中第一行必须为标题栏，而不是正文!");
+				}
+                String[] split1 = data.split(split,-1);//传参
+				for (int i = 0; i < split1.length; i++) {
+					if(StringUtils.isNotBlank(split1[i])){
+						if(" ".equals(split1[i])){
+							continue;
+						}
+						split1[i] = split1[i].trim();
+					}
+				}
                 if(split1.length <= 1){
-                    throw new CustomerException("请指定正确的分隔符");
+                    throw new CustomerException("导入数据解析分隔符错误,请核查分隔符是否正确!");
                 }
                 datas.add(split1);
             }
