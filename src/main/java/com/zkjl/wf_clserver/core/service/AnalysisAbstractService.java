@@ -19,7 +19,7 @@ public abstract class AnalysisAbstractService {
         result.putAll(analysisSameInet(cacheDatasByJobId));
         result.putAll(analysisSameViolation(cacheDatasByJobId));
         result.putAll(analysisSameWork(cacheDatasByJobId));
-        result.putAll(analysisSamePhone(cacheDatasByJobId));
+        result.putAll(analysisSamePhone(word1, word2));
         result.putAll(analysisSameAddress(cacheDatasByJobId));
         result.putAll(analysisSameMember(cacheDatasByJobId));
         return result;
@@ -38,7 +38,7 @@ public abstract class AnalysisAbstractService {
     /**
      * 同手机号
      */
-    protected abstract JSONObject analysisSamePhone(List<List<Document>> datas);
+    protected abstract JSONObject analysisSamePhone(String word1, String word2);
 
     /**
      * 同单位

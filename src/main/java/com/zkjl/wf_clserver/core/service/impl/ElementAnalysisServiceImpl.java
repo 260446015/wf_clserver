@@ -3,6 +3,7 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.zkjl.wf_clserver.core.repository.plover.JobBeanRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import com.zkjl.wf_clserver.core.util.KindDataUtil;
@@ -70,7 +71,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     }
 
     @Override
-    protected JSONObject analysisSamePhone(List<List<Document>> datas) {
+    protected JSONObject analysisSamePhone(String word1, String word2) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("samePhone",null);
         return jsonObject;
@@ -191,10 +192,16 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             System.out.println(collect);
             System.out.println(collect2);
             List list = new ArrayList();
-            list.add(collect);
-            list.add(collect2);
-            map.put("data", list);
-            jsonObject.put("sameInet", map);
+            if(collect.size() != 0){
+                list.add(collect);
+            }
+            if(collect2.size() != 0){
+                list.add(collect2);
+            }
+            if(list.size() != 0){
+                map.put("data", list);
+                jsonObject.put("sameInet", map);
+            }
         } catch (Exception e) {
             logger.error("解析同上网出现异常:",e.getMessage());
         }
@@ -206,6 +213,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameRoom", null);
         try {
+            JSONArray jsonArray = new JSONArray();
             List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "山东警务云宾馆同房间");
             List<String> idCardList = getIdCardList(datas);
             String idCard1 = idCardList.get(0);
@@ -213,8 +221,36 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             List<List> tfjList2 = (List) tfjMap2.get("data");
             tfjList2 = tfjList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a, b) -> b.get(2).toString().compareTo(a.get(2).toString())).collect(Collectors.toList());
             tfjMap2.put("source","sdgayjs");
+            tfjMap2.put("label","山东警务云宾馆同房间");
             tfjMap2.put("data",tfjList2);
-            jsonObject.put("sameRoom", tfjMap2);
+            if(tfjList2.size() != 0){
+                jsonArray.add(tfjMap2);
+            }
+            //查询山东警务云宾馆同宾馆
+            List<List<Document>> kindDatas2 = KindDataUtil.getKindDatas(datas, "sdgayjs", "山东警务云宾馆同宾馆");
+            Map tbgMap2 = (Map) kindDatas2.get(1).get(0).get("data");
+            List<List> tbgList2 = (List) tfjMap2.get("data");
+            tbgList2 = tbgList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a,b) -> b.get(3).toString().compareTo(b.get(3).toString())).collect(Collectors.toList());
+            tbgMap2.put("source","sdgayjs");
+            tbgMap2.put("label","山东警务云宾馆同宾馆");
+            tbgMap2.put("data",tbgList2);
+            if(tbgList2.size() != 0){
+                jsonArray.add(tbgMap2);
+            }
+            //查询宾馆疑似同住人员
+            List<List<Document>> kindDatas3 = KindDataUtil.getKindDatas(datas, "sdgayjs", "宾馆疑似同住人员");
+            Map ystzMap2 = (Map) kindDatas3.get(1).get(0).get("data");
+            List<List> ystzList2 = (List) ystzMap2.get("data");
+            ystzList2 = ystzList2.stream().filter(action -> action.get(1).toString().equals(idCard1)).sorted((a,b) -> b.get(0).toString().compareTo(b.get(0).toString())).collect(Collectors.toList());
+            tbgMap2.put("source","sdgayjs");
+            ystzMap2.put("label","宾馆疑似同住人员");
+            ystzMap2.put("data",ystzList2);
+            if(ystzList2.size() != 0){
+                jsonArray.add(ystzMap2);
+            }
+            if(jsonArray.size() != 0){
+                jsonObject.put("sameRoom", jsonArray);
+            }
         } catch (Exception e) {
             logger.error("解析山东警务云宾馆同房间出现异常:",e.getMessage());
         }
