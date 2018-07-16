@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class ElementAnalysisServiceImpl extends AnalysisAbstractService implements ElementAnalysisService {
 
-    @Resource(name = "secondaryMongoTemplate")
+    @Resource(name = "primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);

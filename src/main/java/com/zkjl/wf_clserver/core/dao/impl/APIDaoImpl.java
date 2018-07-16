@@ -23,8 +23,6 @@ public class APIDaoImpl implements APIDao {
 
 	@Resource(name = "primaryMongoTemplate")
 	private MongoTemplate primaryMongoTemplate;
-	@Resource(name = "secondaryMongoTemplate")
-	private MongoTemplate secondaryMongoTemplate;
 
 	private final String COLL_DATAS = "coll_datas";
 	private final String COLL_USERS = "coll_users";
@@ -40,7 +38,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public boolean saveJob(JobBean jobBean) throws Exception {
 		try {
-			secondaryMongoTemplate.insert(jobBean, COLL_JOBS);
+			primaryMongoTemplate.insert(jobBean, COLL_JOBS);
 			return true;
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
@@ -56,8 +54,8 @@ public class APIDaoImpl implements APIDao {
 	public JobBean cacheQuery(String hash) throws Exception {
 		try {
 			Query query = new Query();
-			query.addCriteria(Criteria.where("hash").is(hash)).with(Sort.by(Direction.DESC,"exetime"));
-			return secondaryMongoTemplate.findOne(query, JobBean.class, COLL_JOBS);
+			query.addCriteria(Criteria.where("hash").is(hash));
+			return primaryMongoTemplate.findOne(query, JobBean.class, COLL_JOBS);
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
 		}
@@ -70,7 +68,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public Document retrieveData(String jobid, String resid, long version) throws Exception {
 		try {
-			return secondaryMongoTemplate.findOne(new Query(Criteria.where("jobid").is(jobid).and("resid").is(resid).and("exetime").gt(version)).with(new Sort(Direction.DESC, "exetime")), Document.class, COLL_DATAS);
+			return primaryMongoTemplate.findOne(new Query(Criteria.where("jobid").is(jobid).and("resid").is(resid).and("exetime").gt(version)).with(new Sort(Direction.DESC, "exetime")), Document.class, COLL_DATAS);
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
 		}
@@ -107,7 +105,7 @@ public class APIDaoImpl implements APIDao {
 	@Override
 	public boolean saveMaterial(Document doc) throws Exception {
 		try {
-			secondaryMongoTemplate.insert(doc, COLL_DATAS);
+			primaryMongoTemplate.insert(doc, COLL_DATAS);
 			return true;
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
