@@ -50,6 +50,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
+        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameAddress", null);
         try {
@@ -61,7 +62,11 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             String address1 = list1.get(0).get(7).toString();
             String address2 = list2.get(0).get(7).toString();
             if (address1.equals(address2)) {
-                jsonObject.put("sameAddress", address1);
+                data1.put("source","yunsou");
+                data1.put("label", "同住址");
+                data1.put("data", list1.get(0));
+                jsonArray.add(data1);
+                jsonObject.put("sameAddress", jsonArray);
             }
         } catch (Exception e) {
             logger.error("查询同住址出现异常:", e.getMessage());
@@ -98,6 +103,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 ids.add(id);
                 if (id.equals(idcard)) {
                     data1.put("source", "yunsou");
+                    data1.put("label", "同机构");
+                    data1.put("data", datum);
                     jsonArray.add(data1);
                 }
             }
@@ -111,6 +118,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     String id = (String) datum.get(1);
                     if (id.equals(idcard)) {
                         data.put("source", "sdgayjs");
+                        data.put("label", "同单位");
+                        data.put("data", datum);
                         jsonArray.add(data);
                     }
                 }
@@ -145,6 +154,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 String id = (String) datum.get(7);
                 if (id.equals(idcard)) {
                     data1.put("source", "yunsou");
+                    data1.put("label", "同车违章");
+                    data1.put("data", datum);
                     jsonArray.add(data1);
                 }
             }
@@ -160,6 +171,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 String id = (String) datum.get(1);
                 if (id.equals(idcard)) {
                     data1.put("source", "sdgayjs");
+                    data1.put("label", "同违章");
+                    data1.put("data", datum);
                     jsonArray.add(data1);
                 }
             }
@@ -184,6 +197,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 String id = (String) datum.get(8);
                 if (id.equals(idcard)) {
                     dataJtlhy.put("source", "jtlhy");
+                    dataJtlhy.put("label", province + "交通违法关联信息");
+                    dataJtlhy.put("data", datum);
                     jsonArray.add(dataJtlhy);
                 }
             }
