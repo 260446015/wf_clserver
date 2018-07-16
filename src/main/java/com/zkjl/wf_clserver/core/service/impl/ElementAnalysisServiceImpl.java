@@ -51,20 +51,20 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameAddress",null);
+        jsonObject.put("sameAddress", null);
         try {
             List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同住址");
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<ArrayList> list2 = (List) data2.get("data");
-            String address1=list1.get(0).get(7).toString();
-            String address2=list2.get(0).get(7).toString();
-            if(address1.equals(address2)){
-                jsonObject.put("sameAddress",address1);
+            String address1 = list1.get(0).get(7).toString();
+            String address2 = list2.get(0).get(7).toString();
+            if (address1.equals(address2)) {
+                jsonObject.put("sameAddress", address1);
             }
         } catch (Exception e) {
-            logger.error("查询同住址出现异常:",e.getMessage());
+            logger.error("查询同住址出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -72,7 +72,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSamePhone(String word1, String word2) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone",null);
+        jsonObject.put("samePhone", null);
         return jsonObject;
     }
 
@@ -82,13 +82,13 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             throw new RuntimeException();
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameWork",null);
+        jsonObject.put("sameWork", null);
         try {
             JSONArray jsonArray = new JSONArray();
-            List<ArrayList> workList=Lists.newArrayList();
+            List<ArrayList> workList = Lists.newArrayList();
             List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同机构");
-            List<String> idCardList=getIdCardList(datas);
-            String idcard=idCardList.get(1);
+            List<String> idCardList = getIdCardList(datas);
+            String idcard = idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<String> ids = new ArrayList<>();
@@ -96,32 +96,32 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                 List datum = list1.get(i);
                 String id = (String) datum.get(0);
                 ids.add(id);
-                if(id.equals(idcard)){
+                if (id.equals(idcard)) {
                     data1.put("source", "yunsou");
                     jsonArray.add(data1);
                 }
             }
             try {
-            List<List<Document>> qdkindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "同单位");
+                List<List<Document>> qdkindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "同单位");
 
-            Map data = (Map) qdkindDatas.get(0).get(0).get("data");
-            List<ArrayList> list = (List) data.get("data");
-            for (int i = 0; i < list.size(); i++) {
-                List datum = list.get(i);
-                String id = (String) datum.get(1);
-                if(id.equals(idcard)){
-                    data.put("source", "sdgayjs");
-                    jsonArray.add(data);
+                Map data = (Map) qdkindDatas.get(0).get(0).get("data");
+                List<ArrayList> list = (List) data.get("data");
+                for (int i = 0; i < list.size(); i++) {
+                    List datum = list.get(i);
+                    String id = (String) datum.get(1);
+                    if (id.equals(idcard)) {
+                        data.put("source", "sdgayjs");
+                        jsonArray.add(data);
+                    }
                 }
-            }
             } catch (Exception e) {
-                logger.error("查询同机构出现异常:",e.getMessage());
+                logger.error("查询同机构出现异常:", e.getMessage());
             }
-        if(workList.size()>0){
-                jsonObject.put("sameWork",jsonArray);
+            if (workList.size() > 0) {
+                jsonObject.put("sameWork", jsonArray);
             }
         } catch (Exception e) {
-            logger.error("查询同机构出现异常:",e.getMessage());
+            logger.error("查询同机构出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -129,10 +129,10 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sameViolation",null);
+        jsonObject.put("sameViolation", null);
         JSONArray jsonArray = new JSONArray();
-        List<String> idCardList=getIdCardList(datas);
-        String idcard=idCardList.get(1);
+        List<String> idCardList = getIdCardList(datas);
+        String idcard = idCardList.get(1);
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
@@ -148,35 +148,51 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     jsonArray.add(data1);
                 }
             }
-            } catch (Exception e) {
-            logger.error("查询同车违章出现异常:",e.getMessage());
+        } catch (Exception e) {
+            logger.error("查询同车违章出现异常:", e.getMessage());
+        }
+        try {
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "同违章");
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            for (int i = 0; i < list1.size(); i++) {
+                List datum = list1.get(i);
+                String id = (String) datum.get(1);
+                if (id.equals(idcard)) {
+                    data1.put("source", "sdgayjs");
+                    jsonArray.add(data1);
+                }
             }
-            try {
+        } catch (Exception e) {
+            logger.error("查询同车违章出现异常:", e.getMessage());
+        }
+
+        try {
             List<List<Document>> jtkindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", "公安部驾驶人基本信息");
             Map data = (Map) jtkindDatas.get(0).get(0).get("data");
             List<ArrayList> list = (List) data.get("data");
-            String address=list.get(0).get(5).toString();
-            Map<String,String> strMap=OriginTest.addressResolution(address);
-            String province=strMap.get("province");
+            String address = list.get(0).get(5).toString();
+            Map<String, String> strMap = OriginTest.addressResolution(address);
+            String province = strMap.get("province");
 
-            List<List<Document>> jtlhykindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", province+"交通违法关联信息");
+            List<List<Document>> jtlhykindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", province + "交通违法关联信息");
             Map dataJtlhy = (Map) jtkindDatas.get(0).get(0).get("data");
             List<ArrayList> jtlhyList = (List) dataJtlhy.get("data");
             List<String> idList = new ArrayList<>();
             for (int i = 0; i < jtlhyList.size(); i++) {
                 List datum = jtlhyList.get(i);
                 String id = (String) datum.get(8);
-                if(id.equals(idcard)){
+                if (id.equals(idcard)) {
                     dataJtlhy.put("source", "jtlhy");
                     jsonArray.add(dataJtlhy);
                 }
             }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(jsonArray.size() != 0){
-                jsonObject.put("sameViolation", jsonArray);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (jsonArray.size() != 0) {
+            jsonObject.put("sameViolation", jsonArray);
+        }
 
         return jsonObject;
     }
@@ -198,18 +214,18 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             System.out.println(collect);
             System.out.println(collect2);
             List list = new ArrayList();
-            if(collect.size() != 0){
+            if (collect.size() != 0) {
                 list.add(collect);
             }
-            if(collect2.size() != 0){
+            if (collect2.size() != 0) {
                 list.add(collect2);
             }
-            if(list.size() != 0){
+            if (list.size() != 0) {
                 map.put("data", list);
                 jsonObject.put("sameInet", map);
             }
         } catch (Exception e) {
-            logger.error("解析同上网出现异常:",e.getMessage());
+            logger.error("解析同上网出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -226,39 +242,39 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             Map tfjMap2 = (Map) kindDatas.get(1).get(0).get("data");
             List<List> tfjList2 = (List) tfjMap2.get("data");
             tfjList2 = tfjList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a, b) -> b.get(2).toString().compareTo(a.get(2).toString())).collect(Collectors.toList());
-            tfjMap2.put("source","sdgayjs");
-            tfjMap2.put("label","山东警务云宾馆同房间");
-            tfjMap2.put("data",tfjList2);
-            if(tfjList2.size() != 0){
+            tfjMap2.put("source", "sdgayjs");
+            tfjMap2.put("label", "山东警务云宾馆同房间");
+            tfjMap2.put("data", tfjList2);
+            if (tfjList2.size() != 0) {
                 jsonArray.add(tfjMap2);
             }
             //查询山东警务云宾馆同宾馆
             List<List<Document>> kindDatas2 = KindDataUtil.getKindDatas(datas, "sdgayjs", "山东警务云宾馆同宾馆");
             Map tbgMap2 = (Map) kindDatas2.get(1).get(0).get("data");
             List<List> tbgList2 = (List) tfjMap2.get("data");
-            tbgList2 = tbgList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a,b) -> b.get(3).toString().compareTo(b.get(3).toString())).collect(Collectors.toList());
-            tbgMap2.put("source","sdgayjs");
-            tbgMap2.put("label","山东警务云宾馆同宾馆");
-            tbgMap2.put("data",tbgList2);
-            if(tbgList2.size() != 0){
+            tbgList2 = tbgList2.stream().filter(action -> action.get(0).toString().equals(idCard1)).sorted((a, b) -> b.get(3).toString().compareTo(b.get(3).toString())).collect(Collectors.toList());
+            tbgMap2.put("source", "sdgayjs");
+            tbgMap2.put("label", "山东警务云宾馆同宾馆");
+            tbgMap2.put("data", tbgList2);
+            if (tbgList2.size() != 0) {
                 jsonArray.add(tbgMap2);
             }
             //查询宾馆疑似同住人员
             List<List<Document>> kindDatas3 = KindDataUtil.getKindDatas(datas, "sdgayjs", "宾馆疑似同住人员");
             Map ystzMap2 = (Map) kindDatas3.get(1).get(0).get("data");
             List<List> ystzList2 = (List) ystzMap2.get("data");
-            ystzList2 = ystzList2.stream().filter(action -> action.get(1).toString().equals(idCard1)).sorted((a,b) -> b.get(0).toString().compareTo(b.get(0).toString())).collect(Collectors.toList());
-            tbgMap2.put("source","sdgayjs");
-            ystzMap2.put("label","宾馆疑似同住人员");
-            ystzMap2.put("data",ystzList2);
-            if(ystzList2.size() != 0){
+            ystzList2 = ystzList2.stream().filter(action -> action.get(1).toString().equals(idCard1)).sorted((a, b) -> b.get(0).toString().compareTo(b.get(0).toString())).collect(Collectors.toList());
+            tbgMap2.put("source", "sdgayjs");
+            ystzMap2.put("label", "宾馆疑似同住人员");
+            ystzMap2.put("data", ystzList2);
+            if (ystzList2.size() != 0) {
                 jsonArray.add(ystzMap2);
             }
-            if(jsonArray.size() != 0){
+            if (jsonArray.size() != 0) {
                 jsonObject.put("sameRoom", jsonArray);
             }
         } catch (Exception e) {
-            logger.error("解析山东警务云宾馆同房间出现异常:",e.getMessage());
+            logger.error("解析山东警务云宾馆同房间出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -270,10 +286,10 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         try {
             List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "sdzfpt", "案件基本信息");
 
-             kindDatas.get(0);
+            kindDatas.get(0);
             System.out.println("-----");
         } catch (Exception e) {
-            logger.error("解析案件基本信息出现异常:",e.getMessage());
+            logger.error("解析案件基本信息出现异常:", e.getMessage());
         }
         return jsonObject;
     }
@@ -303,7 +319,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     e.printStackTrace();
                 }
             }
-            if(jsonArray.size() != 0){
+            if (jsonArray.size() != 0) {
                 jsonObject.put("sameAccount", jsonArray);
             }
         } catch (Exception e) {
@@ -324,7 +340,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     }
 
     public List<String> getIdCardList(List<List<Document>> datas) {
-        List<String> idList= Lists.newArrayList();
+        List<String> idList = Lists.newArrayList();
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
@@ -335,12 +351,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             Map data2 = (Map) kindDatas.get(1).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             List<ArrayList> list2 = (List) data2.get("data");
-            String idcard=list1.get(0).get(0).toString();
+            String idcard = list1.get(0).get(0).toString();
             idList.add(idcard);
-            String idcard2=list2.get(0).get(0).toString();
+            String idcard2 = list2.get(0).get(0).toString();
             idList.add(idcard2);
         } catch (Exception e) {
-            logger.error("查询身份证号出现异常:",e.getMessage());
+            logger.error("查询身份证号出现异常:", e.getMessage());
         }
         return idList;
     }
