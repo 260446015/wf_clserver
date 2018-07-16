@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/track")
 public class TrackController {
 
-    @Resource(name = "secondaryMongoTemplate")
-    private MongoTemplate secondMongoTemplate;
+    @Resource(name = "primaryMongoTemplate")
+    private MongoTemplate primaryMongoTemplate;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(TrackController.class);
 
@@ -44,7 +44,7 @@ public class TrackController {
     public List<TrackDto> get(HttpServletRequest req, TrackRQ trackRQ) throws Exception {
         List<TrackDto> map = new ArrayList<>();
         try {
-            List<Document> documents = secondMongoTemplate.find(new Query(Criteria.where("jobid").is(trackRQ.getJobid())), Document.class, "coll_datas");
+            List<Document> documents = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(trackRQ.getJobid())), Document.class, "coll_datas");
             try {
                 List<ArrayList> dataList = getTrackData(documents, "sdgayjs", "宾馆住宿");
                 List obj=dataList.get(0);

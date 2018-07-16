@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class ElementAnalysisServiceImpl extends AnalysisAbstractService implements ElementAnalysisService {
 
     @Resource(name = "secondaryMongoTemplate")
-    private MongoTemplate secondMongoTemplate;
+    private MongoTemplate primaryMongoTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);
 
@@ -332,8 +332,8 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected List<List<Document>> getCacheDatasByJobId(String jobId1, String jobId2) {
         List<List<Document>> list = new ArrayList<>(2);
-        List<Document> documents = secondMongoTemplate.find(new Query(Criteria.where("jobid").is(jobId1)), Document.class, "coll_datas");
-        List<Document> documents2 = secondMongoTemplate.find(new Query(Criteria.where("jobid").is(jobId2)), Document.class, "coll_datas");
+        List<Document> documents = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobId1)), Document.class, "coll_datas");
+        List<Document> documents2 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobId2)), Document.class, "coll_datas");
         list.add(documents);
         list.add(documents2);
         return list;

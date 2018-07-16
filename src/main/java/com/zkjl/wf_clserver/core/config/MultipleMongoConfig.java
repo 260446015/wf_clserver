@@ -24,19 +24,11 @@ public class MultipleMongoConfig {
 
     @Resource(name = "kklcMongoProperties")
     private MongoProperties kklcMongoProperties;
-    @Resource(name = "ploverMongoProperties")
-    private MongoProperties ploverMongoProperties;
 
     @Primary
     @Bean(name = KklcMongoConfig.MONGO_TEMPLATE)
     public MongoTemplate primaryMongoTemplate() throws Exception {
         return new MongoTemplate(primaryFactory());
-    }
-
-    @Bean
-    @Qualifier(PloverMongoConfig.MONGO_TEMPLATE)
-    public MongoTemplate secondaryMongoTemplate() throws Exception {
-        return new MongoTemplate(secondaryFactory());
     }
 
     @Bean
@@ -46,9 +38,4 @@ public class MultipleMongoConfig {
                 kklcMongoProperties.getDatabase());
     }
 
-    @Bean
-    public MongoDbFactory secondaryFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(ploverMongoProperties.getHost(), ploverMongoProperties.getPort()),
-                ploverMongoProperties.getDatabase());
-    }
 }
