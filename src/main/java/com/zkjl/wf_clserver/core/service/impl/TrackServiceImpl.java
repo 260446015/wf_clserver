@@ -146,41 +146,5 @@ public class TrackServiceImpl implements TrackService {
 		dataMap.put("count", dataList.size());
 		return dataMap;
 	}
-	
-	@Override
-	public Map<String, Object> findTrackTimeLine(TrackRQ trackRQ) {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		if(trackRQ.getTrackType().equals("")||trackRQ.getTrackType().equals("1")){
-			Map<String, Object> stayMap=findStay(trackRQ.getIdCard(),trackRQ.getBeginDate(),trackRQ.getEndDate(),trackRQ.getCity());
-			dataMap.put("stayList", stayMap.get("list"));
-		}else if(trackRQ.getTrackType().equals("2")){
-			//查询网吧上网记录
-			Map<String, Object> internetBarMap=findInternetBar(trackRQ.getIdCard(),trackRQ.getBeginDate(),trackRQ.getEndDate(),trackRQ.getCity());
-			dataMap.put("internetBarList", internetBarMap.get("list"));
-		}else if(trackRQ.getTrackType().equals("3")){
-			//查询乘坐客车记录		
-			dataMap.put("busList", null);
-		}else if(trackRQ.getTrackType().equals("4")){
-			//查询乘坐火车记录
-			Map<String, Object> takeTrainMap=findTakeTrain(trackRQ.getIdCard(),trackRQ.getBeginDate(),trackRQ.getEndDate(),trackRQ.getCity());
-			dataMap.put("takeTrainList", takeTrainMap.get("list"));
-		}else if(trackRQ.getTrackType().equals("5")){
-			//查询乘坐飞机记录
-			Map<String, Object> takePlaneMap=findTakePlane(trackRQ.getIdCard(),trackRQ.getBeginDate(),trackRQ.getEndDate(),trackRQ.getCity());
-			dataMap.put("takePlaneList", takePlaneMap.get("list"));
-		}else if(trackRQ.getTrackType().equals("6")){
-			//查询出入境记录
-			Map<String, Object> entryExitMap=findEntryExit(trackRQ.getIdCard(),trackRQ.getBeginDate(),trackRQ.getEndDate(),trackRQ.getCity());
-			dataMap.put("entryExitList", entryExitMap.get("list"));
-		}else if(trackRQ.getTrackType().equals("7")){
-			//查询人像轨迹记录
-			dataMap.put("portraitList", null);
-		}else if(trackRQ.getTrackType().equals("8")){
-			//查询628轨迹信息
-			dataMap.put("trajectory", null);
-		}
-		
-		return dataMap;
-	}
 
 }

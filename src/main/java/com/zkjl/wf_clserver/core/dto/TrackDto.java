@@ -10,4 +10,5 @@ public class TrackDto {
     private String address;
     private String stayDate;
     private List dataList;
+    private List columns;
 }

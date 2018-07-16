@@ -42,10 +42,5 @@ public interface TrackService {
 	 * @return
 	 */
 	public Map<String, Object> findEntryExit(String idCard, Date beginDate, Date endDate, String city);
-	/**
-	 * 根据时间段加类型查询
-	 * @param trackRQ
-	 * @return
-	 */
-	public Map<String, Object> findTrackTimeLine(TrackRQ trackRQ);
+
 }

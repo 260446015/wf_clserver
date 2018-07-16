@@ -3,7 +3,6 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
-import com.zkjl.wf_clserver.core.repository.plover.JobBeanRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import com.zkjl.wf_clserver.core.util.KindDataUtil;
