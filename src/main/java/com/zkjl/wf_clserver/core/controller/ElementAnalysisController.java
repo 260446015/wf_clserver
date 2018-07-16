@@ -59,7 +59,7 @@ public class ElementAnalysisController extends BaseController {
         Map<String,Object> map=new HashMap<>();
         PageImpl<Document> result=null;
         try {
-            List<Document> documents = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(analysisRQ.getJobid())), Document.class, "coll_datas");
+            List<Document> documents = secondaryMongoTemplate.find(new Query(Criteria.where("jobid").is(analysisRQ.getJobid())), Document.class, "coll_datas");
             try {
                 List<ArrayList> all = KindDataUtil.getTrackData(documents, analysisRQ.getPlatform(), analysisRQ.getDataType());
                 int totalCount;

@@ -1,6 +1,7 @@
 package com.zkjl.wf_clserver.core.util;
 
 import com.google.common.collect.Lists;
+import com.mongodb.BasicDBObject;
 import org.apache.commons.lang.StringUtils;
 import org.bson.Document;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class KindDataUtil {
     public static List<Document> getKindData(List<Document> datas, String platKind, String label) {
         List<Document> document1=Lists.newArrayList();
         try {
-        List<Document> datas1 = datas.stream().filter(action -> action.getString("resid").equals(platKind)).collect(Collectors.toList());
+        List<Document> datas1 = datas.stream().filter(action -> action.getString("resid").equals(platKind)).sorted((a, b) -> b.get("exetime").toString().compareTo(b.get("exetime").toString())).limit(1).collect(Collectors.toList());
         document1 = (List<Document>) datas1.get(0).get("data");
         if(!StringUtils.isBlank(label)){
             document1 = document1.stream().filter(action -> action.getString("label").equals(label)).collect(Collectors.toList());
