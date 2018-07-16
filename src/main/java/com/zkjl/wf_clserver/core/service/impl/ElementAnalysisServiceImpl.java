@@ -101,7 +101,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     jsonArray.add(data1);
                 }
             }
-
+            try {
             List<List<Document>> qdkindDatas = KindDataUtil.getKindDatas(datas, "sdgayjs", "同单位");
 
             Map data = (Map) qdkindDatas.get(0).get(0).get("data");
@@ -114,7 +114,10 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
                     jsonArray.add(data);
                 }
             }
-            if(workList.size()>0){
+            } catch (Exception e) {
+                logger.error("查询同机构出现异常:",e.getMessage());
+            }
+        if(workList.size()>0){
                 jsonObject.put("sameWork",jsonArray);
             }
         } catch (Exception e) {
@@ -127,29 +130,32 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     protected JSONObject analysisSameViolation(List<List<Document>> datas) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sameViolation",null);
+        JSONArray jsonArray = new JSONArray();
+        List<String> idCardList=getIdCardList(datas);
+        String idcard=idCardList.get(1);
         if (datas.size() == 0) {
             throw new RuntimeException();
         }
         try {
-            JSONArray jsonArray = new JSONArray();
             List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同车违章");
-            List<String> idCardList=getIdCardList(datas);
-            String idcard=idCardList.get(1);
             Map data1 = (Map) kindDatas.get(0).get(0).get("data");
             List<ArrayList> list1 = (List) data1.get("data");
             for (int i = 0; i < list1.size(); i++) {
                 List datum = list1.get(i);
                 String id = (String) datum.get(7);
-                if(id.equals(idcard)){
+                if (id.equals(idcard)) {
                     data1.put("source", "yunsou");
                     jsonArray.add(data1);
                 }
             }
-
+            } catch (Exception e) {
+            logger.error("查询同车违章出现异常:",e.getMessage());
+            }
+            try {
             List<List<Document>> jtkindDatas = KindDataUtil.getKindDatas(datas, "jtlhy", "公安部驾驶人基本信息");
             Map data = (Map) jtkindDatas.get(0).get(0).get("data");
-            List<ArrayList> list = (List) data1.get("data");
-            String address=list1.get(0).get(5).toString();
+            List<ArrayList> list = (List) data.get("data");
+            String address=list.get(0).get(5).toString();
             Map<String,String> strMap=OriginTest.addressResolution(address);
             String province=strMap.get("province");
 
@@ -158,19 +164,20 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             List<ArrayList> jtlhyList = (List) dataJtlhy.get("data");
             List<String> idList = new ArrayList<>();
             for (int i = 0; i < jtlhyList.size(); i++) {
-                List datum = list1.get(i);
+                List datum = jtlhyList.get(i);
                 String id = (String) datum.get(8);
                 if(id.equals(idcard)){
                     dataJtlhy.put("source", "jtlhy");
                     jsonArray.add(dataJtlhy);
                 }
             }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             if(jsonArray.size() != 0){
                 jsonObject.put("sameViolation", jsonArray);
             }
-        } catch (Exception e) {
-            logger.error("查询同车违章出现异常:",e.getMessage());
-        }
+
         return jsonObject;
     }
 
