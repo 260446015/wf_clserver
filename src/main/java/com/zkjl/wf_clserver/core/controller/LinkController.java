@@ -37,7 +37,6 @@ public class LinkController extends BaseController {
      * 链接添加或修改
      */
     @PostMapping("/save")
-    @SystemControllerLog(description = "超链接添加/修改")
     @ApiOperation(value = "链接添加", httpMethod = "POST")
     public ApiResult save(@RequestBody Link link) throws Exception {
         return success(linkService.saveOrUpdate(link));

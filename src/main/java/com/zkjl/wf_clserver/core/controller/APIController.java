@@ -114,7 +114,6 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/retrieveData")
-	@SystemControllerLog(description = "获取爬虫返回数据")
 	public @ResponseBody
 	ResultData retrieveData(@RequestBody String data) throws Exception {
 		JSONObject json = JSONObject.parseObject(data);
