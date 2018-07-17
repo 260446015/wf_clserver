@@ -13,6 +13,16 @@ public class JobBean {
 	private String hash;
 	private String username;
 	private String ip;
+	private String isCache;
+
+	public String getIsCache() {
+		return isCache;
+	}
+
+	public void setIsCache(String isCache) {
+		this.isCache = isCache;
+	}
+
 	private long exetime;
 	
 	
