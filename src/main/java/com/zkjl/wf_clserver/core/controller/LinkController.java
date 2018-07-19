@@ -2,7 +2,6 @@ package com.zkjl.wf_clserver.core.controller;
 
 
 import com.zkjl.wf_clserver.core.common.ApiResult;
-import com.zkjl.wf_clserver.core.common.SystemControllerLog;
 import com.zkjl.wf_clserver.core.entity.Link;
 import com.zkjl.wf_clserver.core.service.LinkService;
 import io.swagger.annotations.Api;

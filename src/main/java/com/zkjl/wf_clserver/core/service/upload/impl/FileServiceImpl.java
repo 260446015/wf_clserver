@@ -14,6 +14,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -102,16 +104,18 @@ public class FileServiceImpl implements FileService {
 //        List<FileUploadEntity> datas = IterableUtils.toList(iterable);
 //        PageImpl<FileUploadEntity> page = new PageImpl<>(datas);
 //        PageUtil.pageBeagin(datas.size(), pageNum, pageSize, datas);
-        QueryStringQueryBuilder builder = new QueryStringQueryBuilder(search);
-        HighlightBuilder highlightBuilder = new HighlightBuilder().field("*").requireFieldMatch(false);
+        QueryBuilder matchQuery = QueryBuilders.matchQuery("content",search);
+//        QueryStringQueryBuilder builder = new QueryStringQueryBuilder(search);
+        HighlightBuilder highlightBuilder = new HighlightBuilder().field("content").requireFieldMatch(false).fragmentSize(20000).numOfFragments(10);
         highlightBuilder.preTags("<i>");
         highlightBuilder.postTags("</i>");
         SearchRequestBuilder request = client.prepareSearch("file_upload")
                 .setTypes("entity")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(builder)
-                .highlighter(highlightBuilder);
-        SearchResponse response = request.get();
+                .setQuery(matchQuery)
+                .highlighter(highlightBuilder)
+                .setExplain(true);
+        SearchResponse response = request.execute().actionGet();
         SearchHits hits = response.getHits();
         SearchHit[] hits1 = hits.getHits();
         List<FileUploadEntity> datas = new ArrayList<>();
@@ -119,6 +123,7 @@ public class FileServiceImpl implements FileService {
             SearchHit searchHitFields = hits1[i];
             String sourceAsString = searchHitFields.getSourceAsString();
             FileUploadEntity entity = JSONObject.parseObject(sourceAsString, FileUploadEntity.class);
+            System.out.println("映射实体"+entity);
             Map<String, HighlightField> highlightFields = searchHitFields.getHighlightFields();
             //获取高亮结果
             Set<String> set = highlightFields.keySet();
@@ -128,11 +133,13 @@ public class FileServiceImpl implements FileService {
                 String name = highLight.getName();
                 if("content".equals(name)){
                     Text[] texts = highLight.getFragments();
+                    String content = "";
                     for (int l = 0; l < texts.length; l++) {
                         Text text = texts[l];
-                        System.out.println(name + "=" + text);
-                        entity.setContent(text.toString().replaceAll("\"","'"));
+                        content += text;
                     }
+                    System.out.println(name + "=" + content);
+                    entity.setContent(content.toString().replaceAll("\"","'"));
                 }
             }
 

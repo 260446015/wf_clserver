@@ -49,7 +49,6 @@ public class ElementAnalysisController extends BaseController {
     }
 
     @RequestMapping("/getList")
-    @SystemControllerLog(description="同要素列表")
     @ApiOperation(value = "同要素列表", httpMethod = "GET")
     @ResponseBody
     public ApiResult getList(HttpServletRequest req,AnalysisRQ analysisRQ) throws Exception {

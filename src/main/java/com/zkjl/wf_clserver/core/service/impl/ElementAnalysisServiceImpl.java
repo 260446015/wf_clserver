@@ -11,9 +11,9 @@ import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import com.zkjl.wf_clserver.core.util.KindDataUtil;
 import com.zkjl.wf_clserver.core.util.OriginTest;
 import org.bson.Document;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -85,170 +85,21 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Override
     protected JSONObject analysisSamePhone(String jobid1, String jobid2) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone",null);
-        List<JobBean> jobBeans1 = jobBeanRepository.findByJobid(jobid1);
-        List<JobBean> jobBeans2 = jobBeanRepository.findByJobid(jobid2);
+        jsonObject.put("samePhone", null);
+        List<JobBean> jobBeans1 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid1)).with(Sort.by(Sort.Direction.DESC,"exetime")),JobBean.class,"coll_jobs");
+        List<JobBean> jobBeans2 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid2)).with(Sort.by(Sort.Direction.DESC,"exetime")),JobBean.class,"coll_jobs");
+        List<List<Document>> cacheDatasByJobId = getCacheDatasByJobId(jobid1, jobid2);
+        cacheDatasByJobId.get(0).forEach(action ->{
+            List<List> data = (List<List>) action.get("data");
+//            data.forEach("");
+        });
+
+//        List<JobBean> jobBeans1 = jobBeanRepository.findByJobid(jobid1);
+//        List<JobBean> jobBeans2 = jobBeanRepository.findByJobid(jobid2);
         JobBean jobBean1 = jobBeans1.get(0);
-        JobBean jobBean2 = jobBeans2.get(1);
+        JobBean jobBean2 = jobBeans2.get(0);
         String word1 = jobBean1.getWord();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         String word2 = jobBean2.getWord();
-//        QueryStringQueryBuilder queryStringQueryBuilder = new QueryStringQueryBuilder(word1)
-//        fileUploadEntityRepository.search()
         return jsonObject;
     }
 
@@ -312,7 +163,12 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         jsonObject.put("sameViolation", null);
         JSONArray jsonArray = new JSONArray();
         List<String> idCardList = getIdCardList(datas);
-        String idcard = idCardList.get(1);
+        String idcard = null;
+        try {
+            idcard = idCardList.get(1);
+        } catch (Exception e) {
+            return jsonObject;
+        }
         if (datas.size() == 0) {
             throw new RuntimeException();
         }

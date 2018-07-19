@@ -7,6 +7,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -56,7 +57,7 @@ public class WfClserverApplication extends SpringBootServletInitializer {
 	public Client client() throws Exception {
 		Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
 		TransportClient client = new PreBuiltTransportClient(settings)
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("10.52.219.8"), 9300));
 		return client;
 	}
 

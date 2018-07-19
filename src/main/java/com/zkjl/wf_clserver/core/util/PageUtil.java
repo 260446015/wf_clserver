@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.util;
 
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 

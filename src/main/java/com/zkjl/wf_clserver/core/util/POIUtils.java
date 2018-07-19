@@ -40,19 +40,19 @@ public class POIUtils {
 				Sheet sheet = workbook.getSheetAt(sheetNum);
 				Boolean flag = null;
                 for (Row row : sheet){
-                    String[] cells ;
-                    try {
-                        cells = new String[row.getLastCellNum()];
-                    } catch (Exception e) {
-                        continue;
-                    }
+					String[] cells ;
+					try {
+						cells = new String[row.getLastCellNum()];
+					} catch (Exception e) {
+						continue;
+					}
 
 					for (int i = 0; i < row.getLastCellNum(); i++) {
-                        Cell cell = row.getCell(i);
-                        try {
-                            cell.setCellType(CellType.STRING);
-                        } catch (Exception e) {
-                        }
+						Cell cell = row.getCell(i);
+						try {
+							cell.setCellType(CellType.STRING);
+						} catch (Exception e) {
+						}
 						cells[i] = (cell == null?" ":cell.getStringCellValue());
 					}
 					if(flag == null){

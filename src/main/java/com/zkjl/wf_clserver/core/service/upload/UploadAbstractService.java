@@ -61,7 +61,7 @@ public abstract class UploadAbstractService {
                 JSONObject data = new JSONObject();
                 for (int k = 0; k < title.length; k++) {
                     try {
-                        data.put(title[k],content[k]);
+                        data.put(title[k], content[k]);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         data.put(title[k],"");
                     }
@@ -116,7 +116,10 @@ public abstract class UploadAbstractService {
         }
 //        long beginCount = fileUploadEntityRepository.count();
         for (List<FileUploadEntity> datas : subList) {
-            executorService.execute(() -> fileUploadEntityRepository.saveAll(datas));
+            List<FileUploadEntity> fileUploadEntities  = datas.stream().filter(action -> action != null).collect(Collectors.toList());
+            if(fileUploadEntities.size() != 0){
+                executorService.execute(() -> fileUploadEntityRepository.saveAll(fileUploadEntities));
+            }
         }
 //        executorService.shutdown();
 //        try {

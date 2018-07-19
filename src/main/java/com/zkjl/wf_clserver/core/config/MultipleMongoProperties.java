@@ -23,12 +23,4 @@ public class MultipleMongoProperties {
         System.out.println("-------------------- kklcMongoProperties init ---------------------");
         return new MongoProperties();
     }
-
-    @Bean
-    @ConfigurationProperties(prefix="spring.data.mongodb.secondary")
-    public MongoProperties ploverMongoProperties() {
-        System.out.println("-------------------- ploverMongoProperties init ---------------------");
-        return new MongoProperties();
-    }
-
 }
