@@ -38,7 +38,6 @@ public class TrackController {
      * 轨迹查询
      */
     @RequestMapping("/get")
-    @SystemControllerLog(description = "人员档案-轨迹信息-时间轴展示")
     @ApiOperation(value = "轨迹信息", httpMethod = "GET")
     @ResponseBody
     public List<TrackDto> get(HttpServletRequest req, TrackRQ trackRQ) throws Exception {

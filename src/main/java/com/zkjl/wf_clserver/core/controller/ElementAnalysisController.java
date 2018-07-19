@@ -30,7 +30,7 @@ import java.util.Map;
  * Created on 2018/6/27
  */
 @RestController
-@RequestMapping(name = "/api/analysis")
+@RequestMapping(value = "/api/analysis")
 public class ElementAnalysisController extends BaseController {
 
     @Resource

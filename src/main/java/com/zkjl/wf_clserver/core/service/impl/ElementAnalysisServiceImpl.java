@@ -3,11 +3,15 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.zkjl.wf_clserver.core.entity.JobBean;
+import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
+import com.zkjl.wf_clserver.core.repository.kklc.JobBeanRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import com.zkjl.wf_clserver.core.util.KindDataUtil;
 import com.zkjl.wf_clserver.core.util.OriginTest;
 import org.bson.Document;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -30,6 +34,10 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
 
     @Resource(name = "primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
+    @Resource
+    private JobBeanRepository jobBeanRepository;
+    @Resource
+    private FileUploadEntityRepository fileUploadEntityRepository;
 
     private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);
 
@@ -75,9 +83,172 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     }
 
     @Override
-    protected JSONObject analysisSamePhone(String word1, String word2) {
+    protected JSONObject analysisSamePhone(String jobid1, String jobid2) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("samePhone", null);
+        jsonObject.put("samePhone",null);
+        List<JobBean> jobBeans1 = jobBeanRepository.findByJobid(jobid1);
+        List<JobBean> jobBeans2 = jobBeanRepository.findByJobid(jobid2);
+        JobBean jobBean1 = jobBeans1.get(0);
+        JobBean jobBean2 = jobBeans2.get(1);
+        String word1 = jobBean1.getWord();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        String word2 = jobBean2.getWord();
+//        QueryStringQueryBuilder queryStringQueryBuilder = new QueryStringQueryBuilder(word1)
+//        fileUploadEntityRepository.search()
         return jsonObject;
     }
 

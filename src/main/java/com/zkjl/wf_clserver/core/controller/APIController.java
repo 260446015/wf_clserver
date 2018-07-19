@@ -46,16 +46,31 @@ public class APIController extends BaseController {
 	@SystemControllerLog(description = "创建爬虫任务")
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
+		String flag = request.getParameter("isCache");
 		Map<String, Object> resultData = new LinkedHashMap<>();
 		String userName = this.getCurrentUser().getUsername();
 		String ip = this.getClientIP(request);
 		jobBean.setIp(ip);
 		jobBean.setUsername(userName);
 		jobBean.setExetime(System.currentTimeMillis() / 1000);
-		JobBean cacheJob = apiService.cacheQuery(jobBean);
-		if (cacheJob != null) {
-			jobBean.setJobid(cacheJob.getJobid());
-		} else {
+		if("true".equals(flag)){
+			JobBean cacheJob = apiService.cacheQuery(jobBean);
+			if (cacheJob != null) {
+				jobBean.setJobid(cacheJob.getJobid());
+			} else {
+				jobBean.setJobid(UUID.randomUUID().toString());
+				List<ResourceBean> resList = apiService.userConf(userName);
+				resList.retainAll(jobBean.getResources());
+				for (String id : jobBean.getResources()) {
+					ResourceBean resouceBean = new ResourceBean();
+					resouceBean.setId(id);
+					if (!resList.contains(resouceBean)) {
+						resList.add(resouceBean);
+					}
+				}
+				resultData.put("resources", resList);
+			}
+		}else{
 			jobBean.setJobid(UUID.randomUUID().toString());
 			List<ResourceBean> resList = apiService.userConf(userName);
 			resList.retainAll(jobBean.getResources());
@@ -68,8 +83,9 @@ public class APIController extends BaseController {
 			}
 			resultData.put("resources", resList);
 		}
+
 		apiService.recordJob(jobBean);
-		resultData.put("iscache", cacheJob != null);
+//		resultData.put("iscache", cacheJob != null);
 		resultData.put("jobinfo", jobBean);
 		return ResultFactory.createSuccess("成功创建任务！", resultData);
 	}
@@ -114,7 +130,6 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/retrieveData")
-	@SystemControllerLog(description = "获取爬虫返回数据")
 	public @ResponseBody
 	ResultData retrieveData(@RequestBody String data) throws Exception {
 		JSONObject json = JSONObject.parseObject(data);

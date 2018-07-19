@@ -60,7 +60,11 @@ public abstract class UploadAbstractService {
                 String[] content = datasBySheet.get(j);
                 JSONObject data = new JSONObject();
                 for (int k = 0; k < title.length; k++) {
-                    data.put(title[k], content[k]);
+                    try {
+                        data.put(title[k],content[k]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        data.put(title[k],"");
+                    }
                 }
                 result.add(data);
             }
