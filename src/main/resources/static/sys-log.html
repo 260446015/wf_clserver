@@ -42,7 +42,7 @@
                   </div>
                 </div> 
             </form>
-            <xblock><button id="btnDelete" data-url="http://localhost:8080/api/log/delete" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span id="dataNum" class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+            <xblock><button id="btnDelete" data-url="/api/log/delete" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span id="dataNum" class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
             <table class="layui-table">
                 <thead>
                     <tr>
@@ -107,7 +107,7 @@
               }
               getloglist(0,"",null,null);
               function getloglist(pageval,name,beginDate,endDate) {
-                 var ctx="http://localhost:8080/api/log/page/list?pageSize=10"
+                 var ctx="/api/log/page/list?pageSize=10"
                  if(pageval !=null){
                     ctx+="&pageNum="+pageval
                  }

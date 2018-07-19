@@ -79,7 +79,7 @@
               getUser();
               function getUser(){
               $.ajax({
-                 url: "http://localhost:8080/api/confs/get?id="+oid,
+                 url: "/api/confs/get?id="+oid,
                  xhrFields: {
                     withCredentials: true
                  },
@@ -112,7 +112,7 @@
                     $.ajax({
                        type: "POST",
                        contentType: "application/json; charset=utf-8",
-                       url: "http://localhost:8080/api/confs/save",
+                       url: "/api/confs/save",
                        data:param,//若这里改成data:{"username":"zsd"}请求会报400
                        dataType: "json",
                        success: function(text){

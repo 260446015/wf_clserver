@@ -13,7 +13,7 @@
     <div class="login">
         <div class="message">宝都数据侦查后台管理系统登录</div>
         <div id="darkbannerwrap"></div>   
-        <form method="post" class="layui-form" action="http://localhost:8080/user/login">
+        <form method="post" class="layui-form" action="/user/login">
             <input id="username" name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input id="password" name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
@@ -28,7 +28,7 @@
                 $ = layui.jquery;
                 var form = layui.form(),
                 layer = layui.layer;
-                var ctx = "http://localhost:8080"
+                var ctx = ""
 
         function login(username,password) {
         $.ajax({

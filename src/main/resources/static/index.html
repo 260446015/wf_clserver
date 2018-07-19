@@ -129,7 +129,7 @@ $("#logout").click(function () {
 $.ajax({
     type: "GET",
     contentType: "application/json; charset=utf-8",
-    url: "http://localhost:8080/api/user/logout",
+    url: "/api/user/logout",
     success: function(text){
       localStorage.removeItem("name");//清除c的值
       localStorage.removeItem("photo");//清除c的值

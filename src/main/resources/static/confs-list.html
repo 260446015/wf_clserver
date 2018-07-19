@@ -38,7 +38,7 @@
                   </div>
                 </div> 
             </form>
-            <xblock><button id="btnDelete" data-url="http://localhost:8080/api/confs/delete" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="confs_add('添加用户','confs-add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button><span  id="dataNum" class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+            <xblock><button id="btnDelete" data-url="/api/confs/delete" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="confs_add('添加用户','confs-add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button><span  id="dataNum" class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
             <table class="layui-table">
                 <thead>
                     <tr>
@@ -113,7 +113,7 @@
                 getconfslist(0,"");
 
                 function getconfslist(pageval,name) {
-                var ctx="http://localhost:8080/api/confs/page/list?pageSize=10"
+                var ctx="/api/confs/page/list?pageSize=10"
                     if(pageval !=null){
                        ctx+="&pageNum="+pageval
                     }

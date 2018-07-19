@@ -31,7 +31,6 @@ public class SysUser {
     * 
     */
    private String password;
-
    /** 密码
     *
     */

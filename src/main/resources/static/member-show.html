@@ -46,7 +46,7 @@
               getUser();
               function getUser(){
                 $.ajax({
-                   url: "http://localhost:8080/api/user/get?id="+oid,
+                   url: "/api/user/get?id="+oid,
                    xhrFields: {
                      withCredentials: true
                    },
