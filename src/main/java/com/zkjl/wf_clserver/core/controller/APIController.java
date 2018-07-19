@@ -43,7 +43,7 @@ public class APIController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/api/createJob")
-	@SystemControllerLog(description = "创建爬虫任务")
+	@SystemControllerLog(description = "智能搜索")
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
 		String flag = request.getParameter("isCache");
@@ -86,39 +86,6 @@ public class APIController extends BaseController {
 
 		apiService.recordJob(jobBean);
 //		resultData.put("iscache", cacheJob != null);
-		resultData.put("jobinfo", jobBean);
-		return ResultFactory.createSuccess("成功创建任务！", resultData);
-	}
-
-	/**
-	 * 更新任务
-	 *
-	 * @param request
-	 * @param jobBean
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/api/updateJob")
-	@SystemControllerLog(description = "更新爬虫任务")
-	public @ResponseBody
-	ResultData updateJob(HttpServletRequest request, @RequestBody JobBean jobBean) throws Exception {
-		Map<String, Object> resultData = new LinkedHashMap<>();
-		String userName = this.getCurrentUser().getUsername();
-		String ip = this.getClientIP(request);
-		jobBean.setIp(ip);
-		jobBean.setUsername(userName);
-		jobBean.setExetime(System.currentTimeMillis() / 1000);
-		apiService.recordJob(jobBean);
-		List<ResourceBean> resList = apiService.userConf(userName);
-		resList.retainAll(jobBean.getResources());
-		for (String id : jobBean.getResources()) {
-			ResourceBean resouceBean = new ResourceBean();
-			resouceBean.setId(id);
-			if (!resList.contains(resouceBean)) {
-				resList.add(resouceBean);
-			}
-		}
-		resultData.put("resources", resList);
 		resultData.put("jobinfo", jobBean);
 		return ResultFactory.createSuccess("成功创建任务！", resultData);
 	}

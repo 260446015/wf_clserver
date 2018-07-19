@@ -5,10 +5,7 @@ import com.zkjl.wf_clserver.core.exception.CustomerException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -43,10 +40,19 @@ public class POIUtils {
 				Sheet sheet = workbook.getSheetAt(sheetNum);
 				Boolean flag = null;
                 for (Row row : sheet){
-					String[] cells = new String[row.getLastCellNum()];
+                    String[] cells ;
+                    try {
+                        cells = new String[row.getLastCellNum()];
+                    } catch (Exception e) {
+                        continue;
+                    }
 
 					for (int i = 0; i < row.getLastCellNum(); i++) {
-						Cell cell = row.getCell(i);
+                        Cell cell = row.getCell(i);
+                        try {
+                            cell.setCellType(CellType.STRING);
+                        } catch (Exception e) {
+                        }
 						cells[i] = (cell == null?" ":cell.getStringCellValue());
 					}
 					if(flag == null){

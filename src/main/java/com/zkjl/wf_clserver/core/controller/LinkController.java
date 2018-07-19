@@ -26,8 +26,6 @@ public class LinkController extends BaseController {
      * 查询所有链接
      */
     @GetMapping("/findAll")
-    @SystemControllerLog(description = "查询超链接")
-    @ApiOperation(value = "查询超链接", httpMethod = "GET")
     public ApiResult findAll(String search, Integer pageNum, Integer pageSzie) throws Exception {
         PageImpl<Link> links = linkService.findAll(search, pageNum, pageSzie);
         return successPages(links);

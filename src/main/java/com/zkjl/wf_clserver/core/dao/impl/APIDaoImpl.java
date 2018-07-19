@@ -54,7 +54,7 @@ public class APIDaoImpl implements APIDao {
 	public JobBean cacheQuery(String hash) throws Exception {
 		try {
 			Query query = new Query();
-			query.addCriteria(Criteria.where("hash").is(hash));
+			query.addCriteria(Criteria.where("hash").is(hash)).with(Sort.by(Direction.DESC, "exetime"));
 			return primaryMongoTemplate.findOne(query, JobBean.class, COLL_JOBS);
 		} catch (Exception e) {
 			throw new CustomerException(ExceptionCode.EX_BUS);
