@@ -1,0 +1,119 @@
+
+
+/*超级链接*/
+.lianjiebox{
+    overflow: hidden;
+    min-height: 250px;
+    width: 1200px;
+    margin: 30px auto;
+}
+.lianjiebox li{
+    float: left;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 220px;
+    height: 275px;
+    margin: 10px;
+    box-shadow: 0px 0px 15px #888888;
+}
+.lj_img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10px auto;
+    overflow: hidden;
+}
+.lj_img img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: block;
+}
+.lianjiebox p{
+    text-align: center;
+    padding: 0 10px;
+    height: 22px;
+    color: #0d99e7;
+}
+
+
+/*超级链接后台管理*/
+.ba_delate .iconfont{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+.ba_delate .icon-bianji{
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: -2px;
+}
+.icon-bianji:before {
+    margin-left: 8px;
+}
+.ba_delate .icon-shanchu{
+    font-size: 18px;
+}
+.icon-jinyong:before {
+    margin-left: 8px;
+}
+.icon-shanchu:before {
+    margin-left: 8px;
+}
+#linkpropo{
+    display: none;
+}
+
+
+.ac_fomli .ac_fomi {
+    float: left;
+    height: 36px;
+    width: 82px;
+    margin-right: 10px;
+}
+.ac_textarea{
+    width: 342px;
+    border: 1px solid #666;
+}
+body .layui-layer-lan .layui-layer-title {
+    background: #0d99e7;
+    color: #fff;
+    border: none;
+}
+body .layui-form-radio>i:hover, .layui-form-radioed>i {
+    color: #1e9fff;
+}
+.ac_fomli {
+    height: 32px;
+    line-height: 36px;
+    margin: 15px 0 10px 60px;
+    clear: both;
+}
+#test1{
+    width: 342px;
+    height: 34px;
+    line-height: 34px;
+}
+.ac_fomli input {
+    width: 320px;
+    float: left;
+    height: 32px;
+    border: 1px solid #999;
+    padding: 0 10px;
+    margin-left: 0;
+}
+body .layui-form-item input {
+    width: 342px;
+    height: 34px;
+}
+.ac_btnpro{
+    margin-top: 20px;
+    text-align: center;
+}
+.ac_btnpro div{
+    width: 100px;
+}
+body .layui-layer-lan .layui-layer-btn .layui-layer-btn1 {
+    background: #0d99e7;
+    color: #fff;
+}

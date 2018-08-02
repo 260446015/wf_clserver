@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">同要素关联分析</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/associationAnalysis/associationAnalysis.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<section>
+    <div class="as_top">
+        <ul class="as_ul1">
+            <li class="as_ulliact" style="margin-left: 70px;" data-href="0">身份证号</li>
+            <li data-href="1">手机号</li>
+            <li data-href="1">车牌号</li>
+            <li data-href="1">QQ号</li>
+            <li data-href="1">微信号</li>
+            <li data-href="1">邮箱号</li>
+            <div class="piliang">批量比对</div>
+        </ul>
+    </div>
+
+    <div class="as_cont">
+        <div class="as_box1">
+            <input type="text" style="margin-left: 85px;" class="beginvalue1" value="370983199307142316">
+            <span><img src="../../img/lianjie.png" alt="" ></span>
+            <input type="text" class="beginvalue2" value="370983199306112318">
+            <!--<span class="iconfont icon-xiao63"></span>-->
+            <!--<span class="iconfont icon-jian"></span>-->
+            <span class="as_tijiao biduibtn">分析</span>
+        </div>
+    </div>
+</section>
+<div id="daorubox">
+    <p class="ad_top">请根据格式输入要进行批量对比的数据</p>
+    <div class="daoruboxli">
+        <span>身份证号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="daoruboxli">
+        <span>手机号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="daoruboxli">
+        <span>车牌号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="daoruboxli">
+        <span>QQ号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="daoruboxli">
+        <span>微信号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="daoruboxli">
+        <span>邮箱号:</span>
+        <input type="text">
+        <span style="width: 60px;"><img src="../../img/lianjie.png" alt=""></span>
+        <input type="text">
+    </div>
+    <div class="as_tijiaobtn2 biduibtn">分析</div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script src="../../js/associationAnalysis/associationAnalysis.js?versin=0"></script>
+<script>
+    //选项卡切换
+    $(".as_ul1").on("click","li",function (e) {
+        e.preventDefault();
+        $(this).addClass("as_ulliact").siblings().removeClass("as_ulliact");
+    });
+    //批量导入
+    $(".piliang").click(function () {
+        layer.open({
+            title:'批量比对',
+            area: ['760px', '400px'],
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            anim: 1,
+            content: $('#daorubox'),
+            cancel:function () {
+                $("#daorubox").hide();
+            }
+        });
+    });
+    //比对开始
+    $(".biduibtn").click(function () {
+        var reg1 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+
+        if($(".beginvalue1").val()==""){
+            return layer.msg("请输入证件号A");
+            if (!reg1.test($(".beginvalue1").val())) {
+                return layer.msg("证件号A格式错误");
+            }
+        }
+        if($(".beginvalue2").val()==""){
+            return layer.msg("请输入证件号B");
+            if (!reg1.test($(".beginvalue1").val())) {
+                return layer.msg("证件号B格式错误");
+            }
+        }
+        var index = layer.load(1, {
+            shade: [0.3,'#000'], //0.1透明度的白色背景
+            content:"数据比对中"
+        });
+        clga.searchbegin1($(".beginvalue1").val(),1,true);
+        clga.searchbegin2($(".beginvalue2").val(),1,true);
+    });
+</script>
+</html>

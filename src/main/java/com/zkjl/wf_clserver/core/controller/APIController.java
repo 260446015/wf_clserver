@@ -7,6 +7,7 @@ import com.zkjl.wf_clserver.core.entity.ResourceBean;
 import com.zkjl.wf_clserver.core.entity.ResultData;
 import com.zkjl.wf_clserver.core.service.APIService;
 import com.zkjl.wf_clserver.core.util.ResultFactory;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,14 +47,14 @@ public class APIController extends BaseController {
 	@SystemControllerLog(description = "智能搜索")
 	public @ResponseBody
 	ResultData createJob(HttpServletRequest request, HttpServletResponse response, @RequestBody JobBean jobBean) throws Exception {
-		String flag = request.getParameter("isCache");
+		String flag = jobBean.getIsCache();
 		Map<String, Object> resultData = new LinkedHashMap<>();
-		String userName = this.getCurrentUser().getUsername();
+		String userName = this.getCurrentUser().getId();
 		String ip = this.getClientIP(request);
 		jobBean.setIp(ip);
 		jobBean.setUsername(userName);
 		jobBean.setExetime(System.currentTimeMillis() / 1000);
-		if("true".equals(flag)){
+		if("true".equals(flag) || StringUtils.isBlank(flag)){
 			JobBean cacheJob = apiService.cacheQuery(jobBean);
 			if (cacheJob != null) {
 				jobBean.setJobid(cacheJob.getJobid());

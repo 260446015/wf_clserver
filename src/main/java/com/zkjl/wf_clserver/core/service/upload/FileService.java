@@ -22,4 +22,8 @@ public interface FileService {
     boolean delete(String source);
 
     String uploadImg(HttpServletRequest req, MultipartFile multipartFile);
+
+    PageImpl<?> findUploadData(String username, Integer pageNum, Integer pageSize);
+
+    Long findUploadCount(String username);
 }

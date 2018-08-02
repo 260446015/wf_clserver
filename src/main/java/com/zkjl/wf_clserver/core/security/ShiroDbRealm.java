@@ -5,15 +5,23 @@ import com.zkjl.wf_clserver.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class ShiroDbRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
+	@Resource
+	private EhCacheManager ehCacheManager;
+
 	
 	
 	/**
@@ -29,7 +37,10 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		SysUser login = userService.login(username, password);
 //		String userBate = userDocment.getString("userBate");
 		
-		Session session = SecurityUtils.getSubject().getSession();
+		SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		if(null != sysUser){
+			throw new AuthenticationException("用户已经登录!");
+		}
 //	    session.setAttribute("CURRENT_USERBATE", userBate);
 		Object principal = null;
 		Object credentials = null;
@@ -53,7 +64,31 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pricinal) {
-		return null;
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		SysUser sysUser = (SysUser) pricinal.getPrimaryPrincipal();
+		if(true == sysUser.getIfAdmin()){
+			Set<String> permissions = new HashSet<>();
+			permissions.add("admin");
+			authorizationInfo.setStringPermissions(permissions);
+		}
+		return authorizationInfo;
+	}
+
+	@Override
+	public void onLogout(PrincipalCollection principals) {
+		super.clearCachedAuthorizationInfo(principals);
+		SysUser sysUser = (SysUser) principals.getPrimaryPrincipal();
+		removeUserCache(sysUser.getUsername());
+	}
+
+	/**
+	 * 清楚用户缓存
+	 */
+	private void removeUserCache(String username) {
+		System.out.println("清楚缓存用户"+username);
+
+		ehCacheManager.getCache("shiroCache").remove(username);
+		System.out.println("缓存大小"+ehCacheManager.getCache("shiroCache").size());
 	}
 }
 

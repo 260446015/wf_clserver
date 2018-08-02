@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">用户操作日志</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/backStage/backStage.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+
+<section>
+    <ul class="ba_top">
+        <li><a href="management.html">用户管理</a></li>
+        <li class="ba_active"><a href="record.html">用户操作日志</a></li>
+        <li style="border-right: 1px solid #e9e9e9;"><a href="link.html">链接列表</a></li>
+    </ul>
+    <div class="ba_search">
+        <div class="ba_searbox">
+            <input type="text" placeholder="请输入要查询的姓名" class="ba_acval">
+            <input type="text" class="layui-input" id="test1" placeholder="开始时间">
+            <span>~</span>
+            <input type="text" class="layui-input" id="test2" placeholder="结束时间">
+            <div class="ba_searbtn ba_searclick" data-href="true">搜索</div>
+        </div>
+        <!--<div class="ba_searbtn fr ba_daochu">导出</div>-->
+        <!--<div class="ba_searbtn fr">批量删除</div>-->
+    </div>
+    <table cellspacing="0" cellpadding="0" class="ba_table layui-form">
+        <tr class="ba_frtr">
+            <th></th>
+            <th>编号</th>
+            <th>操作内容</th>
+            <th>操作描述</th>
+            <th>操作人</th>
+            <th>操作IP</th>
+            <th>操作时间</th>
+            <th>操作</th>
+        </tr>
+        <tbody class="ba_rizhilist">
+        <!--<tr>-->
+            <!--<td><input type="checkbox" name="" lay-skin="primary"></td>-->
+            <!--<td>001</td>-->
+            <!--<td>轨迹</td>-->
+            <!--<td>打印轨迹</td>-->
+            <!--<td>村长</td>-->
+            <!--<td>192.268.1.1</td>-->
+            <!--<td>2018-12-12 12:12:23</td>-->
+            <!--<td class="ba_delate"><span class="iconfont icon-g"></span>删除</td>-->
+        <!--</tr>-->
+
+        </tbody>
+    </table>
+    <div id="listpage"></div>
+</section>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    layui.use(['laydate', 'laypage']);
+    var laydate = layui.laydate;
+    var laypage = layui.laypage;
+    //执行一个laydate实例
+    //开始时间
+    laydate.render({
+        elem: '#test1'
+        ,type:'datetime'
+        ,theme:'#0f8fe0'
+    });
+    //结束时间
+    laydate.render({
+        elem: '#test2'
+        ,type:'datetime'
+        ,theme:'#0f8fe0'
+        , done: function (value, date, endDate) {
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            duibi($("#test1").val(), value)
+        }
+    });
+
+    //开始时间与结束时间比较
+    function duibi(a, b) {
+        var arr = a.split("-");
+        var starttime = new Date(arr[0], arr[1], arr[2]);
+        var starttimes = starttime.getTime();
+
+        var arrs = b.split("-");
+        var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+        var lktimes = lktime.getTime();
+
+        if (starttimes >= lktimes) {
+            layer.msg('结束时间小于开始时间，请检查');
+            $(".ba_searclick").attr("data-href", false);
+            return false;
+        }
+        else
+            $(".ba_searclick").attr("data-href", true);
+        return true;
+    }
+
+
+    $(".ba_daochu").click(function () {
+        window.print()
+    });
+    $(".ba_searclick").click(function () {
+        // if($("#test2").val()==""||$("#test1").val()==""){
+        //     return
+        // }
+        if($(".ba_acval").val()==""){
+            if($("#test2").val()==""&&$("#test1").val()!=""){
+                return
+            }else if($("#test2").val()!=""&&$("#test1").val()==""){
+                return
+            }
+        }else{
+            if($("#test2").val()==""&&$("#test1").val()!=""){
+                return
+            }else if($("#test2").val()!=""&&$("#test1").val()==""){
+                return
+            }
+        }
+        linkget(0, $(".ba_acval").val(),$("#test1").val(),$("#test2").val());
+    });
+
+
+    function setPageNo(count) {
+        laypage.render({
+            elem: 'listpage',
+            count: count,
+            first: '首页',
+            last: '尾页',
+            jump: function (obj, first) {
+                clga.setpagecss();
+                if (!first) {
+                    linkget(obj.curr - 1,"","","");
+                }
+            }
+        });
+    }
+
+    linkget(0, "","","");
+    var reg1 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+    var reg2 = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+    var reg3 = /^1[3|4|5|7|8][0-9]{9}$/;
+    function linkget(pageval, searchval,begindata,enddata) {
+        $.ajax({
+            url: ctx + "log/page/list",
+            type: "post",
+            data: JSON.stringify({
+                pageSize: 10,
+                pageNum: pageval,
+                name: searchval,
+                beginDate:begindata,
+                endDate:enddata
+            }),
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType:"application/json",
+            success: function (res) {
+                $(".ba_rizhilist").empty();
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                if (0 === pageval) {
+                    count = res.data.totalNumber;
+                    setPageNo(count);
+                }
+                $.each(res.data.dataList, function (i, item) {
+                    var chaxunuser = "无";
+                    $.each(item.args.split(","),function (i,item) {
+                        if (reg1.test(item)) {
+                            chaxunuser = item;
+                        }
+                        if (reg2.test(item)) {
+                            chaxunuser = item;
+                        }
+                        if (reg3.test(item)) {
+                            chaxunuser = item;
+                        }
+                    });
+
+                    var list = '<tr id="'+item.id+'">' +
+                        '<td><input type="checkbox" name="" lay-skin="primary"></td>' +
+                        '<td>'+(i+1)+'</td>' +
+                        '<td>'+chaxunuser+'</td>' +
+                        '<td>'+item.description+'</td>' +
+                        '<td>'+item.name+'</td>' +
+                        '<td>'+item.ip+'</td>' +
+                        '<td>'+item.createDate+'</td>' +
+                        '<td id="'+item.id+'" class="ba_delate"><span class="iconfont icon-g"></span>删除</td>' +
+                        '        </tr>'
+                    $(".ba_rizhilist").append(list);
+                });
+            }
+        });
+    };
+
+    //日志删除
+    $(".ba_rizhilist").on("click",".ba_delate",function () {
+        var oid = $(this).attr("id");
+        var oarray = $(this).attr("data-href");
+        layer.confirm('您确认要删除吗？', {
+            skin: 'layui-layer-lan',
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                url: ctx + "log/delete",
+                type: "get",
+                data: {
+                    ids:oid
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (res) {
+                    linkget(0, "","","");
+                    layer.closeAll();
+                }
+            });
+        }, function () {
+
+        });
+
+
+    });
+
+</script>
+</html>

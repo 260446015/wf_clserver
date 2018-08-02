@@ -8,6 +8,7 @@ import com.zkjl.wf_clserver.core.service.ConfsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,13 +34,14 @@ public class ConfsController extends BaseController {
      */
     @ApiOperation(value = "平台查询" , httpMethod = "GET")
     @RequestMapping(value = "/page/list",method = RequestMethod.GET)
+    @RequiresPermissions(value = "admin")
     @ResponseBody
     public ApiResult findPage(DefaultPageRQ defaultPageRQ,
                               @RequestParam(required = false) String searchStr
                              ){
         PageImpl<Confs> confs;
         try {
-            confs = confsService.findConfs(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), searchStr);
+            confs = confsService.findConfs(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), searchStr,defaultPageRQ.getId());
         } catch (Exception e) {
             return error("查询平台列表失败");
         }
@@ -50,6 +52,7 @@ public class ConfsController extends BaseController {
      */
     @ApiOperation(value = "平台查询" , httpMethod = "GET")
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequiresPermissions(value = "admin")
     @ResponseBody
     public ApiResult findPage(){
         List<Confs> confs;
@@ -66,6 +69,7 @@ public class ConfsController extends BaseController {
      */
     @ApiOperation(value = "根据id查询平台" , httpMethod = "GET")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @RequiresPermissions(value = "admin")
     @ResponseBody
     public ApiResult getConfsById(@RequestParam String id){
         Optional<Confs> confs;
@@ -82,6 +86,7 @@ public class ConfsController extends BaseController {
      */
     @PostMapping("/save")
     @ResponseBody
+    @RequiresPermissions(value = "admin")
     @ApiOperation(value = "平台添加", httpMethod = "POST")
     public ApiResult save(@RequestBody Confs confs) throws Exception {
         return success(confsService.addConfsOrUpdate(confs));
@@ -92,6 +97,7 @@ public class ConfsController extends BaseController {
      */
     @ApiOperation(value = "平台删除", httpMethod = "GET")
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @RequiresPermissions(value = "admin")
     @ResponseBody
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {
         ApiResult apiResult=new ApiResult();

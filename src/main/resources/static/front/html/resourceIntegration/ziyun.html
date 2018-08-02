@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">资源整合</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/resourceIntegration/resourceIntegration.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<!--头部-->
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<!--粒子-->
+<div id="starsBox"></div>
+<!--数据总量-->
+<div class="zyxzbox">
+    <div class="zy_titlebox" style="width: 69%;">数据总量</div>
+    <ul class="zyzh_sjzl">
+        <li>
+            <span>1</span>
+            <span><i>公安网</i></span>
+            <span><i>14个平台</i></span>
+        </li>
+        <li>
+            <span>2</span>
+            <span><i>社会数据</i></span>
+            <span><i>3160万</i></span>
+        </li>
+        <li>
+            <span>3</span>
+            <span><i>互联网数据</i></span>
+            <span><i>2.2亿</i></span>
+        </li>
+    </ul>
+</div>
+<!--互联网数据-->
+<div class="zyhlwbox">
+    <div class="zy_titlebox" style="width: 23%;">互联网数据</div>
+    <div id="container"></div>
+</div>
+<!--社会数据-->
+<div class="zyshbox">
+    <div class="zy_titlebox" style="width: 22%;">社会数据</div>
+    <div id="container1"></div>
+</div>
+<!--平台数据-->
+<div class="zyptbox">
+    <div class="zy_titlebox" style="width: 69%;">平台对接情况</div>
+    <ul class="zyzh_sjzl zyzh_ptsj">
+        <li>
+            <span style="color: #00deff;">序号</span>
+            <span style="color: #00deff;"><i>系统平台名称</i></span>
+        </li>
+        <li>
+            <span>1</span>
+            <span><i>公安部云搜索</i></span>
+        </li>
+        <li>
+            <span>2</span>
+            <span><i>公安部电信诈骗案件侦办平台</i></span>
+        </li>
+        <li>
+            <span>3</span>
+            <span><i>全国违法犯罪人员信息资源库</i></span>
+        </li>
+        <li>
+            <span>4</span>
+            <span><i>全国在逃人员资源信息库</i></span>
+        </li>
+        <li>
+            <span>5</span>
+            <span><i>全国吸毒人员查证系统</i></span>
+        </li>
+        <li>
+            <span>6</span>
+            <span><i>全国公安交通管理信息综合查询系统</i></span>
+        </li>
+        <li>
+            <span>7</span>
+            <span><i>全国被盗抢机动车信息资源库</i></span>
+        </li>
+        <li>
+            <span>8</span>
+            <span><i>山东公安云计算平台(警务千度)</i></span>
+        </li>
+        <li>
+            <span>9</span>
+            <span><i>山东省人口信息管理系统</i></span>
+        </li>
+        <li>
+            <span>10</span>
+            <span><i>山东省公安机关执法办案闭环管理系统</i></span>
+        </li>
+        <li>
+            <span>11</span>
+            <span><i>山东公安监管拘留所警务工作平台</i></span>
+        </li>
+        <li>
+            <span>12</span>
+            <span><i>山东公安监管看守所警务工作平台</i></span>
+        </li>
+        <li>
+            <span>13</span>
+            <span><i>潍坊智能终端分析系统（蛛网系统）</i></span>
+        </li>
+        <li>
+            <span>14</span>
+            <span><i>潍坊城市基础数据管控平台（三实平台）</i></span>
+        </li>
+    </ul>
+</div>
+<!--地图-->
+<div class="zymapbox">
+    <iframe id="iframe" src="map.html" frameborder="0"></iframe>
+</div>
+
+<section>
+
+</section>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<!--柱形图-->
+<script src="../../js/resourceIntegration/highcharts.js"></script>
+<script src="../../js/resourceIntegration/exporting.js"></script>
+<script src="../../js/resourceIntegration/highcharts-zh_CN.js"></script>
+
+<script src="../../js/resourceIntegration/resourceIntegration.js?versin=0"></script>
+</html>

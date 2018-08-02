@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title" data-href="index1">万联点击实战平台</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="css/common/common.css?version=0">
+    <link rel="stylesheet" href="css/common/layout.css?version=0">
+    <link rel="stylesheet" href="css/common/index.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="sy_back"></div>
+<div class="btmimgbox">
+    <img src="img/sy_btm.png" alt="">
+</div>
+<header class="sy_top syblue" style="background: rgba(0,0,0,.24);">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li style="border: 0;">当前在线人数:<span class="allzaixian"></span></li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg" src="" alt="" onerror="clga.whenoerronheaderindex(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<!--中间-->
+<div class="sy_box">
+    <div class="sy_boxtop">
+        <img src="img/huibiao.png" alt="">
+        <div>昌乐万联点击实战平台</div>
+    </div>
+    <div class="sy_boxcontent">
+        <div class="sy_mokuai1" data-href="html/search/search_index.html">
+            <img src="img/mokuai1.png" alt="">
+            <p>智能搜索</p>
+        </div>
+        <div class="sy_mokuai2 sy_mokuai7" data-href="html/associationAnalysis/association_index.html">
+            <img src="img/mokuai2.png" alt="">
+            <span>同要素关联分析</span>
+        </div>
+        <div class="sy_mokuai3 sy_mokuai7" data-href="html/hyperlink/hyperlink_index.html">
+            <img style="margin-top: 36px;" src="img/mokuai3.png" alt="">
+            <span>超级链接</span>
+        </div>
+        <div class="sy_mokuai4 sy_mokuai7" data-href="html/infomationUpload/uploadindex.html">
+            <img src="img/mokuai4.png" alt="">
+            <span>信息上传</span>
+        </div>
+        <div class="sy_mokuai5 sy_mokuai8" data-href="html/resourceIntegration/ziyun.html">
+            <img src="img/mokuai5.png" alt="">
+            <p>资源整合目录</p>
+        </div>
+        <div class="sy_mokuai6 sy_mokuai8" data-href="html/backStage/management.html">
+            <img src="img/mokuai6.png" alt="">
+            <p>后台管理</p>
+        </div>
+    </div>
+</div>
+<iframe src="res/lizi/liz.html" id="lizi"></iframe>
+</body>
+<script src="res/layui/layui.all.js"></script>
+<script src="js/common/common.js?versin=0"></script>
+<script>
+$(".sy_boxcontent").on("click","div",function () {
+    var href = $(this).attr("data-href");
+    if(href){
+        window.location = href;
+    }
+});
+</script>
+</html>

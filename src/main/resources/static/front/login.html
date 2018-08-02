@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">登录</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="css/common/common.css?version=0">
+    <link rel="stylesheet" href="css/common/layout.css?version=0">
+    <link rel="stylesheet" href="css/common/index.css?version=0">
+    <link rel="stylesheet" href="css/common/login.css?version=0">
+    <style>
+        .btmlogin{
+            width: 100%;
+            height: 30px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+<div class="sy_back"></div>
+<div class="btmimgbox">
+    <img src="img/sy_btm.png" alt="">
+</div>
+<!--中间-->
+<div class="sy_box" style="padding-top: 40px;">
+    <div class="sy_boxtop">
+        <img src="img/huibiao.png" alt="">
+        <div style="font-size: 46px;margin-top: 20px;">昌乐万联点击实战平台</div>
+    </div>
+    <div class="loginbox">
+        <p>用户登录</p>
+        <div class="formbox" style="margin-top: 20px;">
+            <span class="iconfont icon-character"></span>
+            <input type="text" placeholder="请输入用户名/警号" class="username" >
+        </div>
+        <div class="formbox">
+            <span class="iconfont icon-suo"></span>
+            <input type="password" placeholder="请输入密码" class="passwor">
+        </div>
+        <div class="formbtn" style="margin-bottom: 10px;">登录</div>
+    </div>
+</div>
+<iframe src="res/lizi2/lizi2.html" id="lizi2" style="z-index: 200;top: 0;"></iframe>
+<div class="btmlogin">本平台需运行插件，若点击登陆没有反应，请检查插件是否启动；<a href="http://10.52.219.8:8090/apis/download">插件下载</a></div>
+
+<!--<iframe src="res/lizi/liz.html" id="lizi"></iframe>-->
+</body>
+<script src="res/layui/layui.all.js"></script>
+<script>
+    var ctx = "http://10.52.219.8:8090/api/";
+    $(".formbtn").click(function () {
+        //window.location="index.html";
+        if ($(".username").val() == "") {
+            return layer.msg("请填写用户名");
+        }
+        if ($(".passwor").val() == "") {
+            return layer.msg("请填写密码");
+        }
+        $.ajax({
+            url: ctx + "user/login",
+            type: "post",
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                mode:"front",
+                username: $(".username").val(),
+                password: $(".passwor").val()
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                pingtai(res.data.ip);
+                sessionStorage.setItem("clgauser", JSON.stringify(res.data));
+                localStorage.setItem("clgatoken", res.data.session);
+
+            }
+        });
+    });
+    function pingtai(oip) {
+        var dataFormat={'action':'register','data':{'serverhost':"http://10.52.219.8:8090/"}};
+        $.ajax({
+            //url: "http://10.52.220.87:19797",
+            url: "http://"+oip+":19797",
+            type: "post",
+            data: JSON.stringify(dataFormat),
+            dataType:"json",
+            success: function (res) {
+                console.log(res);
+                sessionStorage.setItem("clgapingtai", JSON.stringify(res.data));
+                window.location = "index.html";
+            }
+        });
+    }
+    "130825198610294816"
+    "130825199312064822"
+    "130825198611134830"
+    "220581199305291206"
+    "652302196302255316"
+    "211382198803164621"
+    "370723198209275738"
+    "610404198703282524"
+    "`150428198409204592` "
+
+    "372901198602142610"
+
+    "370983199307142316"
+
+    "370725193809244871"
+
+
+    "220681198608280054"
+    "370725201409075340"
+</script>
+</html>

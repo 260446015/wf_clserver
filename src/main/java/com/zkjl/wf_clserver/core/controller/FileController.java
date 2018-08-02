@@ -8,21 +8,21 @@ import com.zkjl.wf_clserver.core.service.upload.FileService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
-@RestController
+@Controller
 @RequestMapping("/api/file")
 @Api(value = "File-API", description = "这是文件上传接口详细信息的描述")
 public class FileController extends BaseController {
@@ -111,7 +111,7 @@ public class FileController extends BaseController {
 
     @DeleteMapping(value = "{source}")
     @ResponseBody
-    public ApiResult delete(@PathVariable String source){
+    public ApiResult delete(@PathVariable String source) {
         boolean flag = false;
         try {
             flag = fileService.delete(source);
@@ -120,4 +120,17 @@ public class FileController extends BaseController {
         }
         return success(flag);
     }
+
+    @GetMapping
+    @ResponseBody
+    public ApiResult findUploadData(Integer pageNum,Integer pageSize){
+        return successPages(fileService.findUploadData(this.getCurrentUser().getName(),pageNum,pageSize));
+    }
+
+    @GetMapping(value = "uploadCount")
+    @ResponseBody
+    public ApiResult findUploadCount(){
+       return success(fileService.findUploadCount(this.getCurrentUser().getName()));
+    }
+
 }

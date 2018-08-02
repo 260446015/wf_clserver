@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.service.upload.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.BeanNameContext;
 import com.zkjl.wf_clserver.core.common.FileUploadEnum;
@@ -19,8 +20,15 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +77,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private String checkFile(MultipartFile file) throws IOException, CustomerException {
-        String fileType = null;
+        String fileType;
         //判断文件是否存在
         if (null == file) {
             logger.error("文件不存在！");
@@ -77,22 +85,19 @@ public class FileServiceImpl implements FileService {
         }
         //获得文件名
         String fileName = file.getOriginalFilename();
+        String substring = fileName.substring(fileName.lastIndexOf(".") + 1);
         //判断文件是否是excel文件
-        if (!fileName.endsWith(xls) && !fileName.endsWith(xlsx)) {
-            if (fileName.endsWith(txt) || fileName.endsWith(CSV)) {
-                logger.info("正在对txt文件进行读取");
-                fileType = txt;
-            }
-        }
-        if(fileName.endsWith("doc") || fileName.endsWith("docx")){
+        if(substring.equalsIgnoreCase(txt) || substring.equalsIgnoreCase(CSV)){
+            logger.info("正在对txt文件进行读取");
+            fileType = txt;
+        }else if(substring.equalsIgnoreCase("doc") || substring.equalsIgnoreCase("docx")){
+            logger.info("正在对word文件进行读取");
             fileType = "word";
-        }
-        if(fileName.endsWith(xls) || fileName.endsWith(xlsx)){
+        }else if (substring.equalsIgnoreCase(xls) || substring.equalsIgnoreCase(xlsx)){
+            logger.info("正在对excel文件进行读取");
             fileType = "excel";
-        }
-        if(fileType == null){
-            logger.error(fileName + "不是excel文件或txt文件");
-            throw new CustomerException(fileName + "不是excel文件或txt文件");
+        }else{
+            throw new CustomerException(fileName + "文件格式不支持");
         }
         return fileType;
     }
@@ -174,5 +179,30 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
         }
         return myFileName;
+    }
+
+    @Override
+    public PageImpl<JSONObject> findUploadData(String username,Integer pageNum,Integer pageSize) {
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("file_upload").setTypes("entity");
+        TermsAggregationBuilder teamAgg = AggregationBuilders.terms("source_count").field("source.keyword");
+        SearchResponse response = searchRequestBuilder.setQuery(QueryBuilders.termQuery("username.keyword", username)).addAggregation(teamAgg).addSort("createTime", SortOrder.DESC).execute().actionGet();
+        Terms terms = response.getAggregations().get("source_count");
+        List<JSONObject> list = new ArrayList<>();
+        for (Terms.Bucket entry:terms.getBuckets()){
+            JSONObject data = new JSONObject();
+            String value = entry.getKeyAsString();
+            long count = entry.getDocCount();
+            data.put("key",value);
+            data.put("value",count);
+            list.add(data);
+        }
+        return (PageImpl<JSONObject>) PageUtil.pageBeagin(list.size(),pageNum,pageSize,list);
+    }
+
+    @Override
+    public Long findUploadCount(String username) {
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("file_upload").setTypes("entity");
+        SearchResponse response = searchRequestBuilder.setQuery(QueryBuilders.termQuery("username.keyword", username)).execute().actionGet();
+        return response.getHits().totalHits;
     }
 }

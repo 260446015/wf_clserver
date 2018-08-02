@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>粒子</title>
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: arial, tahoma, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+        }
+        html,body{
+            overflow: hidden;
+        }
+        .login-wrapper {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            margin-left: -320px;
+            width: 640px;
+        }
+        .login-button {
+            margin: 80px auto;
+            width: 200px;
+            height: 54px;
+            border: 2px solid #09c;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #9cf;
+            text-align: center;
+            line-height: 54px;
+            transition: ease 0.3s;
+            cursor: pointer;
+        }
+        .login-button:hover {
+            color: #fff;
+            border-color: #0bf;
+        }
+        /*.main-graph {*/
+            /*position: relative;*/
+            /*height: 560px;*/
+            /*background: #112b43;*/
+        /*}*/
+        .main-graph{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<section class="main-graph">
+    <canvas id="main_canvas"></canvas>
+</section>
+<script src="modernizr.js"></script>
+<script src="prefixfree.js"></script>
+<script src="lizi.js"></script>
+</body>
+</html>

@@ -7,14 +7,12 @@ import com.zkjl.wf_clserver.core.entity.LoginCount;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.repository.kklc.LoginCountRepository;
 import com.zkjl.wf_clserver.core.repository.kklc.UserOperationRepository;
+import com.zkjl.wf_clserver.core.security.ShiroUtil;
 import com.zkjl.wf_clserver.core.util.IpUtils;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -43,7 +42,7 @@ public class LogAop {
     @Resource(name = "primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
 
-    @Pointcut(value = "execution(public * com.zkjl.wf_clserver.core.controller.*.*(..))")
+    @Pointcut(value = "execution(public * com.zkjl.wf_clserver.core.controller.*.*(..)) && !execution(public * com.zkjl.wf_clserver.core.controller.UserController.login(..))")
     public void logPoint() { }
     @Pointcut(value = "execution(public * com.zkjl.wf_clserver.core.controller.UserController.login(..))")
     public void loginCountPoint(){ }
@@ -58,6 +57,18 @@ public class LogAop {
         Method targetMethod = methodSignature.getMethod();
         SystemControllerLog annotation = targetMethod.getAnnotation(SystemControllerLog.class);
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        /*if(user == null){
+            System.out.println(targetMethod.getName());
+            if(!("material".equals(targetMethod.getName()) || "download".equals(targetMethod.getName()))) {
+                ShiroUtil.writeResponse(sra.getResponse(), "您的登录已失效，请重新登录本系统！");
+                throw new RuntimeException("用户未登录");
+            }
+//            try {
+//                sra.getResponse().sendRedirect("/front/login.html");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }*/
         System.out.println("当前session:"+ SecurityUtils.getSubject().getSession().getId());
         if (null != annotation && null != user) {
             String methodName = targetMethod.getName();
@@ -93,6 +104,4 @@ public class LogAop {
             e.printStackTrace();
         }
     }
-
-
 }

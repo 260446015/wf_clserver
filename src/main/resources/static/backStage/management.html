@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">用户管理</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/backStage/backStage.css?version=0">
+    <style>
+        body .layui-layer-title {
+            height: 54px;
+            background: #2a93ed;
+            color: #fff;
+            border: none;
+            text-align: center;
+            line-height: 54px;
+            font-size: 18px;
+            padding: 0 20px 0 20px;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+
+<section>
+    <ul class="ba_top">
+        <li class="ba_active"><a href="management.html">用户管理</a></li>
+        <li><a href="record.html">用户操作日志</a></li>
+        <li style="border-right: 1px solid #e9e9e9;"><a href="link.html">链接列表</a></li>
+    </ul>
+    <div class="ba_search">
+        <div class="ba_searbox">
+            <input class="ba_aearckval" type="text" placeholder="请输入要查询的姓名或警号">
+            <div class="ba_searbtn ba_aearckclick">搜索</div>
+        </div>
+        <div class="ba_searbtn fr none">刷新</div>
+        <div class="ba_searbtn fr bc_btnadd none">新增</div>
+    </div>
+    <table cellspacing="0" cellpadding="0" class="ba_table">
+        <tr class="ba_frtr">
+            <th>姓名</th>
+            <th>手机号码</th>
+            <th>警号</th>
+            <th>职位</th>
+            <th>所属部门</th>
+        </tr>
+        <tbody class="ba_tbody1"></tbody>
+    </table>
+    <div id="listpage"></div>
+</section>
+<div id="propo_box" class="propo layui-form">
+    <div class="ac_proli">
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">姓名：</i>
+            <input type="text" placeholder="请输入名称">
+        </div>
+        <div class="layui-form-item ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">性别</i>
+            <div class="layui-input-block">
+                <select name="city" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">职位</i>
+            <div class="layui-input-block">
+                <select name="city" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+        </div>
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">电话：</i>
+            <input type="text" placeholder="请输入电话">
+        </div>
+    </div>
+    <div class="ac_proli">
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">拼音：</i>
+            <input type="text" placeholder="请输入拼音">
+        </div>
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">警号：</i>
+            <input type="text" placeholder="请输入警号">
+        </div>
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi">部门：</i>
+            <input type="text" placeholder="请输入部门">
+        </div>
+        <div class="ac_fomli">
+            <span>*</span>
+            <i class="ac_fomi"> 邮箱：</i>
+            <input type="text" placeholder="请输入邮箱/QQ">
+        </div>
+    </div>
+    <div class="" style="text-align: center">
+        <div class="ac_probtn ac_blue ac_probtnstr">保存</div>
+        <div class="ac_probtn ac_probtnclo">取消</div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    $(".bc_btnadd").click(function () {
+        layer.open({
+            title:'新增用户',
+            area: ['760px', '400px'],
+            type: 1,
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            anim: 1,
+            content: $('#propo_box'),
+            cancel:function () {
+                $("#propo_box").hide();
+            }
+        });
+    });
+    layui.use(['laydate','laypage']);
+    var laypage = layui.laypage;
+    $(".ac_probtnstr").click(function () {
+        layer.msg("开发中")
+    });
+    $(".ac_probtnclo").click(function () {
+        layer.closeAll();
+        $("#propo_box").hide();
+    });
+    function setPageNo(count) {
+        laypage.render({
+            elem:'listpage',
+            count: count,
+            first: '首页',
+            last: '尾页',
+            jump:function (obj, first) {
+                clga.setpagecss();
+                if(!first){
+                    getuserlist(obj.curr-1,"");
+                }
+            }
+        });
+    }
+    getuserlist(0,"");
+    function getuserlist(pageval,searchval) {
+        $.ajax({
+            url: ctx + "/user/list",
+            type: "get",
+            data: {
+                pageSize: 10,
+                pageNum: pageval,
+                searchStr:searchval
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                console.log(res);
+                $(".ba_tbody1").empty();
+                if(res.code!=0){
+                    return layer.msg(res.message,{anim:6});
+                }
+                if(0 === pageval){
+                    count = res.data.totalNumber;
+                    setPageNo(count);
+                }
+                $.each(res.data.dataList,function (i,item) {
+                    console.log(item);
+                    var list = '<tr>' +
+                        '<td>'+item.name+'</td>' +
+                        '<td>'+item.phone+'</td>' +
+                        '<td>'+item.policeNumber+'</td>' +
+                        '<td>'+item.job+'</td>' +
+                        '<td>'+item.department+'</td>' +
+                        '</tr>';
+                    $(".ba_tbody1").append(list);
+                });
+            }
+        });
+    };
+    $(".ba_aearckclick").click(function () {
+        if($(".ba_aearckval").val()!=""){
+            getuserlist(0,$(".ba_aearckval").val());
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,134 @@
+
+
+body {
+    background: #0e2350;
+}
+
+.btmimgbox {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    z-index: -1;
+}
+
+.btmimgbox img {
+    width: 100%;
+}
+
+.sy_back {
+    width: 100%;
+    height: 100%;
+    background: url("../../img/sy_back.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+
+/*模块部分*/
+.sy_box {
+    width: 1080px;
+    margin: 0 auto;
+    padding-top: 72px;
+    color: #fff;
+    position: relative;
+}
+
+
+.sy_boxtop img {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto 5px;
+    display: block;
+}
+
+.sy_boxtop div {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 20px;
+    margin-top: 3%;
+}
+.sy_boxcontent {
+    height: 360px;
+    position: relative;
+    margin-top: 3%;
+}
+.sy_boxcontent div{
+    position: absolute;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+
+.sy_mokuai1 {
+    width: 420px;
+    height: 363px;
+    left: 0;
+    top: 0;
+    background: rgba(4,130,247,0.6);
+}
+.sy_mokuai1 img{
+    display: block;
+    margin: 100px auto 0;
+}
+.sy_mokuai1 p{
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+}
+.sy_mokuai2{
+    width: 360px;
+    height: 114px;
+    left: 440px;
+    top: 0;
+    background: rgba(64,148,222,0.6);
+}
+.sy_mokuai3{
+    width: 360px;
+    height: 114px;
+    left: 440px;
+    top: 125px;
+    background: rgba(31,131,255,0.6);
+}
+.sy_mokuai4{
+    width: 360px;
+    height: 114px;
+    left: 440px;
+    top: 250px;
+    background: rgba(72,119,255,0.6);
+}
+.sy_mokuai7 img{
+    margin: 28px 36px 0 39px;
+    float: left;
+}
+.sy_mokuai7 span{
+    font-size: 18px;
+    line-height: 114px;
+    float: left;
+}
+.sy_mokuai5{
+    width: 261px;
+    height: 173px;
+    left: 820px;
+    top: 0;
+    background: rgba(4,135,247,0.6);
+}
+.sy_mokuai6{
+    width: 261px;
+    height: 173px;
+    left: 820px;
+    top: 191px;
+    background: rgba(4,153,247,0.6);
+}
+.sy_mokuai8 img{
+    display: block;
+    margin: 42px auto 0;
+}
+.sy_mokuai8 p{
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+

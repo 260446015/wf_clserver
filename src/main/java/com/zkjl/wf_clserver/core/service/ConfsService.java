@@ -20,9 +20,11 @@ public interface ConfsService {
     /**
      * 查找平台
      */
-    PageImpl<Confs> findConfs(Integer pageSize, Integer pageNum, String searchStr);
+    PageImpl<Confs> findConfs(Integer pageSize, Integer pageNum, String searchStr, String id);
 
     List<Confs> findAll();
 
     public Optional<Confs> get(String id);
+
+    void copy(String id);
 }

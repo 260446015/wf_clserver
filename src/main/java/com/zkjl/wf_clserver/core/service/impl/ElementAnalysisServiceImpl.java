@@ -3,26 +3,32 @@ package com.zkjl.wf_clserver.core.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.zkjl.wf_clserver.core.entity.Confs;
 import com.zkjl.wf_clserver.core.entity.JobBean;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
+import com.zkjl.wf_clserver.core.repository.kklc.ConfsRepository;
 import com.zkjl.wf_clserver.core.repository.kklc.JobBeanRepository;
 import com.zkjl.wf_clserver.core.service.AnalysisAbstractService;
 import com.zkjl.wf_clserver.core.service.ElementAnalysisService;
 import com.zkjl.wf_clserver.core.util.KindDataUtil;
 import com.zkjl.wf_clserver.core.util.OriginTest;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapreduce.GroupBy;
+import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
+import org.springframework.data.mongodb.core.query.Collation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,9 +41,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     @Resource(name = "primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
     @Resource
-    private JobBeanRepository jobBeanRepository;
-    @Resource
-    private FileUploadEntityRepository fileUploadEntityRepository;
+    private ConfsRepository confsRepository;
 
     private static Logger logger = LoggerFactory.getLogger(ElementAnalysisServiceImpl.class);
 
@@ -70,7 +74,7 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
             String address1 = list1.get(0).get(7).toString();
             String address2 = list2.get(0).get(7).toString();
             if (address1.equals(address2)) {
-                data1.put("source","yunsou");
+                data1.put("source", "yunsou");
                 data1.put("label", "同住址");
                 data1.put("data", list1.get(0));
                 jsonArray.add(data1);
@@ -86,21 +90,93 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
     protected JSONObject analysisSamePhone(String jobid1, String jobid2) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("samePhone", null);
-        List<JobBean> jobBeans1 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid1)).with(Sort.by(Sort.Direction.DESC,"exetime")),JobBean.class,"coll_jobs");
-        List<JobBean> jobBeans2 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid2)).with(Sort.by(Sort.Direction.DESC,"exetime")),JobBean.class,"coll_jobs");
-        List<List<Document>> cacheDatasByJobId = getCacheDatasByJobId(jobid1, jobid2);
-        cacheDatasByJobId.get(0).forEach(action ->{
-            List<List> data = (List<List>) action.get("data");
-//            data.forEach("");
-        });
-
-//        List<JobBean> jobBeans1 = jobBeanRepository.findByJobid(jobid1);
-//        List<JobBean> jobBeans2 = jobBeanRepository.findByJobid(jobid2);
+        List<JobBean> jobBeans1 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid1)).with(Sort.by(Sort.Direction.DESC, "exetime")), JobBean.class, "coll_jobs");
+        List<JobBean> jobBeans2 = primaryMongoTemplate.find(new Query(Criteria.where("jobid").is(jobid2)).with(Sort.by(Sort.Direction.DESC, "exetime")), JobBean.class, "coll_jobs");
         JobBean jobBean1 = jobBeans1.get(0);
         JobBean jobBean2 = jobBeans2.get(0);
         String word1 = jobBean1.getWord();
         String word2 = jobBean2.getWord();
+        String reg = "^[1][3,4,5,7,8][0-9]{9}$";
+        if(!word1.matches(reg)){
+            return jsonObject;
+        }
+        List<List<Document>> cacheDatasByJobId = getCacheDatasByJobId(jobid1, jobid2);
+        List<Document> targetData1 = new ArrayList<>();
+        List<Document> targetData2 = new ArrayList<>();
+        SysUser principal = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        List<Confs> confs = confsRepository.findBySystemuser(principal.getUsername());
+        cacheDatasByJobId.get(0).forEach(action3 -> {
+            List<Confs> resid = confs.stream().filter(action -> action.getId().equals(action3.getString("resid"))).collect(Collectors.toList());
+            String platformName = "";
+            if (resid.size() != 0) {
+                platformName = resid.get(0).getPlatformName();
+            }
+            List<Document> action4 = (List<Document>) action3.get("data");
+            getTargetPhone(word1, targetData1, action4, platformName);
+        });
+        cacheDatasByJobId.get(1).forEach(action3 -> {
+            List<Confs> resid = confs.stream().filter(action -> action.getId().equals(action3.getString("resid"))).collect(Collectors.toList());
+            String platformName = "";
+            if (resid.size() != 0) {
+                platformName = resid.get(0).getPlatformName();
+            }
+            List<Document> action4 = (List<Document>) action3.get("data");
+            getTargetPhone(word2, targetData2, action4, platformName);
+        });
+        String reg2 = "(^\\d{18}$)|(^\\d{15}$)";
+        Set<Document> resultData = new HashSet<>();
+        targetData2.forEach(action -> {
+            Document document = (Document) action.get("data");
+            List<Object> data = (List<Object>) document.get("data");
+            data.forEach(action2 -> {
+                List<Object> list = (List<Object>) action2;
+                list.forEach(action3 -> {
+                    if (null != action3) {
+                        if (action3.toString().matches(reg2)) {
+                            targetData1.forEach(action4 -> {
+                                Document document2 = (Document) action4.get("data");
+                                List<Object> data2 = (List<Object>) document2.get("data");
+                                data2.forEach(action5 -> {
+                                    List<Object> list2 = (List<Object>) action5;
+                                    list2.forEach(action6 -> {
+                                        if (null != action6) {
+                                            if (action6.toString().matches(reg2)) {
+                                                if (action6.toString().equals(action3.toString())) {
+                                                    resultData.add(action);
+                                                    resultData.add(action4);
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+                        }
+                    }
+                });
+            });
+        });
+        if (resultData.size() != 0) {
+            jsonObject.put("samePhone", resultData);
+        }
         return jsonObject;
+    }
+
+    private void getTargetPhone(String word, List<Document> targetData2, List<Document> action4, String platformName) {
+        action4.forEach(action5 -> {
+            Document document = (Document) action5.get("data");
+            List<List<Object>> action6 = (List<List<Object>>) document.get("data");
+            for (List<Object> strList : action6) {
+                strList.forEach(str -> {
+                    if (null != str) {
+                        if (str.toString().equals(word)) {
+                            action5.put("platformName", platformName);
+                            targetData2.add(action5);
+                            System.out.println(str);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override

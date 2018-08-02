@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.data.domain.PageImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class BaseController {
     /**
@@ -57,6 +58,4 @@ public class BaseController {
         result.put("pageNumber",data.getNumber());
         return new ApiResult().setData(result).setCode(0).setMessage("消息返回成功");
     }
-
-
 }

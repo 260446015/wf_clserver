@@ -19,7 +19,7 @@ public class ShiroUtil {
 		try {
 			response.setContentType("application/json");
 			OutputStream outputStream = response.getOutputStream();
-			ApiResult result = new ApiResult().setMessage(message).setCode(-1);
+			ApiResult result = new ApiResult().setMessage(message).setCode(-8);
 			outputStream.write(JSON.toJSONString(result).getBytes("UTF-8"));
 			outputStream.flush();
 			outputStream.close();

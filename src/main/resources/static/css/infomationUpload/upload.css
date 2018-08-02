@@ -1,0 +1,197 @@
+
+/*信息上传*/
+.ua_box{
+    width: 860px;
+    height: 240px;
+    margin: 30px auto;
+}
+.ua_box li{
+    width: 31%;
+    height: 100%;
+    background: #D0D0D0;
+    float: left;
+    margin-right: 3.5%;
+    box-shadow: 0px 0px 14px #a9a8a8;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.ua_box li img{
+    display: block;
+    height: 36.6%;
+    margin: 24% auto 8% auto;
+}
+.ua_box p{
+    text-align: center;
+    font-size: 22px;
+    color: #333333;
+}
+@media screen and (min-width:1680px){
+    .ua_box{
+        width: 1200px;
+        height: 340px;
+        margin: 100px auto;
+    }
+}
+
+/*左侧导航*/
+.ua_wrap{
+    overflow: hidden;
+    margin-top: 72px;
+    height: 100%;
+}
+.ua_boxlef{
+    width: 160px;
+    background: #f3f3f3;
+    position: fixed;
+    left: 0;
+    z-index: 100;
+}
+.ua_boxrig{
+    padding-left:8%;
+    width: 900px;
+    margin: 0 auto;
+    min-height: 300px;
+}
+/*社会信息*/
+.ub_headbox{
+    height: 38px;
+    margin-top: 50px;
+    overflow: hidden;
+}
+.ub_head{
+    height: 38px;
+    overflow: hidden;
+    display: none;
+}
+
+.ub_head div{
+    width: 278px;
+    height: 38px;
+    float: left;
+    position: relative;
+    margin-right: 22px;
+    line-height: 38px;
+}
+.ub_head div img{
+    position: absolute;
+    width: 22px;
+    display: block;
+    top: 0;
+}
+.ub_head div span{
+    margin-left: 15px;
+}
+.ub_head div:nth-child(1){
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.ub_head div:nth-child(3){
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.ub_headact{
+    background: #0d99e7;
+    color: #fff;
+}
+.ub_headact img{
+    right: -22px;
+}
+.ub_headali{
+    background: #e7e7e7;
+    color: #666;
+}
+.ub_headali img{
+    right: -22px;
+}
+.ua_nava{
+    height: 40px;
+    display: block;
+    line-height: 40px;
+    color: #333;
+}
+
+.ua_boxlef .ua_navactive{
+    background: rgba(0,0,0,0.1);
+}
+
+.ua_nava span{
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    margin-left: 30px;
+}
+.ua_nava:hover{
+    background: #d4d4d4;
+    color: #333;
+}
+.layui-upload-drag {
+    width: 876px;
+    height: 230px;
+    padding: 0;
+    border: 1px dashed #504E4E;
+    margin-top: 20px;
+    padding-top: 80px;
+}
+.ua_detial{
+    padding: 10px;
+}
+.ua_detial p{
+    color: #666666;
+}
+.ua_btnbox{
+    margin-top: 10px;
+}
+.ua_btn{
+    width: 390px;
+    height: 38px;
+    border-radius: 4px;
+    float: left;
+    margin: 0 20px;
+    background: #eceded;
+    cursor: pointer;
+    text-align: center;
+    line-height: 38px;
+    color: #333;
+}
+.ua_btnblue{
+    background: #0d99e7;
+    color: #fff;
+}
+.ub_wrap{
+    display: none;
+    padding-right: 22px;
+}
+/*数据表格*/
+.firsttr{
+    background: #f5f5f5;
+
+}
+.firsttr th{
+    font-weight: normal;
+    font-size: 16px;
+}
+.bdtable {
+    width: 100%;
+    color: #333;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 30px;
+}
+.bdtable tr{
+    border-bottom: 1px solid #f3f3f3;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+}
+/*第三步*/
+.icon-chenggong{
+    color: #64c033;
+    font-size: 60px;
+    display: block;
+    margin: 150px auto 30px auto;
+    text-align: center;
+}
+.ub_succes{
+    text-align: center;
+    font-size: 28px;
+}

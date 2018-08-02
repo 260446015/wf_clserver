@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">资源库</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/infomationUpload/upload.css?version=0">
+    <style>
+        body{
+            background: #fefefe;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<div class="ua_wrap">
+    <div class="ua_boxlef">
+        <a class="ua_nava" style="margin-top: 30px;" href="socialmessage.html">
+            <span class="iconfont icon-shehuixinxi"></span>
+            <i>社会信息</i>
+        </a>
+        <a class="ua_nava" href="internetmessage.html">
+            <span class="iconfont icon-wangluo"></span>
+            <i>网络资源</i>
+        </a>
+        <a class="ua_nava" href="resourcemessage.html">
+            <span class="iconfont icon-ziyuan"></span>
+            <i>资源库</i>
+        </a>
+    </div>
+    <div class="ua_boxrig">
+        <table cellpadding="0" cellspacing="0" class="bdtable">
+            <tr class="firsttr uploadth">
+                <th>序号</th>
+                <th>文件名</th>
+                <th>数据条数</th>
+            </tr>
+            <tbody class="uploadtbody">
+
+            </tbody>
+        </table>
+        <div id="listpage" class="listpagejuzhong"></div>
+        <div>数据上传总量：<span class="listasdsadassddssafasasd"></span></div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    $(".ua_boxlef").height($(window).height()-72);
+    $(".ua_boxrig").find(".ub_head").eq(0).fadeIn();
+    layui.use(['laydate', 'laypage', 'upload','form']);
+    var laypage = layui.laypage;
+    var totalnu = 0;
+    gettong(0);
+    function setPageNo(count) {
+        laypage.render({
+            elem: 'listpage',
+            count: count,
+            first: '首页',
+            last: '尾页',
+            jump: function (obj, first) {
+                clga.setpagecss();
+                if (!first) {
+                    gettong(obj.curr - 1);
+                }
+            }
+        });
+    }
+    function gettong(pageNume) {
+        $.ajax({
+            url: ctx+"file",
+            type: "get",
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                pageNum:pageNume,
+                pageSize:10
+            },
+            dataType:"json",
+            success: function (res) {
+                if (0 === pageNume) {
+                    count = res.data.totalNumber;
+                    setPageNo(count);
+                }
+                $.each(res.data.dataList,function (i,item) {
+                    totalnu++;
+                    var list = '<tr>' +
+                        '<td>'+totalnu+'</td>' +
+                        '<td>'+item.key+'</td>' +
+                        '<td>'+item.value+'</td>' +
+                        '</tr>';
+                    $(".uploadtbody").append(list);
+                })
+            }
+        });
+    }
+    $.ajax({
+        url: ctx+"file/uploadCount",
+        type: "get",
+        xhrFields: {
+            withCredentials: true
+        },
+        dataType:"json",
+        success: function (res) {
+            $(".listasdsadassddssafasasd").html(res.data);
+        }
+    });
+</script>
+</html>

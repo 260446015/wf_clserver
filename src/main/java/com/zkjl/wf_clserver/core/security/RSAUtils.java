@@ -43,7 +43,7 @@ public class RSAUtils {
             BigInteger b1 = new BigInteger(modulus);
             BigInteger b2 = new BigInteger(exponent);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA",
-                    new org.bouncycastle.jce.provider.BouncyCastleProvider());
+                    new BouncyCastleProvider());
             RSAPublicKeySpec keySpec = new RSAPublicKeySpec(b1, b2);
             return (RSAPublicKey) keyFactory.generatePublic(keySpec);
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class RSAUtils {
             BigInteger b1 = new BigInteger(modulus);
             BigInteger b2 = new BigInteger(exponent);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA",
-                    new org.bouncycastle.jce.provider.BouncyCastleProvider());
+                    new BouncyCastleProvider());
             RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(b1, b2);
             return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class RSAUtils {
      * @throws Exception
      */
     public static String encryptByPublicKey(String data, RSAPublicKey publicKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA", new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider());
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         // 模长
         int key_len = publicKey.getModulus().bitLength() / 8;
@@ -108,7 +108,7 @@ public class RSAUtils {
      * @throws Exception
      */
     public static String decryptByPrivateKey(String data, RSAPrivateKey privateKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA", new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        Cipher cipher = Cipher.getInstance("RSA", new BouncyCastleProvider());
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         // 模长
         int key_len = privateKey.getModulus().bitLength() / 8;

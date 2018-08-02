@@ -2,8 +2,11 @@ package com.zkjl.wf_clserver.core.service.upload;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.entity.FileUploadEntity;
+import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.repository.es.FileUploadEntityRepository;
+import com.zkjl.wf_clserver.core.security.ShiroUtil;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,12 +85,12 @@ public abstract class UploadAbstractService {
             FileUploadEntity entity = new FileUploadEntity();
             entity.setContent(action.toJSONString());
             entity.setCreateTime(Calendar.getInstance().getTime());
-            String username = "张仁泉";
+            String username = "";
             try {
-//                SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-//                username = user.getName();
+                SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+                username = user.getName();
             } catch (Exception e) {
-//                throw new RuntimeException("用户未登录");
+                throw new RuntimeException("用户未登录");
             }
             entity.setUsername(username);
             entity.generatId();

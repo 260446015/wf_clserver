@@ -1,5 +1,6 @@
 package com.zkjl.wf_clserver.core.dto.req;
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -12,4 +13,5 @@ public class DefaultPageRQ extends AbstractPageRQ{
     private String name;
     private Date beginDate;
     private Date endDate;
+    private String id;
 }

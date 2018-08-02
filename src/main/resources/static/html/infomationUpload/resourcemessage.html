@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">资源库</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/infomationUpload/upload.css?version=0">
+    <style>
+        body{
+            background: #fefefe;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<div class="ua_wrap">
+    <div class="ua_boxlef">
+        <a class="ua_nava" style="margin-top: 30px;" href="socialmessage.html">
+            <span class="iconfont icon-shehuixinxi"></span>
+            <i>社会信息</i>
+        </a>
+        <a class="ua_nava" href="internetmessage.html">
+            <span class="iconfont icon-wangluo"></span>
+            <i>网络资源</i>
+        </a>
+        <a class="ua_nava" href="resourcemessage.html">
+            <span class="iconfont icon-ziyuan"></span>
+            <i>资源库</i>
+        </a>
+    </div>
+    <div class="ua_boxrig">
+        <div class="ub_headbox">
+            <div class="ub_head">
+                <div class="ub_headact">
+                    <span>1.导入</span>
+                    <img src="../../img/social1.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>2.预览</span>
+                    <img src="../../img/social2.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>3.确认</span>
+                </div>
+            </div>
+            <div class="ub_head">
+                <div class="ub_headali">
+                    <span>1.导入</span>
+                    <img src="../../img/social3.png" alt="">
+                </div>
+                <div class="ub_headact">
+                    <span>2.预览</span>
+                    <img src="../../img/social1.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>3.确认</span>
+                </div>
+            </div>
+            <div class="ub_head">
+                <div class="ub_headali">
+                    <span>1.导入</span>
+                    <img src="../../img/social2.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>2.预览</span>
+                    <img src="../../img/social3.png" alt="">
+                </div>
+                <div class="ub_headact">
+                    <span>3.确认</span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-upload-drag" id="test10">
+            <i class="layui-icon"></i>
+            <p>点击上传，或将文件拖拽到此处</p>
+        </div>
+        <div class="ua_detial">
+            <p>说明：</p>
+            <p>1、单个上传文件的数量不超过10万条；</p>
+            <p>2、支持txt、xls、xlsx文件格式；</p>
+        </div>
+        <div class="ua_btnbox">
+            <div class="ua_btn">取消</div>
+            <div class="ua_btn ua_btnblue">下一步</div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    $(".ua_boxlef").height($(window).height()-72);
+    $(".ua_boxrig").find(".ub_head").eq(0).fadeIn();
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+        //拖拽上传
+        upload.render({
+            elem: '#test10'
+            ,url: '/upload/'
+            ,accept: 'file' //普通文件
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+    });
+</script>
+</html>

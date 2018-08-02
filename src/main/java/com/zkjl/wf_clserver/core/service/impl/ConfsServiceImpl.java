@@ -54,8 +54,8 @@ public class ConfsServiceImpl implements ConfsService {
      * 查找平台
      */
     @Override
-    public PageImpl<Confs> findConfs(Integer pageSize, Integer pageNum, String searchStr){
-        List<Confs> all = confsRepository.findAll();
+    public PageImpl<Confs> findConfs(Integer pageSize, Integer pageNum, String searchStr,String id){
+        List<Confs> all = confsRepository.findBySystemuser(id);
         int totalCount;
         all = all.stream().sorted((a, b) -> b.getCreateDate().compareTo(a.getCreateDate())).collect(Collectors.toList());
         if (!StringUtils.isBlank(searchStr)) {
@@ -68,5 +68,15 @@ public class ConfsServiceImpl implements ConfsService {
     @Override
     public List<Confs> findAll(){
        return confsRepository.findAll();
+    }
+
+    @Override
+    public void copy(String id) {
+        List<Confs> bySystemuser = confsRepository.findBySystemuser("5b45fe31c7395f26e0656ea9");
+        bySystemuser.forEach(action ->{
+            action.setSystemuser(id);
+            action.set_id(null);
+        });
+        confsRepository.insert(bySystemuser);
     }
 }

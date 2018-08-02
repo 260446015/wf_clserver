@@ -1,0 +1,269 @@
+
+/*搜索*/
+section{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.sr_content{
+    position: relative;
+    background: red;
+    margin-top: 40px;
+}
+.sr_content input{
+    width: 525px;
+    height: 40px;
+    border: 2px solid #3cacea;
+    font-size: 18px;
+    float: left;
+    padding:0 5px;
+    margin-left: 282px;
+}
+.sr_content span{
+    width: 100px;
+    height: 44px;
+    background: #0d99e7;
+    float: left;
+    text-align: center;
+    line-height: 44px;
+    color: #fff;
+    cursor: pointer;
+}
+.sr_ul1{
+    width: 536px;
+    height: 127px;
+    position: absolute;
+    left: 282px;
+    top: 44px;
+    background: #f3f3f3;
+    display: none;
+    overflow: auto;
+}
+.sr_ul1 li{
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    padding: 0 12px;
+}
+.sr_ul1 li:hover{
+ background: #e7e7e7;
+}
+.sr_ul1::-webkit-scrollbar {
+    width: 0px;
+}
+
+/*人员核查-照片模式*/
+.sl_wilper{
+    background: #dadcdd;
+    width: 100%;
+    padding-bottom: 30px;
+}
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 220px;
+    height: 300px;
+}
+.sl_box{
+    background: #dadcdd;
+    margin-top: 72px;
+    height: 80px;
+    width: 100%;
+}
+
+.sl_box p{
+    float: left;
+    font-size: 18px;
+    line-height: 40px;
+    padding: 0 10px;
+    margin-left: 46px;
+}
+.sl_box .sl_input{
+    float: left;
+    width: 860px;
+    height: 40px;
+    padding: 0 10px;
+    background: #fff;
+    border: 0;
+}
+.sl_boxcen{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+.sl_select{
+    margin-left: 12px;
+    width: 110px;
+    float: left;
+}
+.sl_select input{
+    height: 40px;
+}
+
+/*表格*/
+.sl_biaoge{
+    width: 100%;
+}
+.sl_table th{
+    margin: 5px 0;
+}
+.sl_table .slt_1{
+    height: 30px;
+    border-bottom: 2px solid #d6d6d6;
+    background: #e9e9e9;
+}
+.slt_1 span{
+    width: 2px;
+    height: 12px;
+    background: #d6d6d6;
+    float: left;
+    margin: 4px 4px 0 0 ;
+}
+.sl_tbody tr{
+    height: 30px;
+    padding: 0 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+.sl_tbody td{
+    padding-left: 6px;
+    text-align: center;
+}
+
+.sl_tbody .sl_firtr{
+    background: #f5f5f5;
+}
+.zhanwei{
+    width: 10%;
+}
+.sl_tbody tr:hover{
+    background: #e9e9e9;
+    color: #333;
+}
+
+/*图片列表*/
+.sp_box{
+    width: 1280px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.sp_box li{
+    width: 300px;
+    height: 180px;
+    background: #fff;
+    margin: 7px 10px;
+    float: left;
+    cursor: pointer;
+}
+.sp_imglef{
+    float: left;
+    width: 134px;
+    height: 172px;
+    margin: 4px;
+    overflow: hidden;
+}
+.sp_imglef img{
+    width: 100%;
+}
+.sp_imgrig{
+    float: left;
+    width: 148px;
+}
+.sp_imgrig p{
+    padding: 0 4px;
+    line-height: 24px;
+}
+
+
+/*社会数据*/
+.shehuidatabox{
+    width: 1200px;
+    overflow: hidden;
+    margin: 10px auto;
+    overflow-x: auto;
+}
+.shehuidataconte{
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    clear: both;
+    margin: 10px 0;
+    border-left: 1px solid #ccc;
+}
+.sh_dlbox{
+    overflow: hidden;
+    height: 60px;
+    width: auto;
+    float: left;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.sh_dlbox i{
+    color: red;
+}
+.sh_dlbox dd{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-bottom: 1px solid #ccc;
+}
+.sh_dlbox dt{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+
+/*监督条相关*/
+.cxtm_box{
+    line-height: 30px;
+    margin-top: 10px;
+    padding: 0 5px;
+    height: 30px;
+}
+.ctxm_heade{
+    line-height: 30px;
+    margin: 10px 0;
+}
+.ctxm_ping{
+
+}
+.ctxm_ping span{
+
+}
+.cxtm_boxer{
+    line-height: 30px;
+    color: #fff;
+}
+.cxtm_kuai{
+    width: 18px;
+    height: 18px;
+    float: left;
+    background: #ff8517;
+    border-radius: 3px;
+    margin: 5px;
+}
+.cxtm_boxerw{
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.cxtm_val{
+    float: left;
+}
+.cxtm_wrap{
+    overflow: hidden;
+}
+.cxtm_wrap span{
+    float: left;
+    margin: 3px 10px;
+    color: #fff;
+}
+.shehuititle{
+    text-align: center;
+    background: #e9e9e9;
+    font-weight: bold;
+    line-height: 32px;
+}

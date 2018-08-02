@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">信息上传</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/infomationUpload/upload.css?version=0">
+    <style>
+        body{
+            background: #fefefe;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<div class="sr_top">
+    <img src="../../img/huibiao.png" class="animated zoomIn" alt="">
+    <p class="animated slideInUp">信息上传</p>
+</div>
+
+<!--模块-->
+<ul class="ua_box">
+    <li data-href="socialmessage.html" style="margin-left: 18%;">
+        <img src="../../img/uploadm1.png" alt="">
+        <p>社会数据</p>
+    </li>
+    <li data-href="internetmessage.html">
+        <img src="../../img/uploadm2.png" alt="">
+        <p>超级链接</p>
+    </li>
+    <!--<li style="margin: 0;" data-href="resourcemessage.html">-->
+        <!--<img src="../../img/uploadm3.png" alt="">-->
+        <!--<p>日积月累数据</p>-->
+    <!--</li>-->
+</ul>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    $(".ua_box").on("click","li",function () {
+        if($(this).attr("data-href")){
+            window.location = $(this).attr("data-href");
+        }
+    });
+</script>
+</html>

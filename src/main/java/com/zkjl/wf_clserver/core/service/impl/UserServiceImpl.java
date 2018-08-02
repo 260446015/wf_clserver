@@ -10,8 +10,9 @@ import com.zkjl.wf_clserver.core.repository.kklc.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
 import com.zkjl.wf_clserver.core.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +32,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SysUserRepository sysUserRepository;
     @Resource
-    private SessionDAO sessionDAO;
-    @Resource
     private LoginCountRepository loginCountRepository;
     @Resource(name = "primaryMongoTemplate")
     private MongoTemplate primaryMongoTemplate;
+    @Resource
+    private EhCacheManager ehCacheManager;
 
     /**
      * 登陆判断
      */
     @Override
     public SysUser login(String username, String password) {
+        SysUser sysUser = null;
         try {
-            SysUser sysUser = sysUserRepository.findByUsernameAndPassword(username, password);
-            return sysUser;
+            sysUser = sysUserRepository.findByUsernameAndPassword(username, password);
+            if(null == sysUser){
+                sysUser = sysUserRepository.findByPoliceNumberAndPassword(username,password);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return sysUser;
     }
 
     @Override
@@ -109,6 +113,7 @@ public class UserServiceImpl implements UserService {
             sysUser.setQq(doc.getString("qq"));
             sysUser.setCreateDate(doc.getDate("create_date"));
             sysUser.setIfEnable(doc.getBoolean("if_enable"));
+            sysUser.setUsername(doc.getString("username"));
             all.add(sysUser);
         }
 
@@ -176,8 +181,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JSONObject listActiveSession() {
         JSONObject jsonObject = new JSONObject();
-        Collection<Session> activeSessions = sessionDAO.getActiveSessions();
-        jsonObject.put("activeCount", activeSessions.size());
+        jsonObject.put("activeCount",ehCacheManager.getCache("shiroCache").size());
         jsonObject.put("allCount", loginCountRepository.findAll().size());
         return jsonObject;
     }

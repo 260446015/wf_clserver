@@ -15,4 +15,6 @@ public interface FileUploadEntityRepository extends ElasticsearchRepository<File
     List<FileUploadEntity> findBySource(String source);
 
     List<FileUploadEntity> deleteBySource(String source);
+
+    List<FileUploadEntity> findByUsername(String username);
 }

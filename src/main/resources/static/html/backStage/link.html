@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">用户操作日志</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/backStage/backStage.css?version=0">
+    <link rel="stylesheet" href="../../css/hyperlink/hyperlink.css?version=0">
+    <style>
+        .beizhulink{
+            text-overflow: ellipsis;
+            white-space: normal;
+            overflow: hidden;
+            max-width: 300px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+
+<section>
+    <ul class="ba_top">
+        <li><a href="management.html">用户管理</a></li>
+        <li><a href="record.html">用户操作日志</a></li>
+        <li class="ba_active" style="border-right: 1px solid #e9e9e9;"><a href="link.html">链接列表</a></li>
+    </ul>
+    <div class="ba_search">
+        <div class="ba_searbox">
+            <input type="text" class="ba_seacival" placeholder="请输入要查询的平台名称">
+            <!--<input type="text" class="layui-input" id="test1" placeholder="开始时间">-->
+            <!--<span>~</span>-->
+            <!--<input type="text" class="layui-input" id="test2" placeholder="结束时间">-->
+            <div class="ba_searbtn ba_searclick" data-href="true">搜索</div>
+        </div>
+        <!--<div class="ba_searbtn fr ba_daochu">导出</div>-->
+        <!--<div class="ba_searbtn fr">批量删除</div>-->
+    </div>
+    <table cellspacing="0" cellpadding="0" class="ba_table layui-form">
+        <tr class="ba_frtr">
+            <th></th>
+            <th>编号</th>
+            <th>名称</th>
+            <th>URL</th>
+            <th>类型</th>
+            <th>状态</th>
+            <th>操作</th>
+            <th>备注</th>
+        </tr>
+        <tbody class="ch_tbodybianji">
+        <!--<tr>-->
+            <!--<td><input type="checkbox" name="" lay-skin="primary"></td>-->
+            <!--<td>001</td>-->
+            <!--<td>大数据维稳</td>-->
+            <!--<td>192.268.1.1</td>-->
+            <!--<td>查询类型</td>-->
+            <!--<td>2018-12-12 12:12:23</td>-->
+            <!--<td>正常</td>-->
+            <!--<td class="ba_delate">-->
+                <!--<span class="ch_bianji"><span class="iconfont icon-bianji"></span>编辑</span>-->
+                <!--<span class="ch_shanchu"><span class="iconfont icon-shanchu"></span>删除</span>-->
+                <!--<span class="ch_jinyong"><span class="iconfont icon-jinyong"></span>禁用</span>-->
+            <!--</td>-->
+            <!--<td>无</td>-->
+        <!--</tr>-->
+        </tbody>
+    </table>
+    <div id="listpage"></div>
+</section>
+<div class="linkpropo layui-form" id="linkpropo">
+    <div class="ac_fomli">
+        <span class="">*</span>
+        <i class="ac_fomi">名称：</i>
+        <input class="acda_name" type="text" placeholder="请输入名称">
+    </div>
+    <div class="layui-form-item ac_fomli">
+        <span>*</span>
+        <i class="ac_fomi">登录类型</i>
+        <div class="layui-input-block acdata_leixing">
+            <select name="city" class="selectxiala" lay-verify="required" lay-filter="acseleixing">
+                <option value="">请选择</option>
+                <option value="证书登录">证书登录</option>
+                <option value="账号密码登录">账号密码登录</option>
+            </select>
+        </div>
+    </div>
+    <div class="ac_fomli">
+        <span class="">*</span>
+        <i class="ac_fomi">URL：</i>
+        <input class="acda_url" type="text" placeholder="请输入URL">
+    </div>
+    <!--<div class="ac_fomli">-->
+        <!--<span class="">*</span>-->
+        <!--<i class="ac_fomi">发布时间：</i>-->
+        <!--<input type="text" class="layui-input acda_shijain" id="test1" placeholder="请选择时间">-->
+    <!--</div>-->
+    <div class="ac_fomli">
+        <span class="">*</span>
+        <i class="ac_fomi">状态：</i>
+        <div class="">
+            <input type="radio" name="sex" value="1" title="启用" checked>
+            <input type="radio" name="sex" value="-1" title="禁用">
+        </div>
+    </div>
+    <div class="ac_fomli">
+        <span class="">*</span>
+        <i class="ac_fomi acda_img">logo：</i>
+        <div class="layui-btn layui-btn-normal" id="imgupload">上传图片</div>
+    </div>
+    <div class="ac_fomli" style="height: 100px;">
+        <span class="">*</span>
+        <i class="ac_fomi">备注：</i>
+        <textarea name="desc" placeholder="请输入内容" class="layui-textarea ac_textarea acda_textera"></textarea>
+    </div>
+    <div class="layui-input-block ac_btnpro">
+        <div class="layui-btn layui-btn-normal quedingbtn">确定</div>
+        <div class="layui-btn layui-btn-primary wuxiaobtn">取消</div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+
+    layui.use(['laydate', 'laypage', 'upload','form']);
+    var laydate = layui.laydate;
+    var laypage = layui.laypage;
+    var upload = layui.upload;
+    var form = layui.form;
+    //执行一个laydate实例
+    //开始时间
+    laydate.render({
+        elem: '#test1'
+    });
+    //结束时间
+    laydate.render({
+        elem: '#test1'
+        ,type:'datetime'
+        ,theme:'#0f8fe0'
+    });
+    //图片上传
+    var uploadInst = upload.render({
+        elem: '#imgupload' //绑定元素
+        ,url: ctx+ 'file/uploadImg' //上传接口
+        ,accept:"images"
+        ,choose:function () {
+
+        }
+        ,done: function(res){
+            //上传完毕回调
+            $(".acda_img").attr("data-href",res[0].url)
+        }
+        ,error: function(){
+
+        }
+    });
+
+    //编辑
+    $(".ch_tbodybianji").on("click", ".ch_bianji", function () {
+        var oid =  $(this).attr("data-href");
+        layer.open({
+            title: '编辑',
+            area: ['560px', '500px'],
+            type: 1,
+            skin: 'layui-layer-lan',
+            closeBtn: 1, //不显示关闭按钮
+            anim: 1,
+            content: $('#linkpropo'),
+            cancel: function () {
+                $("#linkpropo").hide();
+            },
+            success:function () {
+                console.log(oid)
+                linkgetwer(0, oid)
+            }
+        });
+
+    });
+    //删除
+    $(".ch_tbodybianji").on("click", ".ch_shanchu", function () {
+        var oarray = $(this).attr("data-href");
+        layer.confirm('您确认要删除吗？', {
+            skin: 'layui-layer-lan',
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            deletefun(oarray);
+        }, function () {
+
+        });
+    });
+    //删除操作
+    function deletefun(dataer) {
+        var dataye = {
+            ids:dataer
+        }
+        $.ajax({
+            url: ctx + "link/delete",
+            type: "get",
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType:'application/json',
+            data: dataye,
+            success: function (res) {
+                console.log(res);
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                linkget(0, "");
+                layer.msg("删除成功");
+            }
+        });
+    }
+    //禁用
+    $(".ch_tbodybianji").on("click", ".ch_jinyong", function () {
+        layer.confirm('您确认要禁用吗？', {
+            skin: 'layui-layer-lan',
+            btn: ['取消', '确定'] //按钮
+        }, function () {
+
+        }, function () {
+
+        });
+    });
+
+    //选择
+    form.on("select(acseleixing)",function (res) {
+        $(".selectxiala").attr("data-href",res.value);
+    });
+    function setPageNo(count) {
+        laypage.render({
+            elem: 'listpage',
+            count: count,
+            first: '首页',
+            last: '尾页',
+            jump: function (obj, first) {
+                clga.setpagecss();
+                if (!first) {
+                    linkget(obj.curr - 1, "");
+                }
+            }
+        });
+    }
+
+    linkget(0, "");
+
+    function linkget(pageval, searchval) {
+        $.ajax({
+            url: ctx + "link/findAll",
+            type: "get",
+            data: {
+                pageSzie: 10,
+                pageNum: pageval,
+                search: searchval
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                console.log(res);
+                $(".ch_tbodybianji").empty();
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                if (0 === pageval) {
+                    count = res.data.totalNumber;
+                    setPageNo(count);
+                }
+                $.each(res.data.dataList, function (i, item) {
+                    var resuid = "";
+                    if(item.ifOpen=="1"){
+                        resuid = "禁用";
+                    }else{
+                        resuid = "启用";
+                    }
+                    var list = ' <tr>' +
+                        '<td><input type="checkbox" name="" lay-skin="primary"></td>' +
+                        '<td>'+(i+1)+'</td>' +
+                        '<td>'+item.name+'</td>' +
+                        '<td><div class="beizhulink">'+item.url+'</div></td>' +
+                        '<td>'+item.pathType+'</td>' +
+                        '<td>'+resuid+'</td>' +
+                        '<td class="ba_delate">' +
+                        '    <span class="ch_bianji" data-href="'+item.name+'"><span class="iconfont icon-bianji"></span>编辑</span>' +
+                        '    <span class="ch_shanchu" data-href="'+item.id+'"><span class="iconfont icon-shanchu"></span>删除</span>' +
+                        '</td>' +
+                        '<td><div class="beizhulink">'+item.remark+'</div></td>' +
+                        '</tr>';
+                    $(".ch_tbodybianji").append(list);
+                });
+            }
+        });
+    };
+
+    $(".ba_searclick").click(function () {
+        if($(".ba_seacival").val()!=""){
+            linkget(0, $(".ba_seacival").val());
+        }
+    });
+
+    //查询
+    function linkgetwer(pageval, searchval) {
+        $.ajax({
+            url: ctx + "link/findAll",
+            type: "get",
+            data: {
+                pageSzie: 10,
+                pageNum: pageval,
+                search: searchval
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                var odata = res.data.dataList[0];
+                $(".linkpropo").attr("data-href",odata.id);
+                $(".acda_name").val(odata.name);
+                $(".selectxiala").val(odata.pathType).attr("data-href",odata.pathType);
+                $(".acda_url").val(odata.url);
+                //$(".acda_shijain").val(odata.publishDate);
+                $("input[name=sex][value="+odata.ifOpen+"]").attr("checked",true);
+                $(".acda_textera").val(odata.remark);
+                $(".acda_img").attr("data-href",odata.logo.split("8080/")[1]);
+                form.render();
+            }
+        });
+    };
+
+    //按钮
+    $(".linkpropo").on("click",".quedingbtn",function () {
+        if($(".acda_name").val()==""){
+            return layer.msg("请输入用户名", {anim: 6});
+        }
+        if(!$(".selectxiala").attr("data-href")){
+            return layer.msg("请选择登录类型", {anim: 6});
+        }
+        if($(".acda_url").val()==""){
+            return layer.msg("请输入链接名称", {anim: 6});
+        }
+        if($(".acda_shijain").val()==""){
+            return layer.msg("请选择发布时间", {anim: 6});
+        }
+        if(!$(".acda_img").attr("data-href")){
+            return layer.msg("请选择图片", {anim: 6});
+        }
+        bianjitijiao();
+    });
+    $(".linkpropo").on("click",".wuxiaobtn",function () {
+        layer.closeAll();
+    });
+
+    //编辑后提交
+    function bianjitijiao() {
+        var lianjiedata = {
+            category: "string",
+            delFlag: "string",
+            hotCount: 0,
+            id:$(".linkpropo").attr("data-href"),
+            ifOpen: $("input[type='radio']:checked").val(),
+            logo: "http://10.52.219.219:8080/"+$(".acda_img").attr("data-href"),
+            name: $(".acda_name").val(),
+            pathType: $(".selectxiala").attr("data-href"),
+            remark: $(".acda_textera").val(),
+            url: $(".acda_url").val(),
+            publishDate:$(".acda_shijain").val()
+        }
+        console.log(lianjiedata)
+        $.ajax({
+            url: ctx + "link/save",
+            type: "post",
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType:'application/json',
+            data: JSON.stringify(lianjiedata),
+            success: function (res) {
+                console.log(res);
+                if (res.code != 0) {
+                    return layer.msg(res.message, {anim: 6});
+                }
+                linkget(0, "");
+                layer.msg("信息提交成功");
+                layer.closeAll();
+            }
+        });
+    }
+</script>
+</html>

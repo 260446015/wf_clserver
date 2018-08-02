@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">万联点击实战平台</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/search/search.css?version=0">
+    <link rel="stylesheet" href="../../css/search/search_detial.css?version=0">
+    <link rel="stylesheet" href="../../css/search/timeline.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<!--回到顶部-->
+<slide data-href="true">
+    <img class="gotop" src="../../img/gotop.png" alt="回到顶部">
+</slide>
+<!--顶部-->
+<div class="sd_top">
+    <div class="sd_topt">
+        <span>人员档案</span>
+        <a href="../../index.html" class="sl_select">返回首页</a>
+        <div class="sl_select daochubtndachu">导出档案</div>
+        <div class="sl_select">
+            <div class="sl_clickbtn" data-href="true">导出</div>
+            <ul class="sl_selectcon animated layui-anim layui-anim-upbit">
+                <li><span data-href="false" data-code="0"></span>基本情况</li>
+                <li><span data-href="false" data-code="1"></span>联系方式</li>
+                <li><span data-href="false" data-code="2"></span>同户关系</li>
+                <li><span data-href="false" data-code="3"></span>邻居关系</li>
+                <li><span data-href="false" data-code="4"></span>物品</li>
+                <li><span data-href="false" data-code="5"></span>轨迹</li>
+                <li><span data-href="false" data-code="6"></span>重点关注</li>
+                <li><span data-href="false" data-code="7"></span>社会信息</li>
+                <li><span data-href="false" data-code="8"></span>互联网信息</li>
+                <li class="quanbu_daochu"><span data-href="false" data-code="9"></span>全部导出</li>
+            </ul>
+        </div>
+    </div>
+    <div class="sd_jiben">
+        <span>基本信息</span>
+        <i>人员最近7天活跃度</i>
+    </div>
+    <div class="sd_conten">
+        <div class="sd_coimg">
+            <img class="ad_coimgdetial"
+                 alt="" onerror="clga.whenoerron(this)">
+            <p>信息来源：户籍常驻人口</p>
+            <ul class="sd_ul biaoqiandetial"></ul>
+        </div>
+
+        <div class="sd_right">
+            <ul class="sd_ul2">
+                <li>
+                    <img src="../../img/lvguan.png" alt="">
+                    <span>旅馆</span>
+                    <span class="sd_sp1">次</span>
+                    <span class="sd_sp1 sd_sp2">1</span>
+                </li>
+                <li>
+                    <img src="../../img/chuxing.png" alt="">
+                    <span>出行</span>
+                    <span class="sd_sp1">次</span>
+                    <span class="sd_sp1 sd_sp2">1</span>
+                </li>
+                <li>
+                    <img src="../../img/shangwang.png" alt="">
+                    <span>上网</span>
+                    <span class="sd_sp1">次</span>
+                    <span class="sd_sp1 sd_sp2">1</span>
+                </li>
+                <li style="margin: 0;">
+                    <img src="../../img/shebao.png" alt="">
+                    <span>社保刷卡</span>
+                    <span class="sd_sp1">次</span>
+                    <span class="sd_sp1 sd_sp2">1</span>
+                </li>
+            </ul>
+            <div class="sd_libox sd_ligray sd_lithree">
+                <div>姓名：姜先生</div>
+                <div>性别：男</div>
+                <div>民族：满足</div>
+            </div>
+            <div class="sd_libox sd_lithree">
+                <div>曾用名：姜先生</div>
+                <div>文化程度：本科</div>
+                <div>籍贯：山东省潍坊市昌乐县X小区</div>
+            </div>
+            <div class="sd_libox sd_ligray sd_lithree">
+                <div>身份证：130825123456784810</div>
+                <div>出生日期：19890703</div>
+            </div>
+            <div class="sd_libox sd_lithree">
+                <div>初领省份证地址：山东昌乐</div>
+                <div>政治面貌：无</div>
+            </div>
+            <div class="sd_libox sd_ligray sd_lithree">
+                <div>所住详细地址：山东省潍坊市昌乐县X小区</div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="sd_libox sd_lithree sd_licenter">生物特征</div>
+            <div class="sd_libox sd_ligray sd_lisix">
+                <div>口音</div>
+                <div>体型</div>
+                <div>肤色</div>
+                <div>是否近视</div>
+                <div>DNA</div>
+                <div>足迹</div>
+            </div>
+            <div class="sd_libox sd_lisix">
+                <div>大同口音</div>
+                <div>172~175</div>
+                <div>白</div>
+                <div>是</div>
+                <div>有</div>
+                <div>有</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--底部-->
+<div class="shadow">
+    <div class="sd_jindu1 animated bouncelnDown">查询进度</div>
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+    </div>
+    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，请不要关闭此页</div>
+    <div class="cxtm_boxer">
+        <div class="cxtm_boxerw">
+            <span class="cxtm_kuai" style="background: #64ff4d;"></span>
+            <span class="cxtm_val">查询完毕返回数据平台</span>
+            <span class="cxtm_kuai" style="background: #eb9927;"></span>
+            <span class="cxtm_val">查询完毕未返回数据平台</span>
+            <span class="cxtm_kuai" style="background: red;"></span>
+            <span class="cxtm_val">查询进行中平台</span>
+            <span class="cr againpathon fr" style="color: #0C0C0C;">again</span>
+        </div>
+        <div class="cxtm_wrap"></div>
+    </div>
+    <!--div-->
+    <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
+</div>
+<div class="sd_wrap">
+    <!--导航-->
+    <ul class="layui-nav" lay-filter="daohang">
+        <li class="layui-nav-item"><a href="search_detial1.html" class="layuinavul0">基本情况</a></li>
+        <li class="layui-nav-item"><a href="search_detiallianxi.html">联系方式</a></li>
+        <li class="layui-nav-item"><a href="search_detialtonghu.html">同户关系</a></li>
+        <li class="layui-nav-item"><a href="search_detiallinju.html">邻居关系</a></li>
+        <li class="layui-nav-item"><a href="search_detialwupin.html">物品</a></li>
+        <li class="layui-nav-item"><a>轨迹</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="search_detialguijifenle.html">分类展示</a></dd>
+                <dd><a href="search_detialguijishijin.html">时间轴展示</a></dd>
+                <dd><a href="search_detialguijiguanxi.html">关系</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item layui-this"><a href="search_detialzhongdian.html">重点关注</a></li>
+        <li class="layui-nav-item"><a href="search_detialshehui.html">社会信息</a></li>
+        <li class="layui-nav-item"><a href="search_detialhulianwang.html">互联网信息</a></li>
+        <li class="layui-nav-item"><a href="search_detialtuopu.html">拓扑图</a></li>
+    </ul>
+    <!--内容区-->
+    <div class="sd_wrapbox">
+        <!--重点关注-->
+        <div class="licontent" style="display: block;" data-href="6">
+            <!--违法犯罪前科-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>违法犯罪前科</span>
+                </div>
+                <div class="none qianke">
+                    <table cellpadding="0" cellspacing="2" class="sj_table2 sxtips" data-href="全国违法犯罪人员">
+                        <tr class="sj_firtr">
+                            <td colspan="7" style="background: transparent;">人员详细信息</td>
+                        </tr>
+                        <tbody class="weifa_jiben"></tbody>
+                    </table>
+                    <!--涉案情况-->
+                    <table cellpadding="0" cellspacing="2" class="sj_table2 sxtips" data-href="全国违法犯罪人员">
+                        <tr class="sj_firtr">
+                            <td colspan="8" style="background: transparent;">涉案情况</td>
+                        </tr>
+                        <tbody class="weifa_qingk"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!--在逃-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>在逃</span>
+                </div>
+                <div class="zaitao_mes"></div>
+            </div>
+            <!--在逃撤销-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>在逃撤销</span>
+                </div>
+                <div class="zaitao_chexiao"></div>
+            </div>
+            <!--涉毒信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>涉毒信息</span>
+                </div>
+                <div class="none xiduxianshi">
+                    <table cellpadding="0" cellspacing="2" class="sj_table2 sxtips" data-href="全国吸毒人员">
+                        <tr class="sj_firtr">
+                            <td colspan="7" style="background: transparent;">基本信息</td>
+                        </tr>
+                        <tbody class="xidu_jiben"></tbody>
+                    </table>
+                    <!--涉案情况-->
+                    <table cellpadding="0" cellspacing="2" class="sj_table2">
+                        <tr class="sj_firtr">
+                            <td colspan="9" style="background: transparent;">发现情况</td>
+                        </tr>
+                        <tbody class="xidu_qingkuang"></tbody>
+                    </table>
+                    <!--管控状态-->
+                    <table cellpadding="0" cellspacing="2" class="sj_table2">
+                        <tr class="sj_firtr">
+                            <td colspan="9" style="background: transparent;">管控状态</td>
+                        </tr>
+                        <tr class="sj_firtr" style="background: #fff;">
+                            <th>管控状态</th>
+                            <th>管控记录</th>
+                            <th>管控地区</th>
+                            <th>管控单位详称</th>
+                            <th>开始时间</th>
+                            <th>更新时间</th>
+                            <th>后续管控环节</th>
+                            <th>后续接管单位</th>
+                        </tr>
+                        <tbody class="xidu_zhuang"></tbody>
+                    </table>
+                    <!--就业安置记录-->
+                    <table cellpadding="0" cellspacing="2" class="sj_table2" style="display: none;">
+                        <tr class="sj_firtr">
+                            <td colspan="7" style="background: transparent;">就业安置记录</td>
+                        </tr>
+                        <tbody>
+                        <tr style="text-align: center;">
+                            <td>安置状态</td>
+                            <td colspan="2" class="sk_nr">就业</td>
+                            <td>是否纳入低保</td>
+                            <td colspan="3" class="sk_nr">否</td>
+                        </tr>
+                        <tr style="text-align: center;">
+                            <td>安置时间</td>
+                            <td>安置类型</td>
+                            <td>安置单位名称</td>
+                            <td>填表单位</td>
+                            <td>填表人</td>
+                            <td>联系电话</td>
+                            <td>操作</td>
+                        </tr>
+                        <tr style="text-align: center;">
+                            <td class="sk_nr">2001-01-12</td>
+                            <td class="sk_nr">自主就业</td>
+                            <td class="sk_nr">自主就业</td>
+                            <td class="sk_nr">自主就业</td>
+                            <td class="sk_nr">自主就业</td>
+                            <td class="sk_nr">自主就业</td>
+                            <td class="sk_nr">详情</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--拘留所信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>拘留所信息</span>
+                </div>
+                <div class="juliu_juliu">
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留基本信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>姓名</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>别名</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>性别</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>出生日期</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>证件号</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>民族</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>婚姻状况</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td></td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>户籍地详址</td>-->
+                    <!--<td colspan="8" class="sk_nr">山东省潍坊市</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>正面照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>左侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>右侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>拘室号</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>收据凭证</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所文书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>入所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>主要案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>成员类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>从案案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>拘留决定机关</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所日期</td>-->
+                    <!--<td colspan="2" class="sk_nr">姜先生</td>-->
+                    <!--<td>拘押期限</td>-->
+                    <!--<td colspan="2" class="sk_nr">男</td>-->
+                    <!--<td>拘留天数</td>-->
+                    <!--<td colspan="2" class="sk_nr">112312312</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案单位</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案单位类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案人</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案人电话</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>裁决书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>口音特点</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>危险等级</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>健康状况</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>犯罪经历</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>情况描述</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所日期</td>-->
+                    <!--<td colspan="3" class="sk_nr">昌乐</td>-->
+                    <!--<td>出所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">昌乐</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所去向</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>备注</td>-->
+                    <!--<td colspan="4" class="sk_nr">指挥中心</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                </div>
+            </div>
+            <!--看守所信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>看守所信息</span>
+                </div>
+                <div class="kanshou_kanshou">
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留基本信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>姓名</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>别名</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>性别</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>出生日期</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>证件号</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>民族</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>婚姻状况</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td></td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>户籍地详址</td>-->
+                    <!--<td colspan="8" class="sk_nr">山东省潍坊市</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>正面照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>左侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>右侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>拘室号</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>收据凭证</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所文书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>入所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>主要案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>成员类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>从案案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>拘留决定机关</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所日期</td>-->
+                    <!--<td colspan="2" class="sk_nr">姜先生</td>-->
+                    <!--<td>拘押期限</td>-->
+                    <!--<td colspan="2" class="sk_nr">男</td>-->
+                    <!--<td>拘留天数</td>-->
+                    <!--<td colspan="2" class="sk_nr">112312312</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案单位</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案单位类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案人</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案人电话</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>裁决书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>口音特点</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>危险等级</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>健康状况</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>犯罪经历</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>情况描述</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所日期</td>-->
+                    <!--<td colspan="3" class="sk_nr">昌乐</td>-->
+                    <!--<td>出所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">昌乐</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所去向</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>备注</td>-->
+                    <!--<td colspan="4" class="sk_nr">指挥中心</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                </div>
+            </div>
+            <!--出所人员-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>出所人员</span>
+                </div>
+                <div class="qiandu_chusuo">
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留基本信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>姓名</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>别名</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>性别</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>出生日期</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>证件号</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>民族</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>婚姻状况</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td></td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>户籍地详址</td>-->
+                    <!--<td colspan="8" class="sk_nr">山东省潍坊市</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>正面照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>左侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--<td>右侧照</td>-->
+                    <!--<td colspan="2" class="sk_nr juliu_img"><img src="../../images/slide1.jpg" alt=""></td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                    <!--<table cellpadding="0" cellspacing="2" class="sj_table2">-->
+                    <!--<tr class="sj_firtr">-->
+                    <!--<td colspan="9" style="background: transparent;">拘留信息</td>-->
+                    <!--</tr>-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                    <!--<td>拘室号</td>-->
+                    <!--<td colspan="3" class="sk_nr">刘国庆</td>-->
+                    <!--<td>收据凭证</td>-->
+                    <!--<td colspan="4" class="sk_nr">刘国庆</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所文书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">姜先生</td>-->
+                    <!--<td>入所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">2018-12-12</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>主要案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>成员类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">123</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>从案案由</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>拘留决定机关</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>入所日期</td>-->
+                    <!--<td colspan="2" class="sk_nr">姜先生</td>-->
+                    <!--<td>拘押期限</td>-->
+                    <!--<td colspan="2" class="sk_nr">男</td>-->
+                    <!--<td>拘留天数</td>-->
+                    <!--<td colspan="2" class="sk_nr">112312312</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案单位</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案单位类型</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>办案人</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>办案人电话</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>裁决书号</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>口音特点</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>危险等级</td>-->
+                    <!--<td colspan="3" class="sk_nr">123123123</td>-->
+                    <!--<td>健康状况</td>-->
+                    <!--<td colspan="4" class="sk_nr">姜先生</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>犯罪经历</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>情况描述</td>-->
+                    <!--<td colspan="8" class="sk_nr" style="width: 85%;">【单位】单位】开发区所【反馈人】开发区接警组【出警人】高忠伟-->
+                    <!--李凯南【反馈时间】2018-05-09 12：35【到场时间】2018-05-09 12：37：35【案件性质】纠纷>其他纠纷>其他纠纷【情况】接警后，民警高忠伟-->
+                    <!--李凯南立即出警。现场伤0人，损失价值0元。目前，报警人王雨辰已报的彩虹新城东门，有人拦路不让走了。警情已现场处结完毕；2018年5月9日-->
+                    <!--12：35时许，王雨辰（130123456789094873）报警称：在彩虹新城东门，与对象张正福（1302345674892732x）电话（13912345678）发生争吵。现场调解处理。-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所日期</td>-->
+                    <!--<td colspan="3" class="sk_nr">昌乐</td>-->
+                    <!--<td>出所原因</td>-->
+                    <!--<td colspan="4" class="sk_nr">昌乐</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td>出所去向</td>-->
+                    <!--<td colspan="3" class="sk_nr">电话</td>-->
+                    <!--<td>备注</td>-->
+                    <!--<td colspan="4" class="sk_nr">指挥中心</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--</table>-->
+                </div>
+            </div>
+            <!--闭环系统信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>闭环系统信息</span>
+                </div>
+                <div class="bihuan_anjian"></div>
+
+            </div>
+            <!--案件-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>案件</span>
+                </div>
+                <div class="qiandu_anjian"></div>
+            </div>
+            <!--高危人员-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>高危人员</span>
+                </div>
+                <div class="qiandu_gaoweirenyuan"></div>
+            </div>
+            <!--全国联查-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>全国联查</span>
+                </div>
+                <div class="qiandu_quanguoliancha"></div>
+            </div>
+            <!--维稳重点人信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>维稳重点人信息</span>
+                </div>
+                <div class="qiandu_zhongdianrenyuan"></div>
+            </div>
+            <!--上访（非坊）信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>上访（非坊）信息</span>
+                </div>
+            </div>
+            <!--接处警信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>接处警综信息</span>
+                </div>
+                <!--<table cellspacing="0" cellpadding="0" class="sj_table">-->
+                <!--<tr class="sj_firtr">-->
+                <!--<th>序号</th>-->
+                <!--<th>事件编号</th>-->
+                <!--<th>报警时间</th>-->
+                <!--<th>接警单位</th>-->
+                <!--<th>事发地址</th>-->
+                <!--<th>报警类别</th>-->
+                <!--<th>报警类型</th>-->
+                <!--<th>报警细类</th>-->
+                <!--<th>来电类型</th>-->
+                <!--<th>报警人</th>-->
+                <!--<th>联系电话</th>-->
+                <!--<th>事件详情</th>-->
+                <!--</tr>-->
+                <!--<tbody class="sj_tboday">-->
+                <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>1234567890123</td>-->
+                <!--<td>2017-12-12</td>-->
+                <!--<td>指挥中心</td>-->
+                <!--<td>召唤师峡谷</td>-->
+                <!--<td>纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>报警或求助</td>-->
+                <!--<td>盖伦</td>-->
+                <!--<td>12343556776</td>-->
+                <!--<td>召唤师峡谷中路。有人堵路，不让走了</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>1234567890123</td>-->
+                <!--<td>2017-12-12</td>-->
+                <!--<td>指挥中心</td>-->
+                <!--<td>召唤师峡谷</td>-->
+                <!--<td>纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>报警或求助</td>-->
+                <!--<td>盖伦</td>-->
+                <!--<td>12343556776</td>-->
+                <!--<td>召唤师峡谷中路。有人堵路，不让走了</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>1234567890123</td>-->
+                <!--<td>2017-12-12</td>-->
+                <!--<td>指挥中心</td>-->
+                <!--<td>召唤师峡谷</td>-->
+                <!--<td>纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>报警或求助</td>-->
+                <!--<td>盖伦</td>-->
+                <!--<td>12343556776</td>-->
+                <!--<td>召唤师峡谷中路。有人堵路，不让走了</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>1234567890123</td>-->
+                <!--<td>2017-12-12</td>-->
+                <!--<td>指挥中心</td>-->
+                <!--<td>召唤师峡谷</td>-->
+                <!--<td>纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>报警或求助</td>-->
+                <!--<td>盖伦</td>-->
+                <!--<td>12343556776</td>-->
+                <!--<td>召唤师峡谷中路。有人堵路，不让走了</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>1234567890123</td>-->
+                <!--<td>2017-12-12</td>-->
+                <!--<td>指挥中心</td>-->
+                <!--<td>召唤师峡谷</td>-->
+                <!--<td>纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>其他纠纷</td>-->
+                <!--<td>报警或求助</td>-->
+                <!--<td>盖伦</td>-->
+                <!--<td>12343556776</td>-->
+                <!--<td>召唤师峡谷中路。有人堵路，不让走了</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+            </div>
+            <!--参与群体性事件信息-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>参与群体性事件信息</span>
+                </div>
+            </div>
+            <!--爆恐-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>爆恐</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script src="../../js/common/dev.util.js?versin=0"></script>
+<script src="../../js/search/search_fenlei.js?versin=0"></script>
+<script src="../../js/search/creatjob.js?versin=0"></script>
+<script src="../../js/search/detialshow.js?versin=0"></script>
+<script src="../../js/search/searchdetial.js?versin=0"></script>
+<script src="../../js/search/timeline.js?versin=0"></script>
+<script>
+
+</script>
+</html>

@@ -18,7 +18,7 @@ public interface UserService {
 	/**
 	 * 查找用户
 	 */
-	PageImpl<SysUser> findUser(Integer pageSize,Integer pageNum,String searchStr);
+	PageImpl<SysUser> findUser(Integer pageSize, Integer pageNum, String searchStr);
 
 	/**
 	 * 查询用户总数
