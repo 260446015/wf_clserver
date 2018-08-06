@@ -43,9 +43,12 @@ public class LogAop {
     private MongoTemplate primaryMongoTemplate;
 
     @Pointcut(value = "execution(public * com.zkjl.wf_clserver.core.controller.*.*(..)) && !execution(public * com.zkjl.wf_clserver.core.controller.UserController.login(..))")
-    public void logPoint() { }
+    public void logPoint() {
+    }
+
     @Pointcut(value = "execution(public * com.zkjl.wf_clserver.core.controller.UserController.login(..))")
-    public void loginCountPoint(){ }
+    public void loginCountPoint() {
+    }
 
     @Before(value = "logPoint()")
     public void saveUserOperation(JoinPoint joinPoint) {
@@ -69,7 +72,7 @@ public class LogAop {
 //                e.printStackTrace();
 //            }
         }*/
-        System.out.println("当前session:"+ SecurityUtils.getSubject().getSession().getId());
+        System.out.println("当前session:" + SecurityUtils.getSubject().getSession().getId());
         if (null != annotation && null != user) {
             String methodName = targetMethod.getName();
             Log log = new Log();
@@ -77,8 +80,8 @@ public class LogAop {
             log.setIp(ip);
             log.setDescription(annotation.description());
             log.setArgs(Arrays.toString(joinPoint.getArgs()));
-            if(methodName.equals("createJob")){
-                log.setArgs(((JobBean)joinPoint.getArgs()[2]).getWord());
+            if (methodName.equals("createJob")) {
+                log.setArgs(((JobBean) joinPoint.getArgs()[2]).getWord());
             }
             String name = user.getUsername();
             log.setName(name);
@@ -89,7 +92,7 @@ public class LogAop {
     }
 
     @After(value = "loginCountPoint()")
-    public void doSaveLoginCount(){
+    public void doSaveLoginCount() {
         try {
             RequestAttributes ra = RequestContextHolder.getRequestAttributes();
             ServletRequestAttributes sra = (ServletRequestAttributes) ra;
