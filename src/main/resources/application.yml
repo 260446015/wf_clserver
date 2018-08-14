@@ -1,46 +1,28 @@
 server:
-  port: 8080
+  port: 8090
 spring:
   data:
     elasticsearch:
-      cluster-nodes: 127.0.0.1:9300
+      cluster-nodes: 10.52.219.8:9300
       cluster-name: elasticsearch
       repositories:
-        enable: true
+        enabled: true
     mongodb:
-      option:
-        min-connection-per-host: 0
-        max-connection-per-host : 100
-        threads-allowed-to-block-for-connection-multiplier : 5
-        server-selection-timeout : 30000
-        max-wait-time : 120000
-        max-connection-idle-time : 0
-        max-connection-life-time : 0
-        connect-timeout : 10000
-        socket-timeout : 0
-        socket-keep-alive : false
-        ssl-enabled : false
-        ssl-invalid-host-name-allowed : false
-        always-use-m-beans : false
-        heartbeat-socket-timeout : 20000
-        heartbeat-connect-timeout : 20000
-        min-heartbeat-frequency : 500
-        heartbeat-frequency : 10000
-        local-threshold : 15
       primary:
-          host: 192.168.1.104
+          host: 10.52.219.8
           port: 27017
           database: kklc
       secondary:
-        host: 192.168.1.104
+        host: 10.52.219.8
         port: 27017
         database: plover
   mvc:
     static-path-pattern: /**
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.uploadpath}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,
+                        classpath:/static/,classpath:/public/,file:${web.upload-path}
 web:
-  uploadpath : D:/图片虚拟目录/
+  upload-path : E:/Apache24/Apache/htdocs/images/upload
 
 
 

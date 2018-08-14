@@ -29,12 +29,6 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyFormAuthenticationFilter.class);
 
-	@Autowired
-	private DefaultWebSecurityManager securityManager;
-	@Resource
-	private SysUserRepository sysUserRepository;
-
-
 	/**
 	 * 登陆验证
 	 */
