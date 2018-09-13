@@ -81,9 +81,10 @@
     text-align: center;
     line-height: 20px;
     background: #fff;
-    margin: 0.5%;
+    margin: 1px;
     font-size: 10px;
     cursor: pointer;
+    min-width: 38px;
 }
 
 .sd_ul .sd_red {
@@ -138,11 +139,13 @@
     height: 30px;
     line-height: 28px;
     background: #fff;
-    padding: 0 40px;
+    padding: 0 3%;
+    overflow: hidden;
 }
 
 .sd_ligray {
     background: #f5f5f5;
+    overflow: hidden;
 }
 
 .sd_lithree div {
@@ -163,6 +166,7 @@
     color: #333333;
     font-size: 14px;
     text-align: center;
+    overflow: hidden;
 }
 
 /*底部*/
@@ -303,8 +307,11 @@ body .sx_p1pq span{
 }
 
 .sx_imgbox dt div span {
-    width: 50%;
+    width: 48%;
+    margin: 0;
     float: left;
+    margin-right: 2%;
+    overflow: hidden;
 }
 .sx_imgboxer dt div span{
     width: 50%;
@@ -312,9 +319,11 @@ body .sx_p1pq span{
     float: left;
 }
 .sx_imgboxer dt div span{
-    width: 50%;
+    width: 48%;
     margin: 0;
     float: left;
+    margin-right: 2%;
+    overflow: hidden;
 }
 .sx_imgboxer i{
     color: #666;
@@ -443,9 +452,11 @@ body .sx_p1pq span{
 .sxh_3 li p {
     text-align: center;
     font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    word-break:break-all;
+    word-wrap:break-word;
 }
 
 /*物品*/
@@ -755,13 +766,22 @@ body .sx_p1pq span{
 }
 .tili_texbtnl{
     float: right;
-    padding: 0 50px;
+    padding: 0 40px;
     height: 40px;
     border-radius: 4px;
     text-align: center;
     line-height: 40px;
     box-shadow: 0px 0px 14px #a9a8a8;
     margin-right: 30px;
+}
+.timeclass .gj_img{
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin: 0 5px;
+}
+.ad_coimgdetial{
+    cursor: pointer;
 }
 .timeeractive .tili_tex{
     background: #0d99e7;
@@ -896,4 +916,29 @@ body .sk_nr{
 .juliu_img img{
     display: inline-block;
     width: 100px;
+}
+/*历史图片*/
+.historypicbox{
+    display: none;
+}
+.his_list{
+    min-height: 300px;
+}
+.his_list li{
+    float: left;
+    width: 150px;
+    height: 250px;
+    margin: 10px;
+    overflow: hidden;
+}
+.his_list li div{
+    width: 150px;
+    height: 200px;
+    overflow: hidden;
+}
+.his_list li p{
+    text-align: center;
+}
+.his_list li img{
+    width: 150px;
 }

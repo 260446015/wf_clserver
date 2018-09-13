@@ -86,9 +86,11 @@ public abstract class UploadAbstractService {
             entity.setContent(action.toJSONString());
             entity.setCreateTime(Calendar.getInstance().getTime());
             String username = "";
+            String policeNumber;
             try {
                 SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
                 username = user.getName();
+                policeNumber = user.getPoliceNumber();
             } catch (Exception e) {
                 throw new RuntimeException("用户未登录");
             }
@@ -96,6 +98,7 @@ public abstract class UploadAbstractService {
             entity.generatId();
             entity.setSource(source);
             entity.setContentType(textType);
+            entity.setPoliceNumber(policeNumber);
             resultList.add(entity);
         });
         return resultList;

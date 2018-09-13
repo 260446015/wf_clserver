@@ -47,17 +47,20 @@ public class WfClserverApplication extends SpringBootServletInitializer {
 	public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
 		//文件最大
-		factory.setMaxFileSize("102400KB"); //KB,MB
+		factory.setMaxFileSize("204800KB"); //KB,MB
 		/// 设置总上传数据总大小
-		factory.setMaxRequestSize("102400KB");
+		factory.setMaxRequestSize("204800KB");
 		return factory.createMultipartConfig();
 	}
 
+	//IpUtils.getServerIP()
+	@Value(value = "${spring.data.elasticsearch.url}")
+	String address;
 	@Bean
 	public Client client() throws Exception {
 		Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
 		TransportClient client = new PreBuiltTransportClient(settings)
-				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("10.52.219.8"), 9300));
+				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(address), 9300));
 		return client;
 	}
 

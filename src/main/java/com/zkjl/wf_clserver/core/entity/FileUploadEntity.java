@@ -25,6 +25,7 @@ public class FileUploadEntity implements Serializable {
     private String contentType;
     private Date createTime;
     private Date updateTime;
+    private String policeNumber;
 
 
     public void generatId() {

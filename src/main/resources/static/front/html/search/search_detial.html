@@ -43,9 +43,9 @@
         <li class="back_index cr" style="border: 0;">返回首页</li>
     </ul>
     <div class="sy_div">
-        <img class="defalurimg" src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <div class="defalurimgbox"><img class="defalurimg"  src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
-        <ul class="sy_divul layui-anim layui-anim-upbit">
+        <ul class="sy_divul layui-anim layui-anim-upbit"><li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -586,10 +586,11 @@
                     <span>华东六省</span>
                 </div>
                 <div class="sx_ul sx_ul1 none guijihuadongliushneg">
+                    <div class="sx_li" style="width: 8%;">华东六省</div>
                     <div class="sx_li">姓名</div>
                     <div class="sx_li" style="width: 18%;">旅客编号</div>
                     <div class="sx_li" style="width: 18%;">证件号码</div>
-                    <div class="sx_li" style="width: 18%;">房间号码</div>
+                    <div class="sx_li" style="width: 10%;">房间号码</div>
                     <div class="sx_li" style="width: 12%;">入住时间</div>
                     <div class="sx_li" style="width: 12%;">退房时间</div>
                 </div>
@@ -1829,6 +1830,12 @@
             <img src="../../img/tuoputu.gif" style="display: block;margin: 0 auto;width: 1200px" alt="">
         </div>
     </div>
+    <!--历史图片-->
+    <div class="historypicbox" id="historypicbox">
+        <ul class="his_list">
+
+        </ul>
+    </div>
 </div>
 </body>
 <script src="../../res/layui/layui.all.js"></script>
@@ -1860,8 +1867,7 @@
         });
         setTimeout(function () {
             layer.close(loadingi)
-        }, 400)
-        console.log($index)
+        }, 400);
         $(".sd_wrapbox").find(".licontent").eq($index).fadeIn().siblings().hide();
         if ($index == 3) {
             linjuguanxi();//邻居关系对其

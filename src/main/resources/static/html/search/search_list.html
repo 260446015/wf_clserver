@@ -42,9 +42,9 @@
         <li class="back_index cr" style="border: 0;">返回首页</li>
     </ul>
     <div class="sy_div">
-        <img src="../../img/defaultimg.png" alt="">
+        <div class="defalurimgbox"><img class="defalurimg"  src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
-        <ul class="sy_divul layui-anim layui-anim-upbit">
+        <ul class="sy_divul layui-anim layui-anim-upbit"><li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -84,7 +84,7 @@
     <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao">
         <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
     </div>
-    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，请不要关闭此页</div>
+    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，尽量不要关闭此页，如需要查看已有数据，请点击关闭按钮<span class="cxtm_closebtyn layui-btn layui-btn-primary">关闭</span></div>
     <div class="cxtm_boxer">
         <div class="cxtm_boxerw">
             <span class="cxtm_kuai" style="background: #64ff4d;"></span>
@@ -92,7 +92,7 @@
             <span class="cxtm_kuai" style="background: #eb9927;"></span>
             <span class="cxtm_val">查询完毕未返回数据平台</span>
             <span class="cxtm_kuai" style="background: red;"></span>
-            <span class="cxtm_val">查询进行中平台</span>
+            <span class="cxtm_val">查询异常平台</span>
             <span class="cr againpathon fr" style="color: #0C0C0C;">again</span>
         </div>
         <div class="cxtm_wrap"></div>
@@ -101,7 +101,7 @@
     <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
 </div>
 <div class="sl_biaoge">
-    <div class="shehuititle">公安网平台数据</div>
+    <div class="shehuititle">公安网系统平台数据</div>
     <table class="sl_table" cellpadding="0" cellspacing="0" style="width: 100%;">
         <tr class="slt_1">
             <th class="zhanwei"></th>
@@ -187,7 +187,7 @@
 
     $(".againpathon").click(function () {
         clga.searchbegin($(".sl_input").val(),1,false);
-        location.reload();
+        //location.reload();
     });
 </script>
 <script>

@@ -1,0 +1,68 @@
+
+
+.section{
+    overflow: hidden;
+    width: 800px;
+    margin: 100px auto 0 auto;
+}
+
+.layui-elem-quote {
+    margin-bottom: 10px;
+    padding: 10px;
+    line-height: 22px;
+    border-left: 5px solid #0d99e7;
+    border-radius: 0 2px 2px 0;
+    background-color: #f2f2f2;
+    font-size: 16px;
+}
+#demo1{
+    background: #ccc;
+    float: left;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    overflow: hidden;
+    margin: 0;
+}
+#demo1 img{
+    width: 64px;
+    height: 64px;
+}
+#otest{
+    float: left;
+    width: 64px;
+    height: 64px;
+    margin-left: 20px;
+    background: #fff;
+    border: 1px dashed #999;
+    border-radius: 5px;
+}
+.xiugai_btn{
+    display: block;
+    width: 200px;
+    background: #0d99e7;
+    margin: 40px auto;
+}
+
+.pz_queding{
+    width: 100px;
+    height: 30px;
+    background: #0d99e7;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 30px;
+}
+.ba_rizhilist .old_pass{
+    width: 90%;
+    margin: 1% 5%;
+    height: 32px;
+    border-color: #999;
+}
+
+.ba_table tr {
+    height: 42px;
+    line-height: 42px;
+}

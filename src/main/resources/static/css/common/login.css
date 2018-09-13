@@ -60,3 +60,9 @@
 .formbox input:-ms-input-placeholder{
     color: #000;
 }           /* IE浏览器 */
+
+
+.chajian{
+    float: right;
+    margin-right: 20px;
+}

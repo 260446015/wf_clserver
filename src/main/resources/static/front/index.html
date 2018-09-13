@@ -45,9 +45,10 @@
         <li style="border: 0;">当前在线人数:<span class="allzaixian"></span></li>
     </ul>
     <div class="sy_div">
-        <img class="defalurimg" src="" alt="" onerror="clga.whenoerronheaderindex(this)">
+        <div class="defalurimgbox"><img class="defalurimg" src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
         <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -90,11 +91,18 @@
 <script src="res/layui/layui.all.js"></script>
 <script src="js/common/common.js?versin=0"></script>
 <script>
-$(".sy_boxcontent").on("click","div",function () {
-    var href = $(this).attr("data-href");
-    if(href){
-        window.location = href;
-    }
-});
+    var ifadmin = JSON.parse(sessionStorage.getItem("clgauser")).ifAdmin;
+    $(".sy_boxcontent").on("click","div",function () {
+        var href = $(this).attr("data-href");
+        if(href!="html/backStage/management.html"){
+            window.location = href;
+        }else{
+            if(ifadmin){
+                window.location = href;
+            }else{
+                layer.msg("您没有权限查看此功能，请联系管理员开通！")
+            }
+        }
+    });
 </script>
 </html>

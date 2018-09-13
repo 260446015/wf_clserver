@@ -99,6 +99,12 @@ public class SysUser {
    @Field(value = "role")
    private String role;
 
+   /**
+    * 上传头像
+    * @return
+    */
+   private String image;
+
    @Override
    public String toString() {
       return JSONObject.toJSONString(this);

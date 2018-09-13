@@ -38,28 +38,41 @@
     cursor: pointer;
     position: relative;
 }
-
-.sy_div img {
+.defalurimgbox{
+    display: inline-block;
     float: right;
     width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    overflow: hidden;
     padding: 15px 10px;
+}
+.sy_div img {
+    width: 42px;
+    min-height: 42px;
+    border-radius: 21px;
 }
 .sy_divul{
     width: 100px;
     height: auto;
     position: absolute;
     right: 0;
-    top: 71px;
+    top: 72px;
     background: #fff;
     border-radius: 3px;
     box-shadow: 0px 0px 14px #a9a8a8;
     display: none;
+    overflow: hidden;
 }
 .sy_divul li{
     color: #000;
     text-align: center;
     line-height: 32px;
     cursor: pointer;
+}
+.sy_divul li:hover {
+    color: #fff;
+    background: rgba(0,0,0,0.5);
 }
 .sy_div span {
     float: right;
@@ -68,6 +81,8 @@
 .times_f{
     width: 100px;
 }
+
+
 
 /*lizi*/
 #lizi,#lizi2{

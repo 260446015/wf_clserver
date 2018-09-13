@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.bson.Document;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ydw
@@ -22,8 +23,24 @@ public abstract class AnalysisAbstractService {
         result.putAll(analysisSamePhone(word1, word2));
         result.putAll(analysisSameAddress(cacheDatasByJobId));
         result.putAll(analysisSameMember(cacheDatasByJobId));
+        result.putAll(analysisSameThcdc(cacheDatasByJobId));
+        result.putAll(analysisSameTcj(cacheDatasByJobId));
         return result;
     }
+
+    /**
+     * 同乘机
+     * @param cacheDatasByJobId
+     * @return
+     */
+    protected abstract JSONObject analysisSameTcj(List<List<Document>> cacheDatasByJobId);
+
+    /**
+     * 同火车搭乘
+     * @param cacheDatasByJobId
+     * @return
+     */
+    protected abstract JSONObject analysisSameThcdc(List<List<Document>> cacheDatasByJobId);
 
     /**
      * 同会员

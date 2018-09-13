@@ -3,9 +3,12 @@ var h1 = $("body").height();
 var w = $(window).width();
 console.log(h + "+" + w);
 var liwidth = ($(window).width()-$(window).width()*0.06)*0.122/ 0.8;
-var ctxer = "10.52.219.8";
+$(window).resize(function () {
+    liwidth = ($(window).width()-$(window).width()*0.06)*0.122/ 0.8;
+    $(".sxh_3").find("img").css("height",liwidth);
+});
 // var ctx = "http://10.52.220.13:8080/api/";
-var ctx = "http://10.52.219.8:8090/api/";
+var ctx = "/api/";
 var clga = {
     base: '中科金联',
     user: 'jianghaifei',
@@ -87,15 +90,16 @@ setInterval(function () {
 }, 30000);
 
 //分页插件居中函数
-clga.setpagecss = function () {
-    var laypage = $(".listpagejuzhong").find('.layui-laypage-default')
-    laypage.css({
-        'margin-left': ($('.listpagejuzhong').width() - laypage.width()) / 2
-    })
+clga.setpagecss = function (othis) {
+    var _this = $("#"+othis);
+    var laypager = _this.find('.layui-laypage-default');
+    laypager.css({
+        'margin-left': (_this.width() - laypager.width()) / 2
+    });
 };
 
 $(".back_index").click(function () {
-    if ($(".title").attr("data-href") != "index") {
+    if ($(".title").attr("data-href") != "index1") {
         window.location = "../../index.html";
     }
 });
@@ -123,9 +127,9 @@ $(".loginout").click(function () {
                 localStorage.removeItem("clgatoken");
                 sessionStorage.removeItem("clgapingtai");
                 if ($(".title").attr("data-href") == "index") {
-                    window.location = "http://10.52.219.8:8090/front/login.html";
+                    window.location = "/front/login.html";
                 } else {
-                    window.location = "http://10.52.219.8:8090/front/login.html";
+                    window.location = "/front/login.html";
                 }
             } else {
                 return layer.msg(res, {anim: 6});
@@ -134,14 +138,37 @@ $(".loginout").click(function () {
     });
 });
 
+$(".personindex").click(function () {
+    if ($(".title").attr("data-href") == "index1") {
+        window.location = "html/person/person.html";
+    } else {
+        window.location = "../person/person.html";
+    }
+});
+
+//账号配置
+$(".pesson_peizhi").click(function () {
+    if ($(".title").attr("data-href") == "index1") {
+        window.location = "html/person/peizhi.html";
+    } else {
+        window.location = "../person/peizhi.html";
+    }
+});
+
 //用户名取出显示
 var clmember = sessionStorage.getItem("clgauser");
 if (clmember) {
     var cldata = JSON.parse(clmember);
-    console.log(cldata)
+    console.log(cldata);
     $(".cluseaname").html(cldata.name);
-    if(cldata.photo){
-        $(".defalurimg").attr("src",cldata.photo)
+    if(cldata.image){
+        $(".defalurimg").attr("src",cldata.image);
+    }else{
+        if ($(".title").attr("data-href") == "index1") {
+            $(".defalurimg").attr("src","img/defaultimg.png");
+        } else {
+            $(".defalurimg").attr("src","../../img/defaultimg.png");
+        }
     }
 }
 //在线人数
@@ -155,8 +182,11 @@ clga.zaixianrenshu = function () {
         data: {},
         success: function (res) {
             console.log(res);
-            if(res.code == -8){
-                window.location = "http://10.52.219.8:8090/front/login.html";
+            if(res.code == -8||res.code == -1){
+                layer.msg("操作超时，即将返回登陆页！");
+                setTimeout(function () {
+                    window.location = "/front/login.html";
+                },3000);
             }
             if(res.code==0){
                 sessionStorage.setItem("clgaznum", JSON.stringify(res.data));
@@ -165,21 +195,24 @@ clga.zaixianrenshu = function () {
         }
     });
 };
+
 clga.zaixianrenshu();
+
 //设定访问量与条数
 clga.shedingzaixian = function (number) {
     var numdata = JSON.parse(number);
     $(".allfangwen").html(numdata.allCount);
     $(".allzaixian").html(numdata.activeCount);
 };
+
 clga.whenoerronheader = function(a) {
     a.onerror = null;
-    a.src="../../img/defaultimg.jpg";
+    a.src="../../img/defaultimg.png";
 };
 
 clga.whenoerronheaderindex = function(a) {
     a.onerror = null;
-    a.src="img/defaultimg.jpg";
+    a.src="img/defaultimg.png";
 };
 
 clga.whenoerron = function(a) {
@@ -213,11 +246,12 @@ $(document).scroll(function () {
         }
     }
 });
+
 $(".gotop").click(function () {
-    $("html body").animate(({scrollTop:0}),300);
-    setTimeout(function () {
-        $("slide").hide().attr("data-href",true);
-    },500);
+    $("html").animate(({scrollTop:0}),300);
+    // setTimeout(function () {
+    //     $("slide").hide().attr("data-href",true);
+    // },500);
 });
 
 //浏览器默认变蓝

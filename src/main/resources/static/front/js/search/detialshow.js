@@ -2,6 +2,7 @@
 var jobdata = JSON.parse(sessionStorage.getItem("jobinfo"));
 var jobetype = jobdata.jobinfo.wordtype;
 var infofrom;
+var imglist = [];
 layui.use(['laydate', 'laypage', 'upload','form']);
 var laypage = layui.laypage;
 //gajgjls-公安监管拘留所警务工作平台
@@ -75,6 +76,24 @@ function setDatagajgjls(residdata) {
             '    </tbody>' +
             '</table>';
         $(".juliu_juliu").append(list);
+        imglist.push({
+            "alt": "公安监管拘留所警务工作平台正面照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("正面照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
+        imglist.push({
+            "alt": "公安监管拘留所警务工作平台左侧照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("左侧照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
+        imglist.push({
+            "alt": "公安监管拘留所警务工作平台右侧照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("右侧照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
     }
     //拘留信息
     function juliu_xinxi(juliudata) {
@@ -192,7 +211,7 @@ function setDatagajgjls(residdata) {
 
 //gajgkss-公安监管看守所警务工作平台
 function setDatagajgkss(residdata) {
-    infofrom = "公安监管看守所警务工作平台"
+    infofrom = "公安监管看守所警务工作平台";
     $(".biaoqiandetial").append('<li class="sd_red">看守所</li>');
     var reaData = JSON.parse(residdata).data;
     $.each(reaData, function (i, item) {
@@ -266,6 +285,24 @@ function setDatagajgkss(residdata) {
             '    </tr>' +
             '    </tbody>' +
             '</table>';
+        imglist.push({
+            "alt": "公安监管看守所警务工作平台正面照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("正面照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
+        imglist.push({
+            "alt": "公安监管看守所警务工作平台左侧照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("左侧照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
+        imglist.push({
+            "alt": "公安监管看守所警务工作平台右侧照",
+            "pid": "", //图片id
+            "src": (colomdata[odata.indexOf("右侧照")]||""), //原图地址
+            "thumb": "" //缩略图地址
+        });
         $(".kanshou_kanshou").append(list);
     }
     //身体状况
@@ -984,6 +1021,12 @@ function setDataqgztry(residdata) {
     function zaitao_zhaopian(zt_data) {
         var colomdata = zt_data.data[0];
         var odata = zt_data.column;
+        imglist.push({
+            "alt": "全国在逃人员",
+            "pid": "", //图片id
+            "src": colomdata[odata.indexOf("照片")], //原图地址
+            "thumb": "" //缩略图地址
+        });
         setTimeout(function () {
             $(".zaitao_mes").find(".zaitao_imgge").attr("src",colomdata[odata.indexOf("照片")]);
         },1000)
@@ -1057,6 +1100,12 @@ function setDatayunsou(residdata) {
         }else{
             gonganimg = "../../img/default.jpg";
         }
+        imglist.push({
+            "alt": "云搜全国人口基本信息",
+            "pid": "", //图片id
+            "src": "http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:"+sxdata[yundata.column.indexOf("公民身份证号")]+"&order=0", //原图地址
+            "thumb": "" //缩略图地址
+        });
         $(".ad_coimgdetial").attr("src",gonganimg);
         $(".jibenxinxi").append('<p class="sx_p1 sxtips" data-href="' + infofrom + '">' +
             '<span>姓名：' + sxdata[1] + '</span>' +
@@ -1130,7 +1179,7 @@ function setDatayunsou(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -1189,7 +1238,7 @@ function setDatayunsou(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -1249,7 +1298,7 @@ function setDatayunsou(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -1308,7 +1357,7 @@ function setDatayunsou(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -1532,7 +1581,7 @@ function setDatayunsou(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -1905,7 +1954,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -2344,7 +2393,7 @@ function setDatasdgayjs(residdata) {
         var odata = qddata.column;
         var sxdata = qddata.data[0]
         $.each(qddata.data,function (i,item) {
-            var img ='http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:'+item[odata.indexOf("公民身份号码")]+'&order=0'
+            var img ='http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:'+item[odata.indexOf("公民身份号码")]+'&order=0';
             var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '-新常住人口">' +
                 '<dd><img src="'+img+'" alt=""onerror="clga.whenoerron(this)"></dd>' +
                 '<dt>' +
@@ -2828,7 +2877,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -2893,7 +2942,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3052,7 +3101,7 @@ function setDatasdgayjs(residdata) {
                 limit:21,
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3192,7 +3241,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    ////clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3254,7 +3303,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3317,7 +3366,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3402,7 +3451,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3469,7 +3518,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3536,7 +3585,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3603,7 +3652,7 @@ function setDatasdgayjs(residdata) {
                 first: '首页',
                 last: '尾页',
                 jump: function (obj, first) {
-                    clga.setpagecss();
+                    //clga.setpagecss(obj.elem);
                     if (!first) {
                         gettong(obj.curr - 1);
                     }
@@ -3707,6 +3756,7 @@ function setDatasdgayjs(residdata) {
     function qiandu_hdls(label,qddata) {
         var numlei = label.split("华东六省");
         if(numlei.length>1){
+            var labeln = numlei[1];
             gettong(0);
             function setPageNo(count) {
                 laypage.render({
@@ -3715,7 +3765,7 @@ function setDatasdgayjs(residdata) {
                     first: '首页',
                     last: '尾页',
                     jump: function (obj, first) {
-                        clga.setpagecss();
+                        //clga.setpagecss(obj.elem);
                         if (!first) {
                             gettong(obj.curr - 1);
                         }
@@ -3748,10 +3798,11 @@ function setDatasdgayjs(residdata) {
                             var colomdata = item;
                             var list = '<li class="sw_li sxtips" data-href="'+infofrom+'-'+label+'">' +
                                 '<ul class="sx_ul">' +
+                                '    <li class="sx_li" style="width: 8%;">' + labeln + '</li>' +
                                 '    <li class="sx_li">' + (colomdata[odata.indexOf("姓名")]||"") + '</li>' +
                                 '    <li class="sx_li" style="width: 18%;">' + (colomdata[odata.indexOf("旅客编号")]||"") + '</li>' +
                                 '    <li class="sx_li" style="width: 18%;">' + (colomdata[odata.indexOf("证件号码")]||"") + '</li>' +
-                                '    <li class="sx_li" style="width: 18%;">' + (colomdata[odata.indexOf("房间号码")]||"") + '</li>' +
+                                '    <li class="sx_li" style="width: 10%;">' + (colomdata[odata.indexOf("房间号码")]||"") + '</li>' +
                                 '    <li class="sx_li" style="width: 12%;">' + (colomdata[odata.indexOf("入住时间")]||"") + '</li>' +
                                 '    <li class="sx_li" style="width: 12%;">' + (colomdata[odata.indexOf("退房时间")]||"") + '</li>' +
                                 '    <li class="swxq_1 sx_li swxq_1" data-href="true">' +
@@ -4326,14 +4377,36 @@ $(".licontent").on("click", ".imgfangda", function () {
                 "thumb": "" //缩略图地址
             }
         ]
-    }
+    };
     layer.photos({
         photos:data,
         anim:5
     })
 });
-
-'<img src="../../img/default.jpg" alt="" onerror="clga.whenoerron(this)">'
-"370724198704052124"
+//人员历史图片
+$(".ad_coimgdetial").click(function () {
+    $(".historypicbox").empty();
+    $.each(imglist,function (i,item) {
+        var list = '<li style="float: left;width: 150px;height: 250px;margin: 10px;overflow: hidden">' +
+            '<div style="width: 150px;height: 200px;overflow: hidden;">' +
+            '<img style="width: 150px;" src="'+item.src+'" alt="">' +
+            '</div>' +
+            '<p style="text-align: center;">'+item.alt+'</p>' +
+            '</li>';
+        $(".historypicbox").append(list);
+    });
+    layer.open({
+        type:1,
+        title:"人员历史图片",
+        skin:'layui-layui-demo',
+        area:["740px","630px"],
+        id:"historypic",
+        anim:2,
+        content:$("#historypicbox"),
+        cancel:function () {
+            $(".historypicbox").hide();
+        }
+    })
+});
 
 

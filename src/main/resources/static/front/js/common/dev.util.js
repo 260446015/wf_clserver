@@ -159,7 +159,6 @@ function setlazy_load() {
     });
 }
 
-var _crawler_url = "http://10.52.219.8:19797";
 $.extend({
     postForm: function (url, args) {
         var form = $("<form method='post' style='display:none'></form>"), input;
@@ -202,7 +201,7 @@ $.extend({
         });
     },
     postCross: function (url, data, func) {
-        url = _crawler_url;
+        url = ctx;
         console.log(url)
         console.log(data)
         $.post(url, JSON.data, func);

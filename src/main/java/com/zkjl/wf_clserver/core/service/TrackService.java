@@ -1,9 +1,12 @@
 package com.zkjl.wf_clserver.core.service;
 
 
+import com.zkjl.wf_clserver.core.dto.TrackDto;
 import com.zkjl.wf_clserver.core.dto.req.TrackRQ;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public interface TrackService {
@@ -42,5 +45,7 @@ public interface TrackService {
 	 * @return
 	 */
 	public Map<String, Object> findEntryExit(String idCard, Date beginDate, Date endDate, String city);
+
+	List<TrackDto> getTrack(HttpServletRequest req, TrackRQ trackRQ) throws Exception;
 
 }

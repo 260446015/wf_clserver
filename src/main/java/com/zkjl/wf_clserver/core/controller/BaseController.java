@@ -7,7 +7,6 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.data.domain.PageImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class BaseController {
     /**
@@ -39,7 +38,7 @@ public class BaseController {
         if (ip == null || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return ip;
+        return "http://"+ip+":8090/";
     }
 
     protected ApiResult success(Object obj){

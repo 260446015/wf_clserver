@@ -1,0 +1,201 @@
+
+/*阴影部分*/
+html,body{
+    width: 100%;
+    height: 100%;
+}
+body {
+    background: #000;
+}
+#starsBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    opacity: .5;
+}
+#starsBox span {
+    display: inline-block;
+    width: auto;
+    position: absolute;
+    border-radius: 100%;
+    transition: 100s linear;
+}
+p {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: translateY(-50%);
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 50px black;
+    text-transform: uppercase;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    letter-spacing: 5px;
+}
+p > span {
+    display: block;
+    font-size: 12px;
+    color: #bdc3c7;
+    margin-top: 30px;
+    font-weight: 100;
+    text-shadow: 0 0 50px black;
+    letter-spacing: 3px;
+}
+p > span > a {
+    font-weight: 700;
+    text-decoration: none;
+    color: #d64541;
+    padding-bottom: 2px;
+    border-bottom: 0px solid #d64541;
+    transition: 0.5s;
+}
+p > span > a:hover {
+    padding-bottom: 5px;
+    border-bottom: 2px solid #d64541;
+}
+#starsBox{
+    background: url("../../img/backshadow.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+}
+body .syblue {
+    background: transparent;
+}
+
+/*主推部分*/
+.sy_top{
+    box-shadow: 0px 3px 5px #11263b;
+}
+#starsBox{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+body{
+    position: relative;
+}
+.zyxzbox{
+    position: absolute;
+    width: 18.22%;
+    height: 24.07%;
+    top: 33.33%;
+    left: 3.23%;
+    background: transparent url("../../img/ziyn/zypingtai_1.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+.zyhlwbox{
+    position: absolute;
+    width: 45.83%;
+    height: 33.06%;
+    top: 61.48%;
+    left: 3.23%;
+    background: transparent url("../../img/ziyn/zyhlw_1.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+.zyshbox{
+    position: absolute;
+    width: 46.25%;
+    height: 33.06%;
+    top: 61.48%;
+    right: 3.23%;
+    background: transparent url("../../img/ziyn/zyshehui_1.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+.zyptbox{
+    position: absolute;
+    width: 23.23%;
+    height: 51.30%;
+    top: 10.92%;
+    right: 3.23%;
+    background: transparent url("../../img/ziyn/zypingtai_1.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+.zymapbox{
+    position: absolute;
+    width: 52.30%;
+    height: 52.22%;
+    top: 9.07%;
+    left: 21.41%;
+}
+#iframe{
+    width: 140%;
+    height: 140%;
+    margin-left: -20%;
+    margin-top: -13%;
+}
+.zy_titlebox{
+    width: 77.21%;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: url("../../img/ziyn/zyte_rig.png") center left no-repeat,url("../../img/ziyn/zyte_lef.png") center right no-repeat;
+    text-align: center;
+    line-height: 50px;
+    color: #00deff;
+    font-size: 20px;
+    margin: 0 20px;
+}
+
+/*数据总量*/
+.zyzh_sjzl{
+    height: 50.38%;
+    width: 100%;
+    margin-top: 22%;
+}
+.zyzh_sjzl li{
+    height: 33%;
+    line-height: 2;
+    border-bottom: 1px solid #0a2236;
+}
+.zyzh_sjzl li span{
+    float: left;
+    color: #eee;
+}
+.zyzh_sjzl li span:nth-child(1){
+    width: 20.53%;
+    text-align: center;
+}
+.zyzh_sjzl li span:nth-child(2){
+    width: 38.86%;
+}
+.zyzh_sjzl li span:nth-child(2) i{
+    margin-left: 10%;
+}
+.zyzh_sjzl li span:nth-child(3){
+    width: 40.61%;
+}
+/*平台对接请情况*/
+.zyptbox .zyzh_ptsj li span:nth-child(1){
+    width: 12%;
+    text-align: center;
+}
+.zyptbox .zyzh_ptsj{
+    height: 94.7%;
+    width: 100%;
+    margin-top: 7.8%;
+}
+.zyptbox .zyzh_ptsj li{
+    height: 6.32%;
+    line-height: 1.6;
+    border-bottom: 1px solid #0a2236;
+    font-size: 14px;
+}
+.zyptbox .zyzh_ptsj li span:nth-child(2){
+    width: 88%;
+}
+/*柱形图*/
+#container,#container1 {
+    width:100%;
+    height:88%;
+    margin-top: 5%;
+}

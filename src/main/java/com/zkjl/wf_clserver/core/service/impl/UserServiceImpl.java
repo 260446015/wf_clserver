@@ -5,16 +5,19 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.zkjl.wf_clserver.core.entity.SysUser;
+import com.zkjl.wf_clserver.core.exception.CustomerException;
 import com.zkjl.wf_clserver.core.repository.kklc.LoginCountRepository;
 import com.zkjl.wf_clserver.core.repository.kklc.SysUserRepository;
 import com.zkjl.wf_clserver.core.service.UserService;
+import com.zkjl.wf_clserver.core.util.IpUtils;
 import com.zkjl.wf_clserver.core.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +41,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private EhCacheManager ehCacheManager;
 
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     /**
      * 登陆判断
      */
@@ -46,8 +51,8 @@ public class UserServiceImpl implements UserService {
         SysUser sysUser = null;
         try {
             sysUser = sysUserRepository.findByUsernameAndPassword(username, password);
-            if(null == sysUser){
-                sysUser = sysUserRepository.findByPoliceNumberAndPassword(username,password);
+            if (null == sysUser) {
+                sysUser = sysUserRepository.findByPoliceNumberAndPassword(username, password);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<SysUser> findById(String id){
+    public Optional<SysUser> findById(String id) {
         try {
             Optional<SysUser> sysUser = sysUserRepository.findById(id);
             return sysUser;
@@ -92,7 +97,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(name)) {
             basicDBObject.append("name", name);
         } else if (beginDate != null && endDate != null) {
-            basicDBObject.append("create_date", new BasicDBObject("$gte", beginDate ).append("$lte", endDate));
+            basicDBObject.append("create_date", new BasicDBObject("$gte", beginDate).append("$lte", endDate));
         }
         FindIterable<Document> docIte = conllections.find(basicDBObject);
         Iterator<Document> it = docIte.iterator();
@@ -153,15 +158,32 @@ public class UserServiceImpl implements UserService {
      * 更新用户信息
      */
     @Override
-    public boolean addUserOrUpdate(SysUser user) {
-        try {
+    public SysUser addUserOrUpdate(SysUser user) throws CustomerException {
+        logger.info("传入修改用户的数据为:" + user);
+        if (StringUtils.isBlank(user.getId())) {
+            SysUser checkUser = sysUserRepository.findByUsername(user.getUsername());
+            if (null != checkUser) {
+                throw new CustomerException("用户已存在");
+            }
             user.setIfAdmin(false);
+            user.setIfEnable(false);
             user.setCreateDate(new Date());
-            sysUserRepository.save(user);
-        } catch (Exception e) {
-            return false;
+            logger.info("新增用户:" + user);
+            return sysUserRepository.save(user);
+        } else {
+            Optional<SysUser> byId = sysUserRepository.findById(user.getId());
+            SysUser checkUser = byId.orElse(null);
+            if (checkUser == null) {
+                throw new CustomerException("用户不存在");
+            }
+            logger.info("更新用户头像:" + user.getImage());
+            //留空
+            checkUser.setImage("http://" + IpUtils.getServerIP() + ":8090/" + user.getImage());
+            sysUserRepository.save(checkUser);
+            SysUser principal = (SysUser) SecurityUtils.getSubject().getPrincipal();
+            principal.setImage(checkUser.getImage());
+            return principal;
         }
-        return true;
     }
 
     /**
@@ -171,7 +193,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String id) {
         MongoCollection<Document> conllections = primaryMongoTemplate.getCollection("sys_user");
         BasicDBObject query = new BasicDBObject();
-        ObjectId objid=new ObjectId(id);
+        ObjectId objid = new ObjectId(id);
         query.put("_id", objid);
         //删除id为1的文档
         conllections.deleteOne(query);
@@ -181,8 +203,46 @@ public class UserServiceImpl implements UserService {
     @Override
     public JSONObject listActiveSession() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("activeCount",ehCacheManager.getCache("shiroCache").size());
+        jsonObject.put("activeCount", ehCacheManager.getCache("shiroCache").size());
         jsonObject.put("allCount", loginCountRepository.findAll().size());
         return jsonObject;
+    }
+
+    @Override
+    public boolean updatePassword(String oldPassword, String newPassword, String id) throws CustomerException {
+        Optional<SysUser> byId = sysUserRepository.findById(id);
+        SysUser check = byId.orElse(null);
+        if (null == check) {
+            throw new CustomerException("用户不存在");
+        }
+        if (!check.getPassword().equals(oldPassword)) {
+            throw new CustomerException("密码错误");
+        } else {
+            check.setPassword(newPassword);
+        }
+        try {
+            sysUserRepository.save(check);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean enable(String id) throws CustomerException {
+        boolean flag = false;
+        try {
+            Optional<SysUser> opuser = this.findById(id);
+            SysUser check = opuser.orElse(null);
+            if (check == null) {
+                throw new CustomerException("用户不存在");
+            }
+            check.setIfEnable(!check.getIfEnable());
+            sysUserRepository.save(check);
+            flag = true;
+        } catch (CustomerException e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 }

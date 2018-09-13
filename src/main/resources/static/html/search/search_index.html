@@ -41,9 +41,10 @@
         <li class="back_index cr" style="border: 0;">返回首页</li>
     </ul>
     <div class="sy_div">
-        <img src="../../img/defaultimg.png" alt="">
+        <div class="defalurimgbox"><img class="defalurimg"  src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
         <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -53,21 +54,12 @@
     <div class="sr_top">
         <img src="../../img/huibiao.png" class="animated zoomIn" alt="">
         <p class="animated slideInUp">智能搜索</p>
-        <div class="animated slideInUp">全量&nbsp;&nbsp;▪&nbsp;&nbsp;精准&nbsp;&nbsp;▪&nbsp;&nbsp;解决</div>
+        <div class="animated slideInUp">整合&nbsp;&nbsp;▪&nbsp;&nbsp;全量&nbsp;&nbsp;▪&nbsp;&nbsp;精准</div>
     </div>
     <div class="sr_content">
         <input type="text" placeholder="支持身份证号、姓名、性别、年龄段、民族、籍贯等组合查询；多条件以空格隔开；" class="zhisouval" value="370725199001113518">
         <span class="sr_btn">智搜</span>
-        <ul class="sr_ul1">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-        </ul>
+        <ul class="sr_ul1"></ul>
     </div>
 </section>
 </body>
@@ -77,23 +69,35 @@
 <script src="../../js/search/creatjob.js"></script>
 <script>
     //下拉框控制
-    // $(".sr_content").on("focus", "input", function () {
-    //     $(".sr_ul1").slideDown();
-    // }).on("blur", "input", function () {
-    //     $(".sr_ul1").hide();
-    // });
-    // $(".sr_content").on("click", "li", function () {
-    //     console.log($(this).html())
-    //     $(".sr_content input").val($(this).html());
-    // });
-    // $(".sr_ul1 li").hover(function () {
-    //     $(".sr_content input").val($(this).html());
-    // })
+    $(".sr_content").on("focus", "input", function () {
+        $(".sr_ul1").slideDown();
+    });
+    $(".sr_content").on("click", "li", function () {
+        console.log($(this).html())
+        $(".sr_content input").val($(this).html());
+    });
+
     //发起查询任务
     $(".sr_btn").click(function () {
         // window.location = "search_list.html";
         clga.searchbegin($(".zhisouval").val(),1,true);
     });
-
+    //
+    $.ajax({
+        url: ctx + "log/log",
+        type: "get",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            console.log(res);
+            $.each(res.data,function (i,item) {
+                $(".sr_ul1").append('<li>'+item+'</li>');
+            });
+            $(".sr_ul1 li").click(function () {
+                $(".sr_content input").val($(this).html());
+            });
+        }
+    });
 </script>
 </html>

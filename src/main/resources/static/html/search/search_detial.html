@@ -43,9 +43,9 @@
         <li class="back_index cr" style="border: 0;">返回首页</li>
     </ul>
     <div class="sy_div">
-        <img src="../../img/defaultimg.png" alt="">
+        <div class="defalurimgbox"><img class="defalurimg"  src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
-        <ul class="sy_divul layui-anim layui-anim-upbit">
+        <ul class="sy_divul layui-anim layui-anim-upbit"><li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -88,24 +88,24 @@
             <ul class="sd_ul biaoqiandetial"></ul>
         </div>
 
-        <div class="sd_right">
+        <div class="sd_right sd_righttime" data-href="" data-code="">
             <ul class="sd_ul2">
-                <li>
+                <li class="smalltipsluguan sxtips" data-href="请进入轨迹时间轴展示查看具体内容">
                     <img src="../../img/lvguan.png" alt="">
                     <span>旅馆</span>
-                    <span class="sd_sp1"></span>
+                    <span class="sd_sp1">次</span>
                     <span class="sd_sp1 sd_sp2"></span>
                 </li>
-                <li>
+                <li class="smalltipschuxing sxtips" data-href="请进入轨迹时间轴展示查看具体内容">
                     <img src="../../img/chuxing.png" alt="">
                     <span>出行</span>
-                    <span class="sd_sp1"></span>
+                    <span class="sd_sp1">次</span>
                     <span class="sd_sp1 sd_sp2"></span>
                 </li>
-                <li>
+                <li class="smalltipsshangwang sxtips" data-href="请进入轨迹时间轴展示查看具体内容">
                     <img src="../../img/shangwang.png" alt="">
                     <span>上网</span>
-                    <span class="sd_sp1"></span>
+                    <span class="sd_sp1">次</span>
                     <span class="sd_sp1 sd_sp2"></span>
                 </li>
                 <li style="margin: 0;">
@@ -130,7 +130,7 @@
                 <div>出生日期：<span class="jbde_joindata"></span></div>
             </div>
             <div class="sd_libox sd_lithree">
-                <div>户籍地县级公安机关：<span class="jbde_chudizhi"></span></div>
+                <div>户籍地派出所/辖区派出所：<span class="jbde_chudizhi"></span></div>
                 <div>政治面貌：<span class="jbde_mianmao"></span></div>
             </div>
             <div class="sd_libox sd_ligray sd_lithree">
@@ -138,20 +138,20 @@
             </div>
             <div class="sd_libox sd_lithree sd_licenter">生物特征</div>
             <div class="sd_libox sd_ligray sd_lisix">
+                <div>身高（cm）</div>
+                <div>体重（kg）</div>
                 <div>口音</div>
-                <div>体型</div>
-                <div>肤色</div>
-                <div>是否近视</div>
-                <div>DNA</div>
-                <div>足迹</div>
+                <div>血型</div>
+                <div>体貌特征</div>
+                <div>表达能力</div>
             </div>
             <div class="sd_libox sd_lisix">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class="de_tx"></div>
+                <div class="de_fs"></div>
+                <div class="de_ky"></div>
+                <div class="de_js"></div>
+                <div class="de_dna"></div>
+                <div class="de_zj"></div>
             </div>
         </div>
 
@@ -163,7 +163,8 @@
     <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao">
         <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
     </div>
-    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，请不要关闭此页</div>
+    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，尽量不要关闭此页，如需要查看已有数据，请点击关闭按钮<span
+            class="cxtm_closebtyn layui-btn layui-btn-primary">关闭</span></div>
     <div class="cxtm_boxer">
         <div class="cxtm_boxerw">
             <span class="cxtm_kuai" style="background: #64ff4d;"></span>
@@ -171,7 +172,7 @@
             <span class="cxtm_kuai" style="background: #eb9927;"></span>
             <span class="cxtm_val">查询完毕未返回数据平台</span>
             <span class="cxtm_kuai" style="background: red;"></span>
-            <span class="cxtm_val">查询进行中平台</span>
+            <span class="cxtm_val">查询异常平台</span>
             <span class="cr againpathon fr" style="color: #0C0C0C;">again</span>
         </div>
         <div class="cxtm_wrap"></div>
@@ -185,13 +186,13 @@
         <li class="layui-nav-item"><a data-href="0" class="layuinavul0">基本情况</a></li>
         <li class="layui-nav-item"><a data-href="1">联系方式</a></li>
         <li class="layui-nav-item"><a data-href="2">同户关系</a></li>
-        <li class="layui-nav-item"><a data-href="3">邻居关系</a></li>
+        <li class="layui-nav-item"><a data-href="3">邻居/单位/机构关系</a></li>
         <li class="layui-nav-item"><a data-href="4">物品</a></li>
         <li class="layui-nav-item"><a>轨迹</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
                 <dd><a data-href="5">分类展示</a></dd>
                 <dd><a data-href="6">时间轴展示</a></dd>
-                <dd><a data-href="7">关系</a></dd>
+                <dd><a data-href="7">同行关系</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item"><a data-href="8">重点关注</a></li>
@@ -208,31 +209,49 @@
                 <span>基本信息</span>
             </div>
             <div class="sx_pibox jibenxinxi"></div>
-
             <div class="sx_title">
                 <span class="iconfont icon-danwei"></span>
                 <span>工作单位</span>
             </div>
             <div class="sx_pibox gongzuodanwei"></div>
-
+            <div class="sx_title">
+                <span class="iconfont icon-danwei"></span>
+                <span>警员信息</span>
+            </div>
+            <div class="sx_pibox jingyuanxinxi sx_imgbox"></div>
             <div class="sx_title">
                 <span class="iconfont icon-icon140"></span>
                 <span>常住人口</span>
             </div>
             <dl class="sx_imgboxer qiandu_changzhurenkou"></dl>
-
-            <div class="sx_title">
-                <span class="iconfont icon-icon140"></span>
-                <span>流动人口</span>
-            </div>
-            <dl class="sx_imgboxer qiandu_liudongrenkou"></dl>
-
             <div class="sx_title">
                 <span class="iconfont icon-icon140"></span>
                 <span>人口全项信息</span>
             </div>
             <dl class="sx_imgboxer sdrkxi_rkqx"></dl>
-
+            <!--三实平台-->
+            <div class="cheliang">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span style="font-size: 14px;">三实平台</span>
+                </div>
+                <div class="sx_ul sx_ul1 none guiji_juzhugjtitle">
+                    <div class="sx_li">序号</div>
+                    <div class="sx_li">姓名</div>
+                    <div class="sx_li">联系方式</div>
+                    <div class="sx_li">居住状态</div>
+                    <div class="sx_li">房主电话</div>
+                    <div class="sx_li">入住日期</div>
+                    <div class="sx_li">离开日期</div>
+                    <div class="sx_li">人员类型</div>
+                </div>
+                <ul class="sw_ul guiji_juzhugj"></ul>
+            </div>
+            <div class="sx_title">
+                <span class="iconfont icon-icon140"></span>
+                <span>流动人口</span>
+            </div>
+            <dl class="sx_imgboxer qiandu_liudongrenkou"></dl>
             <div class="sx_title">
                 <span class="iconfont icon-icon140"></span>
                 <span>驾驶员信息</span>
@@ -249,26 +268,7 @@
                 <span>高校毕业生</span>
             </div>
             <dl class="sx_imgboxer qiandu_gxbysbox"></dl>
-            <!--三实平台-->
-            <div class="cheliang">
-                <div class="sx_title">
-                    <span class="iconfont icon-rwcharacter"></span>
-                    <span>三实平台</span>
-                </div>
-                <div class="sx_ul sx_ul1 none guiji_juzhugjtitle">
-                    <div class="sx_li">序号</div>
-                    <div class="sx_li">姓名</div>
-                    <div class="sx_li">联系方式</div>
-                    <div class="sx_li">居住状态</div>
-                    <div class="sx_li">房主电话</div>
-                    <div class="sx_li">入住日期</div>
-                    <div class="sx_li">离开日期</div>
-                    <div class="sx_li">人员类型</div>
-                </div>
-                <ul class="sw_ul guiji_juzhugj">
 
-                </ul>
-            </div>
         </div>
         <!--联系方式-->
         <div class="licontent" data-href="1">
@@ -350,15 +350,28 @@
                 <span>邻居关系</span>
             </div>
             <div class="sxh_1">
-                <span>下列共有<i class="linju_numce"></i>条记录         人员中部分人员可能与【<i class="jbde_name"></i>（<i class="jbde_idcard"></i>）】存在邻居关系</span>
+                <span>下列共有<i class="linju_numce"></i>条记录         人员中部分人员可能与【<i class="jbde_name"></i>户籍地详址：（<i
+                        class="jbde_hjdxz"></i>）】存在邻居关系</span>
                 <!--<div class="sxh_inbox">-->
                 <!--<input type="text" placeholder="">-->
                 <!--<i>分析</i>-->
                 <!--</div>-->
             </div>
-            <div class="sxh_2">分析结果是依据相关技战术提炼后系统自动运行结果，可尝试或修改条件扩大或缩小范围，结果仅供研判参考。</div>
+            <div class="sxh_2">分析结果是依据相关技战术提炼后系统自动运行结果，可尝试或修改条件扩大或缩小范围，结果仅供研判参考</div>
             <ul class="sxh_3 sx_linju"></ul>
             <div id="listpage1" class="listpagejuzhong"></div>
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同机构</span>
+            </div>
+            <div class="sxh_3 yun_jigou"></div>
+            <div id="listpage2" class="listpagejuzhong"></div>
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同单位</span>
+            </div>
+            <div class="sxh_3 qiandu_danwei"></div>
+            <div id="listpage6" class="listpagejuzhong"></div>
         </div>
         <!--物品-->
         <div class="licontent" data-href="4">
@@ -394,6 +407,7 @@
                     <div style="width: 10%;">详情</div>
                 </div>
                 <ul class="sw_ul weizhang_box"></ul>
+                <div id="listpage16" class="listpagejuzhong"></div>
             </div>
 
             <div class="cheliang">
@@ -402,12 +416,13 @@
                     <span>同车违章</span>
                 </div>
                 <div class="sw_heade1 none che_weizhang">
-                    <li>编号</li>
+                    <li>车牌</li>
                     <li>照片</li>
                     <li>姓名</li>
                     <li>身份证</li>
                     <li>同违章次数</li>
                     <li style="width: 22%;">户口所在地</li>
+                    <li style="width: 22%;">违法时间</li>
                 </div>
                 <ul class="sw_ul yun_weizhang"></ul>
             </div>
@@ -445,7 +460,7 @@
             <div class="cheliang">
                 <div class="sx_title">
                     <span class="iconfont icon-rwcharacter"></span>
-                    <span>酒店旅馆信息</span>
+                    <span>宾馆住宿</span>
                 </div>
                 <div class="sx_ul sx_ul1 none guijibianguan">
                     <div class="sx_li">序号</div>
@@ -456,9 +471,8 @@
                     <div class="sx_li">入住时间</div>
                     <div class="sx_li">退房时间</div>
                 </div>
-                <ul class="sw_ul guiji_binguan">
-
-                </ul>
+                <ul class="sw_ul guiji_binguan"></ul>
+                <div id="listpage15" class="listpagejuzhong"></div>
             </div>
             <!--网吧-->
             <div class="cheliang">
@@ -469,19 +483,17 @@
                 <div class="sx_ul2 sx_ul1 none guiji_wangtitle">
                     <div class="sx_li">序号</div>
                     <div class="sx_li">上网人员姓名</div>
-                    <div class="sx_li">同上网人员姓名</div>
-                    <div class="sx_li">同上网人员身份证</div>
                     <div class="sx_li" style="width: 10%;">网吧号</div>
                     <div class="sx_li">上机时间</div>
                     <div class="sx_li">下机时间</div>
                 </div>
                 <ul class="sw_ul gjtongshang"></ul>
             </div>
-            <!--火车记录-->
+            <!--火车购票记录-->
             <div class="cheliang">
                 <div class="sx_title">
                     <span class="iconfont icon-rwcharacter"></span>
-                    <span>火车记录</span>
+                    <span>铁路记录</span>
                 </div>
                 <div class="sx_ul sx_ul1 none guiji_huoche">
                     <div class="sx_li">序号</div>
@@ -511,6 +523,7 @@
                     <div class="sx_li" style="width:12%;">状态</div>
                 </div>
                 <ul class="sw_ul qiandu_gaqqfwhcgpjl"></ul>
+                <div id="listpage13" class="listpagejuzhong"></div>
             </div>
             <!--飞机-->
             <div class="cheliang">
@@ -573,16 +586,16 @@
                     <span>华东六省</span>
                 </div>
                 <div class="sx_ul sx_ul1 none guijihuadongliushneg">
+                    <div class="sx_li" style="width: 8%;">华东六省</div>
                     <div class="sx_li">姓名</div>
                     <div class="sx_li" style="width: 18%;">旅客编号</div>
                     <div class="sx_li" style="width: 18%;">证件号码</div>
-                    <div class="sx_li" style="width: 18%;">房间号码</div>
+                    <div class="sx_li" style="width: 10%;">房间号码</div>
                     <div class="sx_li" style="width: 12%;">入住时间</div>
                     <div class="sx_li" style="width: 12%;">退房时间</div>
                 </div>
-                <ul class="sw_ul guiji_huadongliusheng">
-
-                </ul>
+                <ul class="sw_ul guiji_huadongliusheng"></ul>
+                <div id="listpage14" class="listpagejuzhong"></div>
             </div>
             <!--客车-->
             <div class="cheliang">
@@ -617,7 +630,8 @@
                 <input type="text" class="layui-input" style="width: 400px;" id="test1" placeholder="开始时间">
             </div>
             <div class="cheklibox layui-form">
-                <input class="chekli" type="checkbox" name="guijicheck" title="住宿轨迹" value="住宿轨迹" lay-skin="primary" checked>
+                <input class="chekli" type="checkbox" name="guijicheck" title="住宿轨迹" value="住宿轨迹" lay-skin="primary"
+                       checked>
                 <input class="chekli" type="checkbox" name="guijicheck" title="网吧轨迹" value="网吧轨迹" lay-skin="primary">
                 <input class="chekli" type="checkbox" name="guijicheck" title="客车轨迹" value="客车轨迹" lay-skin="primary">
                 <input class="chekli" type="checkbox" name="guijicheck" title="火车轨迹" value="火车轨迹" lay-skin="primary">
@@ -666,18 +680,6 @@
                 <span class="cr ding_sdjwyhctdc">山东警务云同火车搭乘</span>
                 <span class="cr ding_sdjwymhtdp">山东警务云民航同订票</span>
             </div>
-            <div class="sx_title">
-                <span class="iconfont icon-rwcharacter"></span>
-                <span>同机构</span>
-            </div>
-            <div class="sxh_3 yun_jigou"></div>
-            <div id="listpage2" class="listpagejuzhong"></div>
-            <div class="sx_title">
-                <span class="iconfont icon-rwcharacter"></span>
-                <span>同单位</span>
-            </div>
-            <div class="sxh_3 qiandu_danwei"></div>
-            <div id="listpage6" class="listpagejuzhong"></div>
             <div class="sx_title">
                 <span class="iconfont icon-rwcharacter"></span>
                 <span>铁路同乘车</span>
@@ -732,6 +734,12 @@
             </div>
             <div class="sxh_3 qiandu_guanxisdjwymhtdp"></div>
             <div id="listpage12" class="listpagejuzhong"></div>
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>山东警务云同上网</span>
+            </div>
+            <div class="sxh_3 qiandu_tswrenyuan"></div>
+            <div id="listpage17" class="listpagejuzhong"></div>
         </div>
         <!--重点关注-->
         <div class="licontent" data-href="6">
@@ -1558,6 +1566,16 @@
                     <span>水电气暖</span>
                 </div>
             </div>
+            <!--其他社会信息-->
+            <div class="social">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>其他社会信息</span>
+                </div>
+            </div>
+            <div class="shehuidata none">
+                <div class="shehuidatabox shehuishujudata none sgehuitittle"></div>
+            </div>
         </div>
         <!--互联网信息-->
         <div class="licontent" data-href="8">
@@ -1795,11 +1813,28 @@
                     <tbody class="so_tbody zwpt_wxqhy"></tbody>
                 </table>
             </div>
+
+            <!--其他互联网信息-->
+            <div class="social">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>其他互联网信息</span>
+                </div>
+            </div>
+            <div class="shehuidata none">
+                <div class="shehuidatabox hulianwangshujudata none hulianwntitle"></div>
+            </div>
         </div>
         <!--拓扑图-->
         <div class="licontent" data-href="9">
             <img src="../../img/tuoputu.gif" style="display: block;margin: 0 auto;width: 1200px" alt="">
         </div>
+    </div>
+    <!--历史图片-->
+    <div class="historypicbox" id="historypicbox">
+        <ul class="his_list">
+
+        </ul>
     </div>
 </div>
 </body>
@@ -1832,8 +1867,7 @@
         });
         setTimeout(function () {
             layer.close(loadingi)
-        }, 400)
-        console.log($index)
+        }, 400);
         $(".sd_wrapbox").find(".licontent").eq($index).fadeIn().siblings().hide();
         if ($index == 3) {
             linjuguanxi();//邻居关系对其
@@ -1938,9 +1972,9 @@
     //开始时间
     laydate.render({
         elem: '#test1' //指定元素
-        ,type:'datetime'
-        ,theme:'#0f8fe0'
-        ,range:true
+        , type: 'datetime'
+        , theme: '#0f8fe0'
+        , range: true
     });
 
     //下拉框

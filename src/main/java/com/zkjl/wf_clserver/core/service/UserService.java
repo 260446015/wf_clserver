@@ -1,7 +1,9 @@
 package com.zkjl.wf_clserver.core.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zkjl.wf_clserver.core.dto.vo.SysuserVO;
 import com.zkjl.wf_clserver.core.entity.SysUser;
+import com.zkjl.wf_clserver.core.exception.CustomerException;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.Date;
@@ -31,7 +33,7 @@ public interface UserService {
 	/**
 	 * 添加用户
 	 */
-	boolean addUserOrUpdate(SysUser user);
+	SysUser addUserOrUpdate(SysUser user) throws CustomerException;
 
 	/**
 	 * 删除用户
@@ -45,4 +47,14 @@ public interface UserService {
 	 */
 	PageImpl<SysUser> findPage(Integer pageSize, Integer pageNum, String name, Date beginDate, Date endDate);
 
+	/**
+	 * 修改密码
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param id
+	 * @return
+	 */
+    boolean updatePassword(String oldPassword, String newPassword, String id) throws CustomerException;
+
+    Boolean enable(String id) throws CustomerException;
 }

@@ -4,18 +4,21 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.zkjl.wf_clserver.core.dto.TrackDto;
 import com.zkjl.wf_clserver.core.dto.req.TrackRQ;
+import com.zkjl.wf_clserver.core.service.TrackAbstractService;
 import com.zkjl.wf_clserver.core.service.TrackService;
 import com.zkjl.wf_clserver.core.util.MongoManager;
 import org.apache.commons.lang.StringUtils;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
-public class TrackServiceImpl implements TrackService {
+public class TrackServiceImpl extends TrackAbstractService implements TrackService {
 
 	@Override
 	public Map<String, Object> findStay(String idCard,Date beginDate,Date endDate,String city) {
@@ -147,4 +150,8 @@ public class TrackServiceImpl implements TrackService {
 		return dataMap;
 	}
 
+	@Override
+	public List<TrackDto> getTrack(HttpServletRequest req, TrackRQ trackRQ) throws Exception {
+		return super.getTrack(req,trackRQ);
+	}
 }

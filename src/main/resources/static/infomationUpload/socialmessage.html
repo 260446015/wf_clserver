@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">社会信息</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/infomationUpload/upload.css?version=0">
+    <style>
+        body {
+            background: #fefefe;
+        }
+
+        .ua_imgtishi {
+            position: absolute;
+            height: 100px;
+            right: 50px;
+            top: 20px;
+        }
+
+        .fengefuhao {
+            height: 38px;
+            line-height: 38px;
+            display: none;
+        }
+        .ua_detial{
+            clear: both;
+        }
+        .fengefuhao input {
+            float: left;
+            width: 300px;
+            margin-left: 5px;
+        }
+        .shujuxuanze{
+            clear: both;
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+        .shujuxuanze span{
+            float: left;
+            line-height: 40px;
+        }
+        .shujutype{
+            width: 300px;
+            float: left;
+            margin-left: 20px;
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<div class="ua_wrap">
+    <div class="ua_boxlef">
+        <a class="ua_nava ua_navactive" style="margin-top: 30px;" href="socialmessage.html">
+            <span class="iconfont icon-shehuixinxi"></span>
+            <i>社会信息</i>
+        </a>
+        <a class="ua_nava" href="internetmessage.html">
+            <span class="iconfont icon-wangluo"></span>
+            <i>超级链接</i>
+        </a>
+        <a class="ua_nava" href="resourcemessage.html" style="display: none;">
+            <span class="iconfont icon-ziyuan"></span>
+            <i>资源库</i>
+        </a>
+    </div>
+    <div class="ua_boxrig">
+        <div class="ub_headbox">
+            <div class="ub_head">
+                <div class="ub_headact">
+                    <span>1.导入</span>
+                    <img src="../../img/social1.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>2.预览</span>
+                    <img src="../../img/social2.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>3.确认</span>
+                </div>
+            </div>
+            <div class="ub_head">
+                <div class="ub_headali">
+                    <span>1.导入</span>
+                    <img src="../../img/social3.png" alt="">
+                </div>
+                <div class="ub_headact">
+                    <span>2.预览</span>
+                    <img src="../../img/social1.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>3.确认</span>
+                </div>
+            </div>
+            <div class="ub_head">
+                <div class="ub_headali">
+                    <span>1.导入</span>
+                    <img src="../../img/social2.png" alt="">
+                </div>
+                <div class="ub_headali">
+                    <span>2.预览</span>
+                    <img src="../../img/social3.png" alt="">
+                </div>
+                <div class="ub_headact">
+                    <span>3.确认</span>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <!--第一步-->
+            <div class="ub_wrap layui-form">
+                <div class="layui-upload-drag" id="test10">
+                    <i class="layui-icon"></i>
+                    <p>点击上传，或将文件拖拽到此处</p>
+                    <p class="wenjianname none" style="color: #0d99e7;"></p>
+                </div>
+                <div class="shujuxuanze">
+                    <span>数据类型选择：</span>
+                    <div class="layui-input-block shujutype">
+                        <select name="city" class="shuuploadselec" lay-verify="required" lay-filter="acseleixing">
+                            <option value="">请选择数据类型</option>
+                            <option value="0">社会数据</option>
+                            <option value="1">互联网数据</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form ua_detial fengefuhao">
+                    <span class="fl">请输入分隔符号：</span>
+                    <input type="text" class="layui-input fengefuinp" style="border: 1px solid #666;">
+                </div>
+                <div class="ua_detial" style="position: relative;">
+                    <!--<p>上传文件须知：</p>-->
+                    <!--<p>1、支持txt、xls、xlsx、csv、word文件格式；</p>-->
+                    <!--<p>1、xls，xksx文件单个文件大小不超过50M;</p>-->
+                    <!--<p>2、单个上传文件的数量不超过40万条，</p>-->
+                    <!--<p>3、支持txt、xls、xlsx、csv、word文件格式；</p>-->
+                    <!--<p>4、txt、csv格式文件需要上传文件分隔符；</p>-->
+                    <!--<p>5、word必须为表格数据格式，同样需要包含标题；</p>-->
+                    <!--<p style="color: red;">6、上传内容不得包含英文逗号","</p>-->
+                    <!--<p style="color: red;">7、上传文件必须包含标题（非表头）如：</p>-->
+                    <!--<img src="../../img/uploadtishi1.jpg" class="ua_imgtishi" alt="">-->
+                </div>
+                <div class="" id="uploadactive"></div>
+                <div class="ua_btnbox">
+                    <div class="ua_btn ua_btnblue ua_btnblue1 none" data-href="true"
+                         style="float: none;margin: 40px auto 0 auto;">开始上传
+                    </div>
+                </div>
+            </div>
+            <!--第二步-->
+            <div class="ub_wrap">
+                <table cellpadding="0" cellspacing="0" class="bdtable">
+                    <tr class="firsttr uploadth"></tr>
+                    <tbody class="uploadtbody"></tbody>
+                </table>
+                <!--<div id="listpage"></div>-->
+
+                <div class="ua_btnbox">
+                    <div class="ua_btn" onclick="javascript:window.location.href='socialmessage.html'">取消</div>
+                    <div class="ua_btn ua_btnblue ua_btnblue2">下一步</div>
+                </div>
+            </div>
+            <!--第三步-->
+            <div class="ub_wrap">
+                <span class="iconfont icon-chenggong"></span>
+                <p class="ub_succes">信息上传完成</p>
+                <div class="ua_btnbox">
+                    <div class="ua_btn" onclick="javascript:window.location.href='socialmessage.html'"
+                         style="float: none;margin: 100px auto 0 auto;">返回
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script>
+    //第一步资源执行
+    $(".ua_boxlef").height($(window).height() - 72);
+    $(".ua_boxrig").find(".ub_head").eq(0).fadeIn();
+    $(".ua_boxrig").find(".ub_wrap").eq(0).fadeIn();
+    layui.use(['upload','form']);
+    var upload = layui.upload;
+    var form = layui.form;
+    uploadonemore(2);
+    //选择
+    form.on("select(acseleixing)",function (res) {
+        $(".shujutype").attr("data-href",res.value);
+    });
+    //文件上传
+    function uploadonemore(oid) {
+        var uploadkey = true;
+        upload.render({
+            elem: '#test10'
+            , url: ctx + 'file/upload'
+            , accept: 'file' //普通文件
+            , data: {
+                uploadid: oid,
+                spliter: function () {
+                    return $(".fengefuinp").val()
+                },
+                textType:function () {
+                    return $(".shujutype").attr("data-href")
+                }
+            }
+            , auto: false
+            , bindAction: "#uploadactive"
+            , choose: function (obj) {
+                obj.preview(function (index, file, result) {
+                    var typeup = file.name.split(".").pop();
+                    $(".wenjianname").show().html(file.name);
+                    $(".ua_btnblue1").show();
+                    if (typeup == "CSV" || typeup == "txt") {
+                        $(".fengefuhao").slideDown();
+                        $(".ua_btnblue1").attr("data-href", "false");
+                    }
+                });
+            }
+            , before: function (obj) {
+                var loa = layer.load(1, {shade: [0.1, '#000']})
+            }
+            , done: function (res) {
+                console.log(res);
+                layer.closeAll();
+                if(res.code!="0"){
+                    return layer.msg(res.message, {anim: 6});
+                }
+                $(".ua_btnblue1").attr("data-href", "true").show();
+                $(".ua_boxrig").find(".ub_head").eq(1).fadeIn().siblings().hide();
+                $(".ua_boxrig").find(".ub_wrap").eq(1).fadeIn().siblings().hide();
+                console.log(res.data.successData)
+                $.each(res.data.successData, function (i, item) {
+                    var conlenh = item.content.split(',');
+                    var list = '<tr>';
+                    if (uploadkey) {
+                        $.each(conlenh, function (i, item) {
+                            var data = item.split("'");
+                            $(".uploadth").append('<th>' + data[1] + '</th>');
+                        });
+                        uploadkey = false;
+                    }
+                    $.each(conlenh, function (i, item) {
+                        var data = item.split("'");
+                        list+='<td>'+data[3]+'</td>';
+                    });
+                    list+='</tr>';
+                    $(".uploadtbody").append(list);
+                });
+
+            }
+            , error: function (index, upload) {
+
+            }
+        });
+    }
+
+    $(".ua_btnblue1").click(function () {
+        if ($(this).attr("data-href") == "false") {
+            if ($(".fengefuinp").val() == "") {
+                return layer.msg("请输入分隔符");
+            }
+        }
+        if(!$(".shujutype").attr("data-href")){
+            return layer.msg("请选择数据类型");
+        }
+        $("#uploadactive").trigger("click")
+    });
+    //第二步
+    $(".ua_btnblue2").click(function () {
+        $(".ua_boxrig").find(".ub_head").eq(2).fadeIn().siblings().hide();
+        $(".ua_boxrig").find(".ub_wrap").eq(2).fadeIn().siblings().hide();
+    });
+</script>
+</html>

@@ -3,6 +3,7 @@ package com.zkjl.wf_clserver.core.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zkjl.wf_clserver.core.common.ApiResult;
 import com.zkjl.wf_clserver.core.dto.req.DefaultPageRQ;
+import com.zkjl.wf_clserver.core.dto.vo.SysuserVO;
 import com.zkjl.wf_clserver.core.entity.SysUser;
 import com.zkjl.wf_clserver.core.service.ConfsService;
 import com.zkjl.wf_clserver.core.service.LogService;
@@ -20,6 +21,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -56,22 +58,24 @@ public class UserController extends BaseController {
     public ApiResult login(String username, String password, String mode, HttpServletRequest request) {
         try {
             SysUser login = userService.login(username, password);
-            if(login == null){
+            if (login == null) {
                 return error("账号密码错误!");
             }
-            if (login.getIfEnable()==false){
+            if (login.getIfEnable() == false) {
                 return error("该账号已被关闭！");
             }
-            JSONObject jsonObject = JSONObject.parseObject(login.toString());
+            SysuserVO vo = new SysuserVO();
+            BeanUtils.copyProperties(login, vo);
+            JSONObject jsonObject = JSONObject.parseObject(vo.toString());
             jsonObject.put("ip", IpUtils.getIpAddr(request));
-            if(mode.equals("front")) {
-                ehCacheManager.getCache("shiroCache").put(login.getUsername(),login);
+            if (mode.equals("front")) {
+                ehCacheManager.getCache("shiroCache").put(login.getUsername(), login);
                 return success(jsonObject);
-            }else if(mode.equals("admin")){
-                if(login.getIfAdmin()){
-                    ehCacheManager.getCache("shiroCache").put(login.getUsername(),login);
+            } else if (mode.equals("admin")) {
+                if (login.getIfAdmin()) {
+                    ehCacheManager.getCache("shiroCache").put(login.getUsername(), login);
                     return success(jsonObject);
-                }else{
+                } else {
                     return error("用户权限不足！");
                 }
 
@@ -131,11 +135,11 @@ public class UserController extends BaseController {
     /**
      * 根据id查询用户
      */
-    @ApiOperation(value = "根据id查询用户" , httpMethod = "GET")
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @ApiOperation(value = "根据id查询用户", httpMethod = "GET")
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     @RequiresPermissions(value = "admin")
     @ResponseBody
-    public ApiResult getUserById(@RequestParam String id){
+    public ApiResult getUserById(@RequestParam String id) {
         Optional<SysUser> user;
         try {
             user = userService.findById(id);
@@ -148,14 +152,14 @@ public class UserController extends BaseController {
     /**
      * 查询
      */
-    @ApiOperation(value = "用户列表查询" , httpMethod = "GET")
-    @RequestMapping(value = "/page/list",method = RequestMethod.GET)
+    @ApiOperation(value = "用户列表查询", httpMethod = "GET")
+    @RequestMapping(value = "/page/list", method = RequestMethod.GET)
     @RequiresPermissions(value = "admin")
     @ResponseBody
     public ApiResult findPage(DefaultPageRQ defaultPageRQ,
                               @RequestParam(required = false) String name,
                               @RequestParam(required = false) Date beginDate,
-                              @RequestParam(required = false) Date endDate){
+                              @RequestParam(required = false) Date endDate) {
         PageImpl<SysUser> user;
         try {
             user = userService.findPage(defaultPageRQ.getPageSize(), defaultPageRQ.getPageNum(), name, beginDate, endDate);
@@ -170,9 +174,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/save")
     @ResponseBody
-    @RequiresPermissions(value = "admin")
     @ApiOperation(value = "用户添加", httpMethod = "POST")
-    public ApiResult save(@RequestBody SysUser user) throws Exception {
+    public ApiResult save(@RequestBody SysUser user, HttpServletRequest request) throws Exception {
         return success(userService.addUserOrUpdate(user));
     }
 
@@ -184,8 +187,8 @@ public class UserController extends BaseController {
     @RequiresPermissions(value = "admin")
     @ApiOperation(value = "修改密码", httpMethod = "POST")
     public ApiResult updatePassword(@RequestBody SysUser user) throws Exception {
-        Optional<SysUser> opuser=userService.findById(user.getId());
-        SysUser sysuser=opuser.get();
+        Optional<SysUser> opuser = userService.findById(user.getId());
+        SysUser sysuser = opuser.get();
         sysuser.setPassword(user.getPassword());
         return success(userService.addUserOrUpdate(sysuser));
     }
@@ -198,10 +201,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(value = "admin")
     @ApiOperation(value = "更改状态", httpMethod = "POST")
     public ApiResult updateStatus(String id) throws Exception {
-        Optional<SysUser> opuser=userService.findById(id);
-        SysUser sysuser=opuser.get();
-        sysuser.setIfEnable(!sysuser.getIfEnable());
-        return success(userService.addUserOrUpdate(sysuser));
+        return success(userService.enable(id));
     }
 
     /**
@@ -212,7 +212,7 @@ public class UserController extends BaseController {
     @RequiresPermissions(value = "admin")
     @ApiOperation(value = "用户删除", httpMethod = "GET")
     public ApiResult delete(@RequestParam(value = "ids") String ids) throws Exception {
-        ApiResult apiResult=new ApiResult();
+        ApiResult apiResult = new ApiResult();
         String[] idsStr = ids.split(",");
         for (int i = 0; i < idsStr.length; i++) {
             userService.deleteUser(idsStr[i]);
@@ -237,7 +237,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping(value = "login")
-    public String login(){
+    public String login() {
 //        if(getCurrentUser() == null){
 //            modelAndView.setViewName("/front/login.html");
 //        }else{
@@ -248,15 +248,32 @@ public class UserController extends BaseController {
 
     @GetMapping(value = "copy")
     @ResponseBody
-    public ApiResult copy(String id){
-        if(StringUtils.isBlank(id)){
+    public ApiResult copy(String id) {
+        if (StringUtils.isBlank(id)) {
             return error("拷贝的id没有传递");
         }
         try {
             confsService.copy(id);
         } catch (Exception e) {
-            return error("出现错误:"+e.getMessage());
+            return error("出现错误:" + e.getMessage());
         }
         return success("拷贝成功,请刷新当前页面！");
+    }
+
+    /**
+     * 普通用户修改密码
+     */
+    @GetMapping("/updatePassword2")
+    @ResponseBody
+    @ApiOperation(value = "修改密码", httpMethod = "GET")
+    public ApiResult updatePassword2(String oldPassword, String newPassword, String id) throws Exception {
+        boolean flag;
+        try {
+            flag = userService.updatePassword(oldPassword, newPassword, id);
+        } catch (Exception e) {
+            log.error("普通用户修改密码失败!" + e.getMessage());
+            return error("用户修改密码失败!");
+        }
+        return success(flag);
     }
 }

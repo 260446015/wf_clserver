@@ -48,9 +48,9 @@
         <li class="back_index cr" style="border: 0;">返回首页</li>
     </ul>
     <div class="sy_div">
-        <img class="defalurimg"  src="../../img/defaultimg.png" alt="" onerror="clga.whenoerronheader(this)">
+        <div class="defalurimgbox"><img class="defalurimg"  src="" alt=""></div>
         <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
-        <ul class="sy_divul layui-anim layui-anim-upbit">
+        <ul class="sy_divul layui-anim layui-anim-upbit"><li class="personindex">个人中心</li><li class="pesson_peizhi">账号配置</li>
             <li class="loginout">退出登录</li>
         </ul>
     </div>
@@ -102,7 +102,7 @@
         <!--</tr>-->
         </tbody>
     </table>
-    <div id="listpage"></div>
+    <div id="listpage" class="listpagejuzhong"></div>
 </section>
 <div class="linkpropo layui-form" id="linkpropo">
     <div class="ac_fomli">
@@ -271,7 +271,7 @@
             first: '首页',
             last: '尾页',
             jump: function (obj, first) {
-                clga.setpagecss();
+                clga.setpagecss(obj.elem);
                 if (!first) {
                     linkget(obj.curr - 1, "");
                 }

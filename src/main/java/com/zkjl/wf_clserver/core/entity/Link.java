@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.io.File;
 import java.util.Date;
 
 /** 链接表
@@ -74,5 +73,13 @@ public class Link {
     */
    @Field(value = "hot_count")
    private int hotCount;
+   /**
+    * 上传人
+    */
+   private String creator;
+   /**
+    * 平台分类
+    */
+   private String linkType;
 
 }

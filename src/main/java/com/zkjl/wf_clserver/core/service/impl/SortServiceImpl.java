@@ -9,9 +9,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SortServiceImpl implements SortService {
@@ -29,7 +30,13 @@ public class SortServiceImpl implements SortService {
         String sortMsg = page.getSortMsg();
         Integer sortType = page.getSortType();
         JSONObject data = page.getData();
+        Set<List<String>> check = new HashSet<>();
         List<List<String>> dataList = (List<List<String>>) data.get("data");
+        dataList.forEach(action ->{
+            if(!check.add(action)){
+                dataList.remove(action);
+            }
+        });
         if(page.isPage()){
             if (StringUtils.isBlank(sortMsg)) {//无排序内容，默认只分页
                 PageImpl<List<String>> objects = (PageImpl<List<String>>) PageUtil.pageBeagin(dataList.size(), pageNum, pageSize, dataList);

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -75,7 +76,10 @@ public class ConfsServiceImpl implements ConfsService {
         List<Confs> bySystemuser = confsRepository.findBySystemuser("5b45fe31c7395f26e0656ea9");
         bySystemuser.forEach(action ->{
             action.setSystemuser(id);
+            action.setUsername("");
+            action.setPassword("");
             action.set_id(null);
+            action.setCreateDate(Calendar.getInstance().getTime());
         });
         confsRepository.insert(bySystemuser);
     }

@@ -20,6 +20,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
@@ -42,10 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author ydw
@@ -184,9 +182,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public PageImpl<JSONObject> findUploadData(String username,Integer pageNum,Integer pageSize) {
         SearchRequestBuilder searchRequestBuilder = client.prepareSearch("file_upload").setTypes("entity");
-        TermsAggregationBuilder teamAgg = AggregationBuilders.terms("source_count").field("source.keyword");
-        SearchResponse response = searchRequestBuilder.setQuery(QueryBuilders.termQuery("username.keyword", username)).addAggregation(teamAgg).addSort("createTime", SortOrder.DESC).execute().actionGet();
-        Terms terms = response.getAggregations().get("source_count");
+        AbstractAggregationBuilder aggregationBuilder = AggregationBuilders.terms("source").field("source.keyword").size(10000);
+//        TermsAggregationBuilder teamAgg = AggregationBuilders.terms("source_count").field("source.keyword");
+        SearchResponse response = searchRequestBuilder.setQuery(QueryBuilders.termQuery("username.keyword", username)).addAggregation(aggregationBuilder).addSort("createTime", SortOrder.DESC).execute().actionGet();
+        Terms terms = response.getAggregations().get("source");
         List<JSONObject> list = new ArrayList<>();
         for (Terms.Bucket entry:terms.getBuckets()){
             JSONObject data = new JSONObject();

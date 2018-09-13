@@ -479,4 +479,85 @@ public class ElementAnalysisServiceImpl extends AnalysisAbstractService implemen
         return idList;
     }
 
+    @Override
+    protected JSONObject analysisSameThcdc(List<List<Document>> datas) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameThcdc", null);
+        List<String> idCardList = getIdCardList(datas);
+        try {
+            JSONArray jsonArray = new JSONArray();
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "铁路同乘车");
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            Set<Object> check = new HashSet<>();
+            list1.forEach(action1 ->{
+                String idCard1 = action1.get(7).toString();
+                if(idCard1.equals(idCardList.get(1))){
+                    check.add(action1);
+                }
+            });
+            list2.forEach(action1 ->{
+                String idCard1 = action1.get(7).toString();
+                if(idCard1.equals(idCardList.get(0))){
+                    check.add(action1);
+                }
+            });
+            System.out.println(check);
+            if(check.size() != 0){
+                JSONObject data = new JSONObject();
+                data.put("source","yunsou");
+                data.put("label","铁路同乘车");
+                data.put("column",data1.get("column"));
+                data.put("data",check);
+                jsonArray.add(data);
+                jsonObject.put("sameThcdc", jsonArray);
+            }
+        } catch (Exception e) {
+            logger.error("解析铁路同乘车出现异常", e.getMessage());
+        }
+        return jsonObject;
+    }
+
+    @Override
+    protected JSONObject analysisSameTcj(List<List<Document>> datas) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sameTcj", null);
+        List<String> idCardList = getIdCardList(datas);
+        try {
+            JSONArray jsonArray = new JSONArray();
+            List<List<Document>> kindDatas = KindDataUtil.getKindDatas(datas, "yunsou", "同乘机");
+            Map data1 = (Map) kindDatas.get(0).get(0).get("data");
+            Map data2 = (Map) kindDatas.get(1).get(0).get("data");
+            List<ArrayList> list1 = (List) data1.get("data");
+            List<ArrayList> list2 = (List) data2.get("data");
+            Set<Object> check = new HashSet<>();
+            list1.forEach(action1 ->{
+                String idCard1 = action1.get(7).toString();
+                if(idCard1.equals(idCardList.get(1))){
+                    check.add(action1);
+                }
+            });
+            list2.forEach(action1 ->{
+                String idCard1 = action1.get(7).toString();
+                if(idCard1.equals(idCardList.get(0))){
+                    check.add(action1);
+                }
+            });
+            System.out.println(check);
+            if(check.size() != 0){
+                JSONObject data = new JSONObject();
+                data.put("source","yunsou");
+                data.put("label","铁路同乘车");
+                data.put("column",data1.get("column"));
+                data.put("data",check);
+                jsonArray.add(data);
+                jsonObject.put("sameThcdc", jsonArray);
+            }
+        } catch (Exception e) {
+            logger.error("解析铁路同乘车出现异常", e.getMessage());
+        }
+        return jsonObject;
+    }
 }

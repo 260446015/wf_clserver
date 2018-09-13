@@ -52,6 +52,7 @@ console.log(jobdata.jobinfo.jobid);
 $(".licontent").on("click",".guijichaxunbtn",function () {
     getguiji()
 });
+var list;
 function getguiji() {
     var timeval = $("#test1").val()||"";
     $.ajax({
@@ -75,22 +76,44 @@ function getguiji() {
             $.each(res,function (i,item) {
                 var olist = "";
                 var adata = item.dataList;
+                var oimg = "";
                 $.each(item.columns,function (i,item) {
                     olist+='<span>'+item+'：'+adata[i]+'</span>'
                 });
+                console.log(item)
+                switch(item.mark){
+                    case "hotel":
+                        oimg = "../../img/hotel.png";
+                        break;
+                    case "net":
+                        oimg = "../../img/inter.png";
+                        break;
+                    case "train":
+                        oimg = "../../img/train.png";
+                        break;
+                    case "plane":
+                        oimg = "../../img/plane.png";
+                        break;
+                    case "bus":
+                        oimg = "../../img/bus.png";
+                        break;
+                    default:
+                        oimg = "../../img/guiji.png";
+                        break;
+                }
                 if(i%2){
-                    var list = '<li class="bounceInDown timeclass timeeractive cr">' +
+                    list = '<li class="bounceInDown timeclass timeeractive cr">' +
                         '    <div class="timeclassleft">' +
                         '        <span class="tili_te tili_texlef">'+item.stayDate+'</span>' +
                         '    </div>' +
                         '    <div class="timeclassright">' +
-                        '        <div class="tili_tex tili_texbtnr gjsjz_addres" data-href="'+olist+'">'+(item.address||"")+'</div>' +
+                        '        <div class="tili_tex tili_texbtnr gjsjz_addres" data-href="'+olist+'"><img class="gj_img" src="'+oimg+'">'+(item.address||"")+'</div>' +
                         '    </div>' +
                         '</li>';
                 }else{
-                    var list = '<li class="bounceInDown timeclass cr" data-href="">' +
+                    list = '<li class="bounceInDown timeclass cr" data-href="">' +
                         '    <div class="timeclassleft">' +
-                        '        <div class="tili_tex tili_texbtnl gjsjz_addres" data-href="'+olist+'">'+(item.address||"")+'</div>' +
+                        '        <div class="tili_tex tili_texbtnl gjsjz_addres" data-href="'+olist+'"><img class="gj_img" src="'+oimg+'">'+(item.address||"")+'</div>' +
                         '    </div>' +
                         '    <div class="timeclassright">' +
                         '        <span class="tili_te tili_texrig">'+item.stayDate+'</span>' +

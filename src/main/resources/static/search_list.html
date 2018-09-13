@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">万联点击实战平台</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+    <!--swiper-->
+    <link rel="stylesheet" href="../../res/swiper/swiper.min.css">
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/search/search.css?version=0">
+    <style>
+
+    </style>
+</head>
+<body>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<!--搜索框-->
+<div class="sl_box">
+    <div class="sl_boxcen">
+        <p>人员核查</p>
+        <input class="sl_input" type="text" placeholder="">
+        <div class="layui-btn layui-btn-normal searchclickque" style="margin-left: 20px;">确定</div>
+        <!--<div class="layui-form sl_select">-->
+            <!--<select class="" name="" lay-verify="" lay-filter="sl_type">-->
+                <!--<option value="search_list.html">照片模式</option>-->
+                <!--<option value="search_photo.html">图片列表</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    </div>
+</div>
+<!-- Swiper -->
+<div class="swiper-container sl_wilper" style="display: none;">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="../../images/slide5.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../../images/slide2.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../../images/slide1.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../../images/slide4.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../../images/slide3.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../../images/slide6.jpg" alt=""></div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+<!--列表-->
+<div class="shadow">
+    <div class="sd_jindu1 animated bouncelnDown">查询进度</div>
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+    </div>
+    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，请不要关闭此页</div>
+    <div class="cxtm_boxer">
+        <div class="cxtm_boxerw">
+            <span class="cxtm_kuai" style="background: #64ff4d;"></span>
+            <span class="cxtm_val">查询完毕返回数据平台</span>
+            <span class="cxtm_kuai" style="background: #eb9927;"></span>
+            <span class="cxtm_val">查询完毕未返回数据平台</span>
+            <span class="cxtm_kuai" style="background: red;"></span>
+            <span class="cxtm_val">查询进行中平台</span>
+            <span class="cr againpathon fr" style="color: #0C0C0C;">again</span>
+        </div>
+        <div class="cxtm_wrap"></div>
+    </div>
+    <!--div-->
+    <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
+</div>
+<div class="sl_biaoge">
+    <div class="shehuititle">公安网平台数据</div>
+    <table class="sl_table" cellpadding="0" cellspacing="0" style="width: 100%;">
+        <tr class="slt_1">
+            <th class="zhanwei"></th>
+            <th style="min-width: 60px;"><span></span>姓名</th>
+            <th style="min-width: 60px;"><span></span>性别</th>
+            <th><span></span>身份证号码</th>
+            <th style="min-width: 100px;"><span></span>出生日期</th>
+            <th style="min-width: 120px;"><span></span>来源平台</th>
+            <th style="min-width: 60px;"><span></span>民族</th>
+            <th style="min-width: 130px;"><span></span>户籍地址</th>
+            <th style="min-width: 100px;"><span></span>联系方式</th>
+            <th class="zhanwei"></th>
+        </tr>
+        <tbody class="sl_tbody"></tbody>
+    </table>
+</div>
+<!--社会数据-->
+<div class="shehuidata none">
+    <div class="shehuititle none sgehuitittle">社会数据</div>
+    <div class="shehuidatabox shehuishujudata none sgehuitittle"></div>
+    <div class="shehuititle none hulianwntitle">互联网数据</div>
+    <div class="shehuidatabox hulianwangshujudata none hulianwntitle"></div>
+</div>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../res/swiper/swiper.min.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script src="../../js/common/dev.util.js?versin=0"></script>
+<script src="../../js/search/creatjob.js?versin=0"></script>
+<script src="../../js/search/search_jiben.js?versin=0"></script>
+<script src="../../js/search/searchdetial.js?versin=0"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        effect: 'coverflow',
+        grabCursor: true,
+        loop: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            rotate: 20,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+        },
+        autoplay: {
+            delay: 3000,
+            stopOnLastSlide: false,
+            disableOnInteraction: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        on: {
+            click: function () {
+                window.location = "search_detial.html";
+            },
+            touchEnd: function (event) {
+                console.log(event)
+            }
+        }
+    });
+    layui.use('form', function () {
+        var form = layui.form;
+        //各种基于事件的操作，下面会有进一步介绍
+        form.on('select(sl_type)', function (data) {
+            window.location = data.value;
+        });
+    });
+    $(".sl_tbody").on("click", ".swillistclic", function () {
+        //window.location = "search_detial.html";
+        if($(this).html()!=""){
+            clga.searchbegin($(this).html(),2,true);
+        }
+    });
+    $(".searchclickque").click(function () {
+        clga.searchbegin($(".sl_input").val(),2,true);
+    });
+
+    $(".againpathon").click(function () {
+        clga.searchbegin($(".sl_input").val(),1,false);
+        location.reload();
+    });
+</script>
+<script>
+
+</script>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">同要素分析结果</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=0, user-scalable=no">
+    <meta name="Author" Content="jianghaifei"/>
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!--不缓存-->
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <script src="../../js/common/jquery-3.3.1.min.js"></script>
+    <!--animate-->
+    <link rel="stylesheet" href="../../css/common/animate.css">
+    <!--layui-->
+    <link rel="stylesheet" href="../../res/layui/css/layui.css">
+
+    <!--自定义-->
+    <link rel="stylesheet" href="../../css/common/common.css?version=0">
+    <link rel="stylesheet" href="../../css/common/layout.css?version=0">
+    <link rel="stylesheet" href="../../css/associationAnalysis/associationAnalysis.css?version=0">
+    <link rel="stylesheet" href="../../css/search/search_detial.css?version=0">
+    <style>
+        .ts_top{
+            font-size: 20px;
+            text-align: center;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        section{
+            overflow: hidden;
+        }
+        .layui-progress{
+            margin-top: 50px;
+        }
+        .cxtm_box{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="shadow">
+    <div class="sd_jindu1 animated bouncelnDown">对比进度</div>
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao1">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+    </div>
+    <div class="cxtm_box">A查询时间<span class="chaxuntime1">0</span>s</div>
+
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao2">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+    </div>
+    <div class="cxtm_box">B查询时间<span class="chaxuntime2">0</span>s</div>
+
+    <!--div-->
+    <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
+</div>
+<header class="sy_top syblue">
+    <ul class="sy_ul">
+        <li class="sy_line times_f"></li>
+        <li class="sy_line" style="line-height: 18px;">
+            <div style="margin-top: -6px;" class="timey_r"></div>
+            <div class="time_z"></div>
+        </li>
+        <li class="sy_line">总访问量:<span class="allfangwen"></span></li>
+        <li>当前在线人数:<span class="allzaixian"></span></li>
+        <li class="back_index cr" style="border: 0;">返回首页</li>
+    </ul>
+    <div class="sy_div">
+        <img src="../../img/defaultimg.png" alt="">
+        <span><span class="time_statue"></span>，<span class="cluseaname"></span></span>
+        <ul class="sy_divul layui-anim layui-anim-upbit">
+            <li class="loginout">退出登录</li>
+        </ul>
+    </div>
+</header>
+<section>
+    <div class="ts_top">同要素关联分析比对结果</div>
+    <div class="licontent">
+        <!--同户-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同户</span>
+                <a>户号：<i class="tonghu_num"></i></a>
+            </div>
+            <div class="sw_heade1 none tystit_th">
+                <li>照片</li>
+                <li>姓名</li>
+                <li>关系</li>
+                <li>民族</li>
+                <li>性别</li>
+                <li>年龄</li>
+                <li>身份证</li>
+            </div>
+            <ul class="sw_ul tysdt_thgx"></ul>
+        </div>
+        <!--同住址-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同住址</span>
+            </div>
+            <div class="sx_pibox tysdt_tzh"></div>
+        </div>
+        <!--同案-->
+        <div class="jiechujing">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同案</span>
+            </div>
+            <div class="tys_ta"></div>
+        </div>
+        <!--同上网-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同上网</span>
+            </div>
+            <div class="sx_ul2 sx_ul1 none guiji_wangtitle">
+                <div class="sx_li">序号</div>
+                <div class="sx_li">上网人员姓名</div>
+                <div class="sx_li">同上网人员姓名</div>
+                <div class="sx_li">同上网人员身份证</div>
+                <div class="sx_li" style="width: 10%;">网吧号</div>
+                <div class="sx_li">上机时间</div>
+                <div class="sx_li">下机时间</div>
+            </div>
+            <ul class="sw_ul tysdt_wangba"></ul>
+        </div>
+        <!--同房间-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同房间</span>
+            </div>
+            <div class="sx_ul sx_ul1 none guijibianguan">
+                <div class="sx_li">序号</div>
+                <div class="sx_li">姓名</div>
+                <div class="sx_li">宾馆名称</div>
+                <div class="sx_li">城市</div>
+                <div class="sx_li">入住房号</div>
+                <div class="sx_li">入住时间</div>
+                <div class="sx_li">退房时间</div>
+            </div>
+            <ul class="sw_ul tysdt_tfj">
+
+            </ul>
+        </div>
+        <!--同车违章-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同车违章</span>
+            </div>
+            <div class="sw_heade1 none che_weizhang">
+                <li>编号</li>
+                <li>照片</li>
+                <li>姓名</li>
+                <li>身份证</li>
+                <li>同违章次数</li>
+                <li style="width: 22%;">户口所在地</li>
+            </div>
+            <ul class="sw_ul tysdt_tcwz"></ul>
+        </div>
+        <!--同单位-->
+        <div class="sx_title">
+            <span class="iconfont icon-danwei"></span>
+            <span>同单位</span>
+        </div>
+        <div class="sx_pibox gongzuodanwei"></div>
+
+        <!--同会员-->
+        <div class="cheliang">
+            <div class="sx_title">
+                <span class="iconfont icon-rwcharacter"></span>
+                <span>同会员</span>
+            </div>
+        </div>
+    </div>
+    <div class="licontent">
+        <div class="sx_title">
+            <span class="iconfont icon-rwcharacter"></span>
+            <span>基本信息</span>
+        </div>
+        <p class="sx_p1">
+            <span>姓名：姜先生</span>
+            <span>性别：男</span>
+            <span>户籍地址：山东省潍坊市昌乐县X小区</span>
+            <span>暂住地：山东省潍坊市昌乐县X小区</span>
+        </p>
+
+        <div class="sx_title">
+            <span class="iconfont icon-danwei"></span>
+            <span>工作单位</span>
+        </div>
+        <p class="sx_p1">
+            <span>2011-2014  中国石油化工集团公司   餐饮处  科长</span>
+        </p>
+        <p class="sx_p2">
+            <span>2014-今     中国石油公司                 餐饮处 处长</span>
+        </p>
+
+        <div class="sx_title">
+            <span class="iconfont icon-icon140"></span>
+            <span>驾驶员信息</span>
+        </div>
+        <dl class="sx_imgbox">
+            <dd><img src="../../images/slide4.jpg" alt=""></dd>
+            <dt>
+                <div>
+                    <span>姓名：姜先生</span>
+                    <span>驾驶证号：130925193306137590</span>
+                    <span>准驾车型：C1</span>
+                    <span>档案号：1234567890</span>
+                    <span>有效期：2018-2028</span>
+                </div>
+            </dt>
+        </dl>
+
+        <div class="sx_title">
+            <span class="iconfont icon-huzhao"></span>
+            <span>护照信息</span>
+        </div>
+        <dl class="sx_imgbox">
+            <dd><img src="../../images/slide4.jpg" alt=""></dd>
+            <dt>
+                <div>
+                    <span>姓名：张麻子</span>
+                    <span>性别：男</span>
+                    <span>出生日期：1933-06-13</span>
+                    <span>出生地：河南</span>
+                    <span>签发地：河南</span>
+                    <span>有效期：2019-10-12</span>
+                    <span>签发机关：公安部出入境管理局</span>
+                </div>
+            </dt>
+        </dl>
+        <div class="sx_title">
+            <span class="iconfont icon-danwei"></span>
+            <span>同会员</span>
+        </div>
+        <p class="sx_p1">
+            <span>2011-2014  如家酒店会员</span>
+        </p>
+        <p class="sx_p2">
+            <span>2014-今     星期天酒店会员</span>
+        </p>
+    </div>
+</section>
+</body>
+<script src="../../res/layui/layui.all.js"></script>
+<script src="../../js/common/common.js?versin=0"></script>
+<script src="../../js/common/dev.util.js?versin=0"></script>
+<script src="../../js/associationAnalysis/associationAnaldetial.js?versin=0"></script>
+<script>
+    var $index = window.location.search.split("?")[1];
+    $("section").find(".licontent").eq($index).fadeIn();
+</script>
+</html>

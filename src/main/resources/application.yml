@@ -7,6 +7,7 @@ spring:
       cluster-name: elasticsearch
       repositories:
         enabled: true
+      url: 10.52.219.8
     mongodb:
       primary:
           host: 10.52.219.8
@@ -19,11 +20,8 @@ spring:
   mvc:
     static-path-pattern: /**
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,
-                        classpath:/static/,classpath:/public/,file:${web.upload-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
 web:
-  upload-path : E:/Apache24/Apache/htdocs/images/upload
-
-
+  upload-path : /wf_clserver/images/upload
 
 

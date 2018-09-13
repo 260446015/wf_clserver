@@ -2,14 +2,17 @@ package com.zkjl.wf_clserver.core.controller;
 
 
 import com.zkjl.wf_clserver.core.common.ApiResult;
+import com.zkjl.wf_clserver.core.dto.LinkDTO;
 import com.zkjl.wf_clserver.core.entity.Link;
 import com.zkjl.wf_clserver.core.service.LinkService;
+import com.zkjl.wf_clserver.core.util.IpUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 超级链接
@@ -24,9 +27,9 @@ public class LinkController extends BaseController {
     /**
      * 查询所有链接
      */
-    @GetMapping("/findAll")
-    public ApiResult findAll(String search, Integer pageNum, Integer pageSzie) throws Exception {
-        PageImpl<Link> links = linkService.findAll(search, pageNum, pageSzie);
+    @PostMapping("/findAll")
+    public ApiResult findAll(@RequestBody LinkDTO linkDTO) throws Exception {
+        PageImpl<Link> links = linkService.findAll(linkDTO);
         return successPages(links);
     }
 
@@ -35,7 +38,10 @@ public class LinkController extends BaseController {
      */
     @PostMapping("/save")
     @ApiOperation(value = "链接添加", httpMethod = "POST")
-    public ApiResult save(@RequestBody Link link) throws Exception {
+    public ApiResult save(@RequestBody Link link, HttpServletRequest request) throws Exception {
+        String username = this.getCurrentUser().getUsername();
+        link.setCreator(username);
+        link.setLogo("http://"+IpUtils.getServerIP() +":8090/"+ link.getLogo());
         return success(linkService.saveOrUpdate(link));
     }
 

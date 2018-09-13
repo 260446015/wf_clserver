@@ -37,7 +37,7 @@ $(function () {
             'jobtype':'1',
             'resources':resourceArr,
             'isCache':oiscase
-        }
+        };
         $.ajax({
             url: ctx + "createJob",
             type: "post",
@@ -55,7 +55,7 @@ $(function () {
                 callLocal(res.data.jobinfo,res.data.resources,turntype);
             }
         });
-    }
+    };
     function callLocal(jobinfo,resources,turntype){
         jobinfo.resources = resources;
         var job = {"action":"createjob","data":jobinfo}
@@ -72,10 +72,12 @@ $(function () {
                 if(turntype==1){
                     window.location = "search_list.html";
                 }else{
-                    window.location = "search_detial.html";
+                    window.open("search_detial.html");
+                    //window.location = "search_detial.html";
                 }
             }
         });
     }
 
 });
+
