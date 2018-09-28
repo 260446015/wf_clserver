@@ -3,19 +3,19 @@ server:
 spring:
   data:
     elasticsearch:
-      cluster-nodes: 10.52.219.8:9300
+      cluster-nodes: 112.244.72.30:9300
       cluster-name: elasticsearch
       repositories:
         enabled: true
-      url: 10.52.219.8
+      url: 112.244.72.30
     mongodb:
       primary:
-          host: 10.52.219.8
-          port: 27017
+          host: 112.244.72.30
+          port: 44335
           database: kklc
       secondary:
-        host: 10.52.219.8
-        port: 27017
+        host: 112.244.72.30
+        port: 44335
         database: plover
   mvc:
     static-path-pattern: /**

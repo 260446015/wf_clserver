@@ -75,31 +75,55 @@
 </header>
 
 <section>
-    <div class="sr_top">
-        <img src="../../img/huibiao.png" class="animated zoomIn" alt="">
-        <p class="animated slideInUp">超级链接</p>
+    <!--<div class="sr_top">-->
+        <!--<img src="../../img/huibiao.png" class="animated zoomIn" alt="">-->
+        <!--<p class="animated slideInUp">超级链接</p>-->
+    <!--</div>-->
+    <div class="layui-form hy_link" style="margin: 80px auto 0 auto;width: 1200px;">
+        <div class="layui-form-item ac_fomli">
+            <i class="ac_fomi">平台名称</i>
+            <input class="acda_name" type="text" placeholder="请输入名称">
+        </div>
+        <div class="layui-form-item ac_fomli">
+            <i class="ac_fomi pingleibir" data-href="">平台类别</i>
+            <div class="layui-input-block acdata_leixing">
+                <select name="city" lay-verify="required" lay-filter="pingtaitype">
+                    <option value="">请选择</option>
+                    <option value="人像比对类">人像比对类</option>
+                    <option value="QQ查询类">QQ查询类</option>
+                    <option value="旅馆住宿查询类">旅馆住宿查询类</option>
+                    <option value="户籍查询类">户籍查询类</option>
+                    <option value="综合查询类">综合查询类</option>
+                    <option value="追逃类">追逃类</option>
+                    <option value="实用工具类">实用工具类</option>
+                    <option value="视频侦查类">视频侦查类</option>
+                    <option value="涉毒人员管理类">涉毒人员管理类</option>
+                    <option value="合成作战类">合成作战类</option>
+                    <option value="公安网大数据类">公安网大数据类</option>
+                    <option value="公安网论坛类">公安网论坛类</option>
+                    <option value="话单分析类">话单分析类</option>
+                    <option value="刑事科学技术类">刑事科学技术类</option>
+                    <option value="公安行业/国家标准类">公安行业/国家标准类</option>
+                    <option value="公安网网址导航">公安网网址导航</option>
+                    <option value="论坛类">论坛类</option>
+                    <option value="软件下载类">软件下载类</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-btn checklink">查询</div>
     </div>
     <!--链接部分-->
-    <ul class="lianjiebox">
-        <!--<li>-->
-            <!--<div class="lj_img"><img src="../../img/linksuper1.png" alt=""></div>-->
-
-            <!--<p class="ac_jianjie">全国交通违法信息综合平台全国交通违法信息综合平台</p>-->
-            <!--<p class="ac_biaoti">全国交通违法信息综合平台全国交通违法信息综合平台</p>-->
-            <!--<div class="ac_liulan">浏览：20</div>-->
-            <!--<div class="ac_miaoshu none"></div>-->
-        <!--</li>-->
-    </ul>
+    <ul class="lianjiebox"></ul>
     <div id="listpage" class="listpagejuzhong"></div>
 </section>
 </body>
 <script src="../../res/layui/layui.all.js"></script>
 <script src="../../js/common/common.js?versin=0"></script>
 <script>
-    layui.use(['laydate', 'laypage', 'upload']);
-    var laydate = layui.laydate;
+    layui.use(['laydate', 'laypage', 'upload','form']);
+
     var laypage = layui.laypage;
-    var upload = layui.upload;
+    var form = layui.form;
 
     function setPageNo(count) {
         laypage.render({
@@ -116,20 +140,27 @@
         });
     }
 
+    //平台类别选择
+    form.on("select(pingtaitype)",function (res) {
+        $(".pingleibir").attr("data-href",res.value);
+    });
+
     linkget(0, "");
 
     function linkget(pageval, searchval) {
         $.ajax({
             url: ctx + "link/findAll",
-            type: "get",
-            data: {
-                pageSzie: 10,
+            type: "post",
+            data: JSON.stringify({
+                pageSize: 10,
                 pageNum: pageval,
-                search: searchval
-            },
+                linkType: $(".pingleibir").attr("data-href"),
+                name:searchval
+            }),
             xhrFields: {
                 withCredentials: true
             },
+            contentType:'application/json',
             success: function (res) {
                 console.log(res);
                 $(".lianjiebox").empty();
@@ -152,7 +183,8 @@
                 });
             }
         });
-    };
+    }
+
     $(".lianjiebox").on("click","li",function () {
         var ourl = $(this).attr("data-href");
         var aopen = $(this).attr("data-open");
@@ -165,6 +197,10 @@
         if(ourl.split("http").length>1){
             window.open(ourl,"_blank");
         }
+    });
+
+    $(".checklink").click(function () {
+        linkget(0, $(".acda_name").val());
     });
 </script>
 </html>

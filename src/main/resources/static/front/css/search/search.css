@@ -30,7 +30,7 @@ section{
     cursor: pointer;
 }
 .sr_ul1{
-    width: 676px;
+    width: 778px;
     position: absolute;
     left: 229px;
     top: 44px;
@@ -131,49 +131,72 @@ section{
 .swillistclic{
     color: red;
 }
+.swillistclic a{
+    color: red;
+}
 
 .sl_tbody .sl_firtr{
     background: #f5f5f5;
 }
 .zhanwei{
-    width: 10%;
+    width: 0%;
 }
 .sl_tbody tr:hover{
     background: #e9e9e9;
     color: #333;
 }
 
+.searchindextitle .layui-layer-title{
+    background: #0d99e7;
+    color: #fff;
+}
+
+.yufatishi .layui-layer-content{
+    background: #0d99e7;
+    padding: 30px;
+    color: #fff;
+
+}
 /*图片列表*/
 .sp_box{
     width: 1280px;
     margin: 0 auto;
     overflow: hidden;
+    font-size: 14px;
 }
-.sp_box li{
-    width: 300px;
-    height: 180px;
+.sp_box a{
+    width: 308px;
+    height: 190px;
     background: #fff;
-    margin: 7px 10px;
+    margin: 6px 6px;
     float: left;
     cursor: pointer;
 }
 .sp_imglef{
     float: left;
-    width: 134px;
-    height: 172px;
+    width: 125px;
+    height: 180px;
     margin: 4px;
     overflow: hidden;
+}
+.sp_imglef img{
+    min-height: 150px;
+}
+.sp_imglef p{
+    text-align: center;
+    margin-top: 8px;
 }
 .sp_imglef img{
     width: 100%;
 }
 .sp_imgrig{
     float: left;
-    width: 148px;
+    width: 174px;
 }
 .sp_imgrig p{
     padding: 0 4px;
     line-height: 24px;
+    word-break: break-all;
 }
 
 
@@ -189,6 +212,7 @@ section{
     overflow: hidden;
     clear: both;
     margin: 10px 0;
+    padding-left: 10px;
     border-left: 1px solid #ccc;
 }
 .sh_dlbox{
@@ -267,6 +291,7 @@ section{
     background: #e9e9e9;
     font-weight: bold;
     line-height: 32px;
+    font-size: 18px;
 }
 
 body .cxtm_closebtyn{
@@ -274,4 +299,65 @@ body .cxtm_closebtyn{
     line-height: 25px;
     margin-left: 20px;
     background: #ccc;
+}
+
+
+/*手机号码类*/
+.sx_title {
+    height: 40px;
+    line-height: 40px;
+    margin: 10px 0;
+    background: #1E93B5;
+    padding-left: 10px;
+}
+
+
+.pingtailist{
+    float: left;
+    width: 18%;
+}
+.ptlt_li{
+    overflow: hidden;
+    padding: 20px;
+}
+.ptlt_li div{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.ptlt_li ul{
+    background: rgba(100,100,100,0.1);
+    overflow: hidden;
+}
+.ptlt_li ul li{
+    float: left;
+    padding: 5px 10px;
+    color: red;
+}
+
+
+.pingtaidata{
+    float: right;
+    width: 100%;
+}
+body .sx_title span {
+    color: #000;
+    font-weight: bold;
+}
+.ptda_p{
+    overflow: hidden;
+    padding: 10px 1%;
+    margin-bottom: 20px;
+    background: rgba(100,100,100,0.1);
+    font-size: 14px;
+}
+.ptda_p span{
+    width: 49%;
+    margin-left: 1%;
+    float: left;
+}
+.ptda_p span i{
+    color: #666;
+}
+.ptda_p span a{
+    color: red;
 }

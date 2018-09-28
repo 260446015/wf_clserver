@@ -132,6 +132,33 @@
                             </select>
                         </div>
                     </div>
+                    <div class="layui-form-item ac_fomli">
+                        <span>*</span>
+                        <i class="ac_fomi pingleibir">平台类别</i>
+                        <div class="layui-input-block acdata_leixing">
+                            <select name="city" lay-verify="required" lay-filter="pingtaitype">
+                                <option value="">请选择</option>
+                                <option value="人像比对类">人像比对类</option>
+                                <option value="QQ查询类">QQ查询类</option>
+                                <option value="旅馆住宿查询类">旅馆住宿查询类</option>
+                                <option value="户籍查询类">户籍查询类</option>
+                                <option value="综合查询类">综合查询类</option>
+                                <option value="追逃类">追逃类</option>
+                                <option value="实用工具类">实用工具类</option>
+                                <option value="视频侦查类">视频侦查类</option>
+                                <option value="涉毒人员管理类">涉毒人员管理类</option>
+                                <option value="合成作战类">合成作战类</option>
+                                <option value="公安网大数据类">公安网大数据类</option>
+                                <option value="公安网论坛类">公安网论坛类</option>
+                                <option value="话单分析类">话单分析类</option>
+                                <option value="刑事科学技术类">刑事科学技术类</option>
+                                <option value="公安行业/国家标准类">公安行业/国家标准类</option>
+                                <option value="公安网网址导航">公安网网址导航</option>
+                                <option value="论坛类">论坛类</option>
+                                <option value="软件下载类">软件下载类</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="ac_fomli">
                         <span class="">*</span>
                         <i class="ac_fomi">URL：</i>
@@ -229,10 +256,13 @@
         ,type:'datetime'
         ,theme:'#0f8fe0'
     });
-
     //选择
     form.on("select(acseleixing)",function (res) {
         $(".acdata_leixing").attr("data-href",res.value);
+    });
+    //平台类别选择
+    form.on("select(pingtaitype)",function (res) {
+        $(".pingleibir").attr("data-href",res.value);
     });
 
     function linkupload() {
@@ -240,6 +270,7 @@
             category: "string",
             delFlag: "string",
             hotCount: 0,
+            linkType:$(".pingleibir").attr("data-href"),
             ifOpen: $("input[type='radio']:checked").val(),
             logo: $(".acda_img").attr("data-href"),
             name: $(".acda_name").val(),

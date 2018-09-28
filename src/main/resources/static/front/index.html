@@ -91,6 +91,39 @@
 <script src="res/layui/layui.all.js"></script>
 <script src="js/common/common.js?versin=0"></script>
 <script>
+    $(function () {
+        if(sessionStorage.getItem("clgauser") == null || sessionStorage.getItem("clgauser") == "null"){
+            $.ajax({
+                url: ctx + "user/getUserInfo",
+                type: "get",
+                async:true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (res) {
+                    console.log(res);
+                    sessionStorage.setItem("clgauser", JSON.stringify(res.data));
+                    localStorage.setItem("clgatoken", res.data.session);
+                    pingtai()
+                }
+            });
+        }
+    })
+    function pingtai(oip) {
+        var dataFormat={'action':'register','data':{'serverhost':"http://10.52.219.8:8090/"}};
+        $.ajax({
+            //url: "http://10.52.220.87:19797",
+            url: "http://localhost:19797",
+            type: "post",
+            data: JSON.stringify(dataFormat),
+            dataType:"json",
+            success: function (res) {
+                console.log(res);
+                sessionStorage.setItem("clgapingtai", JSON.stringify(res.data));
+                window.location = "index.html";
+            }
+        });
+    }
     var ifadmin = JSON.parse(sessionStorage.getItem("clgauser")).ifAdmin;
     $(".sy_boxcontent").on("click","div",function () {
         var href = $(this).attr("data-href");

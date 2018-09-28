@@ -284,15 +284,17 @@
     function linkget(pageval, searchval) {
         $.ajax({
             url: ctx + "link/findAll",
-            type: "get",
-            data: {
-                pageSzie: 10,
+            type: "post",
+            data: JSON.stringify({
+                pageSize: 10,
                 pageNum: pageval,
-                search: searchval
-            },
+                linkType:"",
+                name:searchval
+            }),
             xhrFields: {
                 withCredentials: true
             },
+            contentType:'application/json',
             success: function (res) {
                 console.log(res);
                 $(".ch_tbodybianji").empty();

@@ -167,6 +167,7 @@
     font-size: 14px;
     text-align: center;
     overflow: hidden;
+    min-height: 1px;
 }
 
 /*底部*/
@@ -229,27 +230,19 @@
 }
 
 /*基本情况*/
-.sx_title {
-    height: 40px;
-    line-height: 40px;
-    /* border-bottom: 2px solid #AAACAD; */
-    margin: 10px 0;
-    //background: #D0D0D0;
-    background: #1E93B5;
-}
 
-body .sx_title span {
-    color: #000;
-    font-weight: bold;
-}
 
 .sx_p1 {
     line-height: 26px;
     padding: 0 20px;
-    background: #ececec;
+    background: rgba(100,100,100,0.1);
+    clear: both;
+    overflow: hidden;
+    margin: 10px 0;
 }
 .sx_pibox .sx_p1{
     margin-top: 10px;
+    overflow: hidden;
 }
 .sx_p1tips{
     display: none;
@@ -276,13 +269,16 @@ body .sx_p1pq span{
 }
 
 .sx_p1 span, .sx_p2 span {
-    margin-right: 10%;
+    margin-right: 2%;
+    float: left;
+    min-width: 320px;
 }
 
 .sx_imgbox {
-    padding: 0 1%;
+    padding: 10px 1%;
     overflow: hidden;
     margin-bottom: 20px;
+    background: rgba(100,100,100,0.1);
 }
 
 .sx_imgbox dd {
@@ -942,3 +938,4 @@ body .sk_nr{
 .his_list li img{
     width: 150px;
 }
+

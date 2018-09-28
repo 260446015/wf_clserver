@@ -274,12 +274,12 @@ clga.getlength = function (str) {
 clga.timechange = function (time) {
     var timedata = new Date(time);
     var y = timedata.getFullYear();
-    var m = (timedata.getMonth()+1<10?'0'+(timedata.getMonth()+1):timedata.getMonth()+1);
+    var m = (timedata.getMonth()+1<10?'0'+(timedata.getMonth()+1):timedata.getMonth()+1)+'-';
     var d = timedata.getDate();
     var h = timedata.getHours();
     var min = timedata.getMinutes();
     var s = timedata.getSeconds();
-    return y+'-'+m+'-'+d;
+    return y+'-'+m+d+'  '+h+':'+min+':'+s;
 };
 
 //数据定位

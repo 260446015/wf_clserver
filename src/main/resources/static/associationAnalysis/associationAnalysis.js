@@ -59,8 +59,9 @@ $(function () {
         var job = {"action":"createjob","data":jobinfo}
         var pachong = JSON.parse(sessionStorage.getItem("clgauser")).ip;
         $.ajax({
-            url: "http://"+pachong+":19797",
+            // url: "http://"+pachong+":19797",
             //url: "http://10.52.220.87:19797",
+            url: "http://localhost:19797",
             type: "post",
             data: JSON.stringify(job),
             dataType:"json",
@@ -131,7 +132,7 @@ $(function () {
         var job = {"action":"createjob","data":jobinfo}
         var pachong = JSON.parse(sessionStorage.getItem("clgauser")).ip;
         $.ajax({
-            url: "http://"+pachong+":19797",
+            // url: "http://"+pachong+":19797",
             //url: "http://10.52.220.87:19797",
             type: "post",
             data: JSON.stringify(job),

@@ -62,7 +62,8 @@ $(function () {
         var pachong = JSON.parse(sessionStorage.getItem("clgauser")).ip;
         console.log(job)
         $.ajax({
-            url: "http://"+pachong+":19797",
+            // url: "http://"+pachong+":19797",
+            url: "http://localhost:19797",
             //url: "http://10.52.220.87:19797",
             type: "post",
             data: JSON.stringify(job),

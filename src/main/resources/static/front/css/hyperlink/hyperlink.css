@@ -117,3 +117,34 @@ body .layui-layer-lan .layui-layer-btn .layui-layer-btn1 {
     background: #0d99e7;
     color: #fff;
 }
+
+/*查询*/
+.hy_link{
+    padding: 30px 60px;
+}
+.hy_link .ac_fomli{
+    width: 400px;
+    float: left;
+    clear: none;
+    margin: 0 10px;
+}
+.hy_link .ac_fomli input{
+    width: 285px;
+    float: left;
+}
+.hy_link .layui-input-block {
+    margin-left: 93px;
+    min-height: 36px;
+}
+.hy_link .layui-select-title input{
+    width: 308px;
+}
+.hy_link .layui-form-select .layui-edge {
+    top: 17px;
+}
+.checklink{
+    background: #0d99e7;
+    margin-left: 20px;
+    height: 34px;
+    line-height: 34px;
+}

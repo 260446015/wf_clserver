@@ -105,6 +105,12 @@ public class SysUser {
     */
    private String image;
 
+   /**
+    * token身份令牌
+    * @return
+    */
+   private String token;
+
    @Override
    public String toString() {
       return JSONObject.toJSONString(this);

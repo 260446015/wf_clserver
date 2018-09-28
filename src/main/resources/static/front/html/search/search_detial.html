@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="shadowshuiyin">
 <head>
     <meta charset="UTF-8">
     <title class="title">万联点击实战平台</title>
@@ -123,21 +123,32 @@
             <div class="sd_libox sd_lithree">
                 <div>曾用名：<span class="jbde_cengyongming"></span></div>
                 <div>文化程度：<span class="jbde_wenhua"></span></div>
-                <div>户籍地：<span class="jbde_hujidi"></span></div>
+                <div>政治面貌：<span class="jbde_mianmao"></span></div>
             </div>
             <div class="sd_libox sd_ligray sd_lithree">
-                <div>身份证：<span class="jbde_idcard"></span></div>
+                <div>职业：<span class="jbde_zhiye"></span></div>
                 <div>出生日期：<span class="jbde_joindata"></span></div>
             </div>
             <div class="sd_libox sd_lithree">
-                <div>户籍地派出所/辖区派出所：<span class="jbde_chudizhi"></span></div>
-                <div>政治面貌：<span class="jbde_mianmao"></span></div>
+                <div style="width: 50%;">身份证：<span class="jbde_idcard"></span></div>
+                <div style="width: 50%;">户籍地：<span class="jbde_hujidi"></span></div>
+            </div>
+            <div class="sd_libox sd_ligray sd_lithree">
+                <div style="width: 50%;">籍贯：<span class="jbde_jiguan"></span></div>
+                <div style="width: 50%;">出生地：<span class="jbde_chusd"></span></div>
+            </div>
+            <div class="sd_libox sd_lithree">
+                <div style="width: 50%;">初领证件地：<span class="jbde_clzjdz"></span></div>
             </div>
             <div class="sd_libox sd_ligray sd_lithree">
                 <div style="width: 100%;">户籍地详址：<span class="jbde_hjdxz"></span></div>
             </div>
-            <div class="sd_libox sd_lithree sd_licenter">生物特征</div>
-            <div class="sd_libox sd_ligray sd_lisix">
+            <div class="sd_libox sd_lithree">
+                <div style="width: 100%;">户籍地派出所：<span class="jbde_chudizhi"></span></div>
+            </div>
+            
+            <div class="sd_libox sd_ligray sd_licenter">生物特征</div>
+            <div class="sd_libox sd_lisix">
                 <div>身高（cm）</div>
                 <div>体重（kg）</div>
                 <div>口音</div>
@@ -218,7 +229,7 @@
                 <span class="iconfont icon-danwei"></span>
                 <span>警员信息</span>
             </div>
-            <div class="sx_pibox jingyuanxinxi sx_imgbox"></div>
+            <div class="sx_pibox jingyuanxinxi"></div>
             <div class="sx_title">
                 <span class="iconfont icon-icon140"></span>
                 <span>常住人口</span>
@@ -597,12 +608,26 @@
                 <ul class="sw_ul guiji_huadongliusheng"></ul>
                 <div id="listpage14" class="listpagejuzhong"></div>
             </div>
-            <!--客车-->
+
+            <!--汽车购票信息-->
             <div class="cheliang">
                 <div class="sx_title">
                     <span class="iconfont icon-rwcharacter"></span>
-                    <span>客车</span>
+                    <span>汽车购票信息</span>
                 </div>
+                <div class="sx_ul5 sx_ul1 none qiandu_qcgpxxtitle">
+                    <div class="sx_li" style="width: 6%;">序号</div>
+                    <div class="sx_li" style="width: 10%;">姓名</div>
+                    <div class="sx_li" style="width: 13%;">购票日期</div>
+                    <div class="sx_li" style="width: 13%;">发车日期</div>
+                    <div class="sx_li" style="width: 8%;">车次</div>
+                    <div class="sx_li" style="width: 8%;">车牌号码</div>
+                    <div class="sx_li" style="width: 12%;">出发站</div>
+                    <div class="sx_li" style="width: 12%;">到达站</div>
+                    <div class="sx_li" style="width:12%;">购票类型</div>
+                </div>
+                <ul class="sw_ul qiandu_qcgpxx"></ul>
+                <div id="listpage18" class="listpagejuzhong"></div>
             </div>
             <!--人像轨迹-->
             <div class="cheliang">
@@ -617,6 +642,42 @@
                     <span class="iconfont icon-rwcharacter"></span>
                     <span>628轨迹</span>
                 </div>
+            </div>
+            <!--新疆国内旅客-->
+            <div class="cheliang">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>新疆国内旅客</span>
+                </div>
+                <div class="sx_ul sx_ul1 none xjgnlktitle">
+                    <div class="sx_li">序号</div>
+                    <div class="sx_li">姓名</div>
+                    <div class="sx_li">宾馆名称</div>
+                    <div class="sx_li">管辖地名称</div>
+                    <div class="sx_li">入住房号</div>
+                    <div class="sx_li">入住时间</div>
+                    <div class="sx_li">旅馆编号</div>
+                </div>
+                <ul class="sw_ul guiji_xjgnlkbox"></ul>
+            </div>
+            <!--新疆客运售票-->
+            <div class="cheliang">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>新疆客运售票</span>
+                </div>
+                <div class="sx_ul sx_ul1 none xjkysptitle">
+                    <div class="sx_li">姓名</div>
+                    <div class="sx_li">客运站名称</div>
+                    <div class="sx_li">发车站</div>
+                    <div class="sx_li">到达站</div>
+                    <div class="sx_li">乘车时间</div>
+                    <div class="sx_li">售票时间</div>
+                    <div class="sx_li">班次编号</div>
+                    <div class="sx_li">车牌号</div>
+                    <div class="sx_li">座位号</div>
+                </div>
+                <ul class="sw_ul guiji_xjkyspbox"></ul>
             </div>
         </div>
         <!--轨迹-时间轴展示-->
@@ -780,6 +841,14 @@
                     <span>在逃撤销</span>
                 </div>
                 <div class="zaitao_chexiao"></div>
+            </div>
+            <!--监狱释放人员-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>监狱释放人员</span>
+                </div>
+                <div class="qiandu_jianyushifang"></div>
             </div>
             <!--涉毒信息-->
             <div class="jiechujing">
@@ -1314,6 +1383,14 @@
                 </div>
                 <div class="qiandu_gaoweirenyuan"></div>
             </div>
+            <!--传销人员-->
+            <div class="jiechujing">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>传销人员</span>
+                </div>
+                <div class="qiandu_chuanxiaory"></div>
+            </div>
             <!--全国联查-->
             <div class="jiechujing">
                 <div class="sx_title">
@@ -1476,6 +1553,26 @@
                     <span>股东信息</span>
                 </div>
                 <div class="qiandu_gudongxinxi"></div>
+            </div>
+            <!--互联网上网场所-->
+            <div class="social">
+                <div class="sx_title">
+                    <span class="iconfont icon-rwcharacter"></span>
+                    <span>互联网上网场所</span>
+                </div>
+                <table cellpadding="0" cellspacing="2" class="socialtable">
+                    <tr class="so_fitr none qiandu_hlwswcstitle">
+                        <th>场所名称</th>
+                        <th>场所地址</th>
+                        <th>经营性质</th>
+                        <th>法人</th>
+                        <th>法人证件号</th>
+                        <th>开办日期</th>
+                        <th>起始IP地址</th>
+                        <th>结束IP地址</th>
+                    </tr>
+                    <tbody class="so_tbody qiandu_hlwswcsbox"></tbody>
+                </table>
             </div>
             <!--银行信息-->
             <div class="social">
@@ -1813,7 +1910,14 @@
                     <tbody class="so_tbody zwpt_wxqhy"></tbody>
                 </table>
             </div>
-
+            <!--互联网服务商-->
+            <div class="sxt_li">
+                <div class="sx_title">
+                    <span class="iconfont icon-danwei"></span>
+                    <span>互联网服务商</span>
+                </div>
+                <div class="sxt_box hlwfwsbox"></div>
+            </div>
             <!--其他互联网信息-->
             <div class="social">
                 <div class="sx_title">
@@ -1821,6 +1925,7 @@
                     <span>其他互联网信息</span>
                 </div>
             </div>
+
             <div class="shehuidata none">
                 <div class="shehuidatabox hulianwangshujudata none hulianwntitle"></div>
             </div>
@@ -1832,9 +1937,7 @@
     </div>
     <!--历史图片-->
     <div class="historypicbox" id="historypicbox">
-        <ul class="his_list">
-
-        </ul>
+        <ul class="his_list"></ul>
     </div>
 </div>
 </body>
@@ -1845,6 +1948,7 @@
 <script src="../../js/search/detialshow.js?versin=0"></script>
 <script src="../../js/search/searchdetial.js?versin=0"></script>
 <script src="../../js/search/timeline.js?versin=0"></script>
+<script src="../../js/search/shuiyin.js?versin=0"></script>
 <script>
 
 
@@ -1879,6 +1983,8 @@
             getguiji();
         }
         sessionStorage.setItem("$index", $index);
+        //水印
+        watermark();
     });
 
     xuanxiangzhanshi();//控制选项卡的显示
@@ -2080,13 +2186,19 @@
         }
         $(".sy_top").hide();
         $(".sd_top").css("margin-top", 0);
+        $("slide").hide();
         $(".sl_selectcon li").find("span")
             .removeClass("layui-icon layui-icon-ok sl_selcheckblue")
             .attr("data-href", false);//清除选中
         $(".sl_selectcon").hide();
+        $(".sxh_3").find("img").css("height","118px");
+        watermark();
         window.print();
         $(".sy_top").show();
         $(".sd_top").css("margin-top", "72px");
     });
+
+
+
 </script>
 </html>

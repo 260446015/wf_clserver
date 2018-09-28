@@ -100,24 +100,26 @@
     <!--div-->
     <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
 </div>
-<div class="sl_biaoge">
+<div class="sl_biaoge" style="overflow: hidden;">
     <div class="shehuititle">公安网系统平台数据</div>
-    <table class="sl_table" cellpadding="0" cellspacing="0" style="width: 100%;">
-        <tr class="slt_1">
-            <th class="zhanwei"></th>
-            <th style="min-width: 120px;"><span></span>来源平台</th>
-            <th style="min-width: 60px;"><span></span>姓名</th>
-            <th style="min-width: 60px;"><span></span>性别</th>
-            <th><span></span>身份证号码</th>
-            <th style="min-width: 100px;"><span></span>出生日期</th>
-            <th style="min-width: 60px;"><span></span>民族</th>
-            <th style="min-width: 130px;"><span></span>户籍地址</th>
-            <th style="min-width: 100px;"><span></span>联系方式</th>
-            <th class="zhanwei"></th>
-        </tr>
-        <tbody class="sl_tbody"></tbody>
-    </table>
+    <!--<div class="pingtailist">-->
+        <!--<div class="ptlt_li">-->
+            <!--<div class="">云搜</div>-->
+            <!--<ul>-->
+                <!--<li>邻居</li>-->
+                <!--<li>邻邻居居</li>-->
+                <!--<li>邻居</li><li>邻居</li>-->
+                <!--<li>邻邻居居</li>-->
+
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="pingtaidata"></div>
 </div>
+<!--回到顶部-->
+<slide data-href="true">
+    <img class="gotop" src="../../img/gotop.png" alt="回到顶部">
+</slide>
 <!--社会数据-->
 <div class="shehuidata none">
     <div class="shehuititle none sgehuitittle">社会数据</div>
@@ -131,8 +133,7 @@
 <script src="../../js/common/common.js?versin=0"></script>
 <script src="../../js/common/dev.util.js?versin=0"></script>
 <script src="../../js/search/creatjob.js?versin=0"></script>
-<script src="../../js/search/search_jiben.js?versin=0"></script>
-<script src="../../js/search/searchdetial.js?versin=0"></script>
+<script src="../../js/search/searchdetialphone.js?versin=0"></script>
 <script src="../../js/search/shuiyin.js?versin=0"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
@@ -178,9 +179,9 @@
     });
     $(".sl_tbody").on("click", ".swillistclic", function () {
         //window.location = "search_detial.html";
-        // if($(this).html()!=""){
-        //     clga.searchbegin($(this).html(),2,true);
-        // }
+        if($(this).html()!=""){
+            clga.searchbegin($(this).html(),2,true);
+        }
     });
     $(".searchclickque").click(function () {
         clga.searchbegin($(".sl_input").val(),2,true);

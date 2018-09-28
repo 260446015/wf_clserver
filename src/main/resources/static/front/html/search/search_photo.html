@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="shadowshuiyin">
 <head>
     <meta charset="UTF-8">
     <title class="title">万联点击实战平台</title>
@@ -51,187 +51,76 @@
         </ul>
     </div>
 </header>
+
+<!--列表-->
+<div class="shadow">
+    <div class="sd_jindu1 animated bouncelnDown">查询进度</div>
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="jindutiao">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+    </div>
+    <div class="cxtm_box">查询时间<span class="chaxuntime">0</span>s,数据正在返回中，尽量不要关闭此页，如需要查看已有数据，请点击关闭按钮<span class="cxtm_closebtyn layui-btn layui-btn-primary">关闭</span></div>
+    <div class="cxtm_boxer">
+        <div class="cxtm_boxerw">
+            <span class="cxtm_kuai" style="background: #64ff4d;"></span>
+            <span class="cxtm_val">查询完毕返回数据平台</span>
+            <span class="cxtm_kuai" style="background: #eb9927;"></span>
+            <span class="cxtm_val">查询完毕未返回数据平台</span>
+            <span class="cxtm_kuai" style="background: red;"></span>
+            <span class="cxtm_val">查询异常平台</span>
+            <span class="cr againpathon fr" style="color: #0C0C0C;">again</span>
+        </div>
+        <div class="cxtm_wrap"></div>
+    </div>
+    <!--div-->
+    <div class="sd_jindu2 animated cr">查询成功，点击关闭</div>
+</div>
 <!--搜索框-->
 <div class="sl_box">
     <div class="sl_boxcen">
         <p>人员核查</p>
         <input class="sl_input" type="text" placeholder="">
-        <div class="layui-form sl_select">
-            <select class="" name="" lay-verify="" lay-filter="sl_type">
-                <option value="search_photo.html">图片列表</option>
-                <option value="search_list.html">照片模式</option>
-            </select>
-        </div>
+        <!--<div class="layui-form sl_select">-->
+            <!--<select class="" name="" lay-verify="" lay-filter="sl_type">-->
+                <!--<option value="search_photo.html">图片列表</option>-->
+                <!--<option value="search_list.html">照片模式</option>-->
+            <!--</select>-->
+        <!--</div>-->
     </div>
 </div>
 
 <!--图片列表-->
-<ul class="sp_box">
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide1.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide2.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide3.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide4.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide5.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide6.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide1.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide2.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide1.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide2.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide3.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide4.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide5.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide6.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide1.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-    <li>
-        <div class="sp_imglef">
-            <img src="../../images/slide2.jpg" alt="">
-        </div>
-        <div class="sp_imgrig">
-            <p style="margin-top: 25px;">姓名：姜先生</p>
-            <p>身份证：130825123456784810</p>
-            <p>地址：山东省潍坊市昌乐县X小区</p>
-        </div>
-    </li>
-</ul>
+<div class="sp_box sp_photobox">
+    <!--<a>-->
+        <!--<div class="sp_imglef">-->
+            <!--<img src="../../images/slide3.jpg" alt="">-->
+        <!--</div>-->
+        <!--<div class="sp_imgrig">-->
+            <!--<p style="margin-top: 25px;">姓名：姜先生</p>-->
+            <!--<p>身份证：<br/>130825123456784810</p>-->
+            <!--<p>地址：山东省潍坊市昌乐县X小区</p>-->
+        <!--</div>-->
+    <!--</a>-->
+</div>
+<!--回到顶部-->
+<slide data-href="true">
+    <img class="gotop" src="../../img/gotop.png" alt="回到顶部">
+</slide>
+<!--社会数据-->
+<div class="shehuidata none">
+    <div class="shehuititle none sgehuitittle">社会数据</div>
+    <div class="shehuidatabox shehuishujudata none sgehuitittle"></div>
+    <div class="shehuititle none hulianwntitle">互联网数据</div>
+    <div class="shehuidatabox hulianwangshujudata none hulianwntitle"></div>
+</div>
 </body>
 <script src="../../res/layui/layui.all.js"></script>
 <script src="../../res/swiper/swiper.min.js"></script>
 <script src="../../js/common/common.js?versin=0"></script>
+<script src="../../js/common/dev.util.js?versin=0"></script>
+<script src="../../js/search/creatjob.js?versin=0"></script>
+<script src="../../js/search/search_jiben.js?versin=0"></script>
+<script src="../../js/search/searchdetial.js?versin=0"></script>
+<script src="../../js/search/shuiyin.js?versin=0"></script>
 <script>
     layui.use('form', function () {
         var form = layui.form;
@@ -243,5 +132,16 @@
     $(".sp_box").on("click","li",function () {
         window.location = "search_detial.html";
     });
+    
+    var list = '<a href="search_detial.html">' +
+        '<div class="sp_imglef">' +
+        '    <img src="../../images/slide3.jpg" alt="">' +
+        '</div>' +
+        '<div class="sp_imgrig">' +
+        '    <p style="margin-top: 25px;">姓名：姜先生</p>' +
+        '    <p>身份证：<br/>130825123456784810</p>' +
+        '    <p>地址：山东省潍坊市昌乐县X小区</p>' +
+        '</div>' +
+        '    </a>'
 </script>
 </html>

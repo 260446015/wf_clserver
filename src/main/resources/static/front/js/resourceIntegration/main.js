@@ -163,9 +163,9 @@ var geoCoordMap = {
 };
 
 var SHData = [
-    [{name:'昌乐'},{name:'广州',value:80}],
-    [{name:'昌乐'},{name:'郑州',value:70}],
-    [{name:'昌乐'},{name:'长沙',value:40}],
+    [{name:'昌乐'},{name:'广州',value:20}],
+    [{name:'昌乐'},{name:'郑州',value:20}],
+    [{name:'昌乐'},{name:'长沙',value:20}],
     [{name:'昌乐'},{name:'北京',value:30}],
     [{name:'昌乐'},{name:'长春',value:20}],
     [{name:'昌乐'},{name:'银川',value:20}],

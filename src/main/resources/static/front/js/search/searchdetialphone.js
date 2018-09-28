@@ -94,54 +94,36 @@ $(function () {
     }
     //定义循环结果
     function switchresid(residdata) {
-        var resid = JSON.parse(residdata).resid;
-        //console.log(resid);
-        switch (resid) {
-            case "yunsou":
-                setDatayunsou(residdata);
-                break;
-            case "gajgjls":
-                setDatagajgjls(residdata);
-                break;
-            case "jtlhy":
-                setDatajtlhy(residdata);
-                break;
-            case "qgwffzry":
-                setDataqgwffzry(residdata);
-                break;
-            case "qgxdry":
-                setDataqgxdry(residdata);
-                break;
-            case "qgztry":
-                setDataqgztry(residdata);
-                break;
-            case "sdgayjs":
-                setDatasdgayjs(residdata);
-                break;
-            case "gajgkss":
-                setDatagajgkss(residdata);
-                break;
-            case "sdzfpt":
-                setDatasdzfpt(residdata);
-                break;
-            case "gabdxzp":
-                setDatagabdxzp(residdata);
-                break;
-            case "sdsrkxx":
-                setDatasdsrkxx(residdata);
-                break;
-            case "wfjcsj":
-                setDatawfjcsj(residdata);
-                break;
-            case "wfsznzd":
-                setDatawfsznzd(residdata);
-                break;
-            case "qgbdqqc":
-                setDataqgbdqqc(residdata);
-                break;
-            default:
-                break;
-        }
+        var resdata = JSON.parse(residdata);
+        //平台名称获取
+        var oname = "";
+        $.each(searchresourceArr,function (i,item) {
+            if(resdata.resid==item.id){
+                oname = item.name
+            }
+        });
+        $.each(resdata.data,function (i,item) {
+            var olist = '<div class="sx_title"><span class="iconfont icon-danwei"></span><span>'+oname+'-<i class="ptda_name">'+item.label+'</i></span></div>' +
+                '<div class="sx_pibox gongzuodanwei">';
+            console.log(oname+'-'+item.label);
+            var column = item.data.column
+            $.each(item.data.data,function (i,item) {
+                olist+='<p class="ptda_p">'
+                $.each(item,function (i,item) {
+                    var reg1 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+                    var reg2 = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+                    var reg3 = /^1[3|4|5|7|8][0-9]{9}$/;
+                    if (reg1.test(item)||reg3.test(item)) {
+                        olist += '<span>' + column[i] + '：<a href="../../html/search/search_detial.html?'+item+'" target="_blank">' + item + '</a></span>'
+                    }else{
+                        olist += '<span>' + column[i] + '：<i>' + item + '</i></span>'
+                    }
+                });
+                olist+='</p>'
+            });
+            olist+='</div>';
+            $(".pingtaidata").append(olist);
+        })
     }
 
     //社会数据展示

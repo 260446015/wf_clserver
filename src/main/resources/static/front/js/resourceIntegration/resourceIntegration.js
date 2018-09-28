@@ -41,7 +41,7 @@ function setzhuxing(res) {
         },
         xAxis: {
             categories: [
-                '3月', '4月', '5月', '6月', '7月'
+                '5月', '6月', '7月', '8月', '9月'
             ],
             crosshair: true,
             tickColor: '#08324d',
@@ -131,7 +131,7 @@ function setzhuxingzhexian(res) {
         },
         xAxis: {
             categories: [
-                '3月', '4月', '5月', '6月', '7月'
+                '5月', '6月', '7月', '8月', '9月'
             ],
             crosshair: true,
             tickColor: '#08324d',

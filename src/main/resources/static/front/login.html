@@ -29,7 +29,7 @@
     <style>
         .btmlogin{
             width: 100%;
-            height: 30px;
+            height: 70px;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -63,15 +63,16 @@
     </div>
 </div>
 <iframe src="res/lizi2/lizi2.html" id="lizi2" style="z-index: 200;top: 0;"></iframe>
-<div class="btmlogin">本平台需运行插件，若点击登陆没有反应，请检查插件是否启动；<a href="/apis/download">插件下载</a></div>
-
-<!--<iframe src="res/lizi/liz.html" id="lizi"></iframe>-->
+<div class="btmlogin">
+    软件版本号：<i style="color:red;">V1.0</i>  发布日期：<i style="color:red;margin-right: 10px;">2018.07.20</i>Copyright 2018-2020<br/>
+    技术支持：山东省潍坊市昌乐县公安局    张仁泉：18815369688<span style="margin: 0 10px"></span> 中科金联（北京）科技有限公司     邢国贤 13911797602<br/>
+    请使用谷歌浏览器以及1024*768以上分辨率    软件运行前请务必 <a href="/apis/download">安装插件</a>
+</div>
 </body>
 <script src="res/layui/layui.all.js"></script>
 <script>
-    var ctx = "/api/";
+    var ctx = "/";
     $(".formbtn").click(function () {
-        //window.location="index.html";
         if ($(".username").val() == "") {
             return layer.msg("请填写用户名");
         }
@@ -79,7 +80,7 @@
             return layer.msg("请填写密码");
         }
         $.ajax({
-            url: ctx + "user/login",
+            url: ctx + "api/user/login",
             type: "post",
             xhrFields: {
                 withCredentials: true
@@ -102,9 +103,8 @@
         });
     });
     function pingtai(oip) {
-        var dataFormat={'action':'register','data':{'serverhost':"http://10.52.219.8:8090/"}};
+        var dataFormat={'action':'register','data':{'serverhost':ctx}};
         $.ajax({
-            //url: "http://10.52.220.87:19797",
             url: "http://"+oip+":19797",
             type: "post",
             data: JSON.stringify(dataFormat),
@@ -131,9 +131,11 @@
     "370983199307142316"
 
     "370725193809244871"
-"http://10.52.219.8:8090/front/login.html"
 
     "220681198608280054"
     "370725201409075340"
+
+    "15864578550"
+    "鲁VX5216"
 </script>
 </html>

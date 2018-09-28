@@ -59,7 +59,9 @@
     <div class="sr_content">
         <input type="text" placeholder="支持身份证号、姓名、性别、年龄段、民族、籍贯等组合查询；多条件以空格隔开；" class="zhisouval" value="370725199001113518">
         <span class="sr_btn">智搜</span>
-        <ul class="sr_ul1"></ul>
+        <ul class="sr_ul1">
+            <li style="background: #ccc;color: #666;">检索语法： 输入姓名、籍贯、年龄，检索条件为：张三 北京 20-40岁<a class="more_yufa" style="float: right;font-size: 12px;">更多语法>></a></li>
+        </ul>
     </div>
 </section>
 </body>
@@ -71,18 +73,30 @@
     //下拉框控制
     $(".sr_content").on("focus", "input", function () {
         $(".sr_ul1").slideDown();
+    }).on("blur","input",function () {
+        setTimeout(function () {
+            $(".sr_ul1").slideUp();
+        },100);
     });
-    $(".sr_content").on("click", "li", function () {
-        console.log($(this).html())
-        $(".sr_content input").val($(this).html());
-    });
-
     //发起查询任务
     $(".sr_btn").click(function () {
-        // window.location = "search_list.html";
         clga.searchbegin($(".zhisouval").val(),1,true);
     });
-    //
+    if(!sessionStorage.getItem("qibuzhun")){
+        layer.alert('平台将记录您所有操作，请严格遵守公安信息共享查询应用“七不准”原则；',{
+            title:'注意事项',
+            skin:'searchindextitle',
+            offset:'rb',
+            shadeClose:false,
+            shade:0,
+            cancel:function () {
+                sessionStorage.setItem("qibuzhun","trur");
+            },
+            yes:function () {
+                sessionStorage.setItem("qibuzhun","trur");
+            }
+        });
+    }
     $.ajax({
         url: ctx + "log/log",
         type: "get",
@@ -92,12 +106,42 @@
         success: function (res) {
             console.log(res);
             $.each(res.data,function (i,item) {
-                $(".sr_ul1").append('<li>'+item+'</li>');
+                $(".sr_ul1").append('<li class="sr_ulli">'+item+'</li>');
             });
-            $(".sr_ul1 li").click(function () {
+            $(".sr_ulli").click(function () {
                 $(".sr_content input").val($(this).html());
             });
         }
+    });
+    //更多语法
+    $(".more_yufa").click(function () {
+        layer.open({
+            type:"1",
+            shadow:false,
+            title:false,
+            skin:'yufatishi',
+            area:['800px'],
+            content:'检索语法<br/><br/>' +
+            '1、输入电话或手机号码。如：66266551。<br/> ' +
+            '2、输入身份证号或身份证号前6位或身份证号匹配。如：51102519450618318X、511025、51102519700101????、5110251970*。<br/> ' +
+            '3、输入日期数据。如：2013.09.01、20130901、"2013/09/01"、1988、198806。 <br/>' +
+            '4、输入年龄。如：20、20岁、20~50、20-50岁。范围0-150。<br/> ' +
+            '5、输入性别。如：男、女、男性、女性。 <br/>' +
+            '6、输入民族。如：汉、满族。<br/> ' +
+            '7、输入原户籍。如：江西上饶人、北京昌平区。<br/> ' +
+            '8、输入姓名或拼音。如：张三、zhangsan。<br/> ' +
+            '9、使用通配符*、?匹配模糊查询。推荐语法：XM:张三*、XM:张三?、HPHM:京A30?86、HPHM:京A3*6。 <br/>' +
+            '    ?匹配一个字符，*匹配多个字符;所以多个*号(如***)与一个*号是一样的<br/> ' +
+            '    通配符不能作为单个检索词的第一个字符。 <br/>' +
+            '    使用通配符时，加双引号检索通配符无效。 <br/> ' +
+            '10、组合检索。如：张三 河北保定人、王晓惠 49岁。 <br/>' +
+            '11、带字段检索，暂不支持输入中文字段查询。如：XM:张三。<br/> ' +
+            '12、加英文双引号检索。如："公安部"，将检索出命中"公安部"的结果。不加双引号会命中公安、公安局等。 <br/>' +
+            '13、使用运算符进行组合检索。并且的运算符可使用AND、&&、&、+，如：张三 AND 河北保定人、张三 & 河北；<br/> ' +
+            '    或者的运算符可使用OR、||、|，如：（张三 OR 李四）； <br/>' +
+            '    非（排除）的运算符可使用NOT、-，NOT、-作为检索词的第一个运算符时检索结果为空，如：张三 NOT 河北；<br/> ' +
+            '    其中AND、OR的优先级是相同的，所以同时使用AND和OR时需要注意用小括号()来区分运算优先级。 <br/>'
+        })
     });
 </script>
 </html>

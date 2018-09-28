@@ -525,10 +525,12 @@ function setDatajtlhy(residdata) {
 
     //公安部驾驶人详细信息
     function jiaotong_jiashiren(jt_data) {
+
         //驾驶员信息
         var jiashidata = jt_data.data[0];
+        var jiahsiimg = "http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:"+jiashidata[jt_data.column.indexOf("身份证明号码")]+"&order=0";
         var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '">' +
-            '<dd><img src="../../img/default.jpg" alt=""></dd>' +
+            '<dd><img src="'+jiahsiimg+'" alt=""></dd>' +
             '<dt>' +
             '<div>';
         $.each(reaData[1].data.column, function (i, item) {
@@ -1037,12 +1039,13 @@ function setDataqgztry(residdata) {
 function setDatayunsou(residdata) {
     infofrom = "信息来源：云搜";
     var reaData = JSON.parse(residdata).data;
+    // console.log(reaData)
 
     $.each(reaData, function (i, item) {
         var ij = i;
         var lisiisis = item.label;
-        //console.log(lisiisis);
-        //console.log(item.data);
+        // console.log(lisiisis);
+        // console.log(item.data);
         switch (lisiisis) {
             case "全国人口基本信息":
                 yun_jiben(item.data);
@@ -1094,6 +1097,7 @@ function setDatayunsou(residdata) {
     //全国人口基本信息
     function yun_jiben(yundata) {
         var sxdata = yundata.data[0];
+
         var gonganimg = "";
         if(sxdata[yundata.column.indexOf("公民身份证号")]){
             gonganimg = "http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:"+sxdata[yundata.column.indexOf("公民身份证号")]+"&order=0";
@@ -1107,28 +1111,37 @@ function setDatayunsou(residdata) {
             "thumb": "" //缩略图地址
         });
         $(".ad_coimgdetial").attr("src",gonganimg);
-        $(".jibenxinxi").append('<p class="sx_p1 sxtips" data-href="' + infofrom + '">' +
-            '<span>姓名：' + sxdata[1] + '</span>' +
-            '<span>性别：' + sxdata[2] + '</span>' +
-            '<span>户籍地址：' + sxdata[6] + '</span>' +
-            '<span></span></p>');
+        $.each(yundata.data,function (i,item) {
+            console.log(item);
+            $(".jibenxinxi").append('<p class="sx_p1 sxtips" data-href="' + infofrom + '">' +
+                '<span>姓名：' + item[1] + '</span>' +
+                '<span>性别：' + item[2] + '</span>' +
+                '<span>户籍地址：' + item[6] + '</span>' +
+                '<span></span></p>');
+            var oname = item[1].split("(已注销:迁出)");
+            if(oname.length==1){
+                $(".jbde_name").html(item[4]);
+                $(".title").html(item[4]);
+                $(".jbde_hujidi").html(item[9]);
+                $(".jbde_chudizhi").html(item[11]);
 
-        $(".jbde_name").html(sxdata[yundata.column.indexOf("姓名")]);
-        $(".title").html(sxdata[yundata.column.indexOf("姓名")]);
+                $(".jbde_jiguan").html(item[6]);
+                $(".jbde_zhiye").html(item[1]);
+                $(".jbde_chusd").html(item[6]);
+            }
+        });
         $(".jbde_gender").html(sxdata[yundata.column.indexOf("性别")]);
         $(".jbde_minzu").html(sxdata[yundata.column.indexOf("民族")]);
         $(".jbde_idcard").html(sxdata[yundata.column.indexOf("公民身份证号")]);
-
-        $(".jbde_hujidi").html(sxdata[yundata.column.indexOf("户籍地")]);
-        $(".jbde_chudizhi").html(sxdata[yundata.column.indexOf("户籍地县级公安机关")]);
     }
 
     //全国驾驶人
     function yun_jiashi(yundata) {
         //驾驶员信息
         var jiashidata = yundata.data[0];
+        var jiahsiimg = "http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:"+jiashidata[yundata.column.indexOf("身份证明号码")]+"&order=0";
         var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '">' +
-            '<dd><img src="../../img/default.jpg" alt=""></dd>' +
+            '<dd><img src="'+jiahsiimg+'" alt=""></dd>' +
             '<dt>' +
             '<div>';
         $.each(reaData[1].data.column, function (i, item) {
@@ -1838,6 +1851,27 @@ function setDatasdgayjs(residdata) {
             case "出境申请":
                 qiandu_cjsq(item.data);
                 break;
+            case "汽车购票信息":
+                qiandu_qcgpxx(item.data);
+                break;
+            case "互联网服务商":
+                qiandu_hlwfws(item.data);
+                break;
+            case "监狱释放人员":
+                qiandu_jysfry(item.data);
+                break;
+            case "传销人员":
+                qiandu_cxry(item.data);
+                break;
+            case "互联网上网场所":
+                qiandu_hlwswcs(item.data);
+                break;
+            case "新疆国内旅客":
+                qiandu_xjgnlk(item.data);
+                break;
+            case "新疆客运售票":
+                qiandu_xjkysp(item.data);
+                break;
             default:
                 qiandu_hdls(lisiisis,item.data);
                 break;
@@ -1848,9 +1882,12 @@ function setDatasdgayjs(residdata) {
     function qiandu_jiben(qddata) {
         var sxdata = qddata.data[0];
         var odata = qddata.column;
+        console.log(odata)
+        console.log(sxdata)
+
         $(".jbde_cengyongming").html(sxdata[odata.indexOf("曾用名")]);
         $(".jbde_wenhua").html(sxdata[odata.indexOf("文化程度")]);
-
+        $(".jbde_clzjdz").html(sxdata[odata.indexOf("初领身份证地址")]);
         $(".jbde_joindata").html(sxdata[odata.indexOf("出生日期")]);
 
 
@@ -1858,6 +1895,7 @@ function setDatasdgayjs(residdata) {
 
         $(".jbde_hjdxz").html(sxdata[odata.indexOf("详细地址")]);
     }
+
     //警员信息
     function qiandu_jingyuanixnxi(qddata) {
         var odata = qddata.column;
@@ -1875,6 +1913,7 @@ function setDatasdgayjs(residdata) {
             $(".jingyuanxinxi").append(jiashi);
         });
     }
+
     //联系方式
     function qiandu_lianxi(qddata) {
         var odata = qddata.column;
@@ -1887,10 +1926,27 @@ function setDatasdgayjs(residdata) {
         })
     }
 
+    //互联网服务商
+    function qiandu_hlwfws(qddata) {
+        var odata = qddata.column;
+        $.each(qddata.data,function (i,item) {
+            var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '-互联网服务商">' +
+                '<dt style="margin-left: 0;"><div>';
+            $.each(item, function (i, item) {
+                if (i != 1) {
+                    jiashi += '<span>' + odata[i] + '：<i>' + item + '</i></span>';
+                }
+            });
+            jiashi += '</div></dt></dl>';
+            $(".hlwfwsbox").append(jiashi);
+        })
+    }
+
     //地址信息
     function qiandu_dizhi(qddata) {
 
     }
+
     //工作学习履历
     function qiandu_lvli(qddata) {
         var odata = qddata.column;
@@ -1929,7 +1985,7 @@ function setDatasdgayjs(residdata) {
     function qiandu_hunyin(qddata) {
         var odata = qddata.column;
         $.each(qddata.data,function (i,item) {
-            var img = "../../img/default.jpg";
+            var img = "http://ys.zyfw.ga/photo/renkou/photoSearch.do?method=allPhoto1&searchword=SFZHM:"+(item[odata.indexOf('身份证')]||'')+"&order=0";
             var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '">' +
                 '<dd><img src="'+img+'" alt=""onerror="clga.whenoerron(this)"></dd>' +
                 '<dt>' +
@@ -2088,6 +2144,26 @@ function setDatasdgayjs(residdata) {
 
 
         });
+    }
+
+    //互联网上网场所
+    function qiandu_hlwswcs(qddata) {
+        var odata = qddata.column;
+        $.each(qddata.data,function (i,item) {
+            var colomdata = item;
+            var list = ' <tr class="sxtips" data-href="'+infofrom+'-互联网上网场所">' +
+                '<td>'+(colomdata[odata.indexOf("CSMC")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("场所地址")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("经营性质")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("法定代表人姓名")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("FDDBRSFZH")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("开办日期")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("起始IP地址")]||"")+'</td>' +
+                '<td>'+(colomdata[odata.indexOf("结束IP地址")]||"")+'</td>' +
+                '</tr>';
+            $(".qiandu_hlwswcsbox").append(list);
+        });
+        $(".qiandu_hlwswcstitle").fadeIn();
     }
 
     //全国联查
@@ -2369,14 +2445,137 @@ function setDatasdgayjs(residdata) {
         })
     }
 
+    //监狱释放人员
+    function qiandu_jysfry(qddata) {
+        $(".biaoqiandetial").append('<li class="sd_red">监狱释放</li>');
+        var odata = qddata.column;
+        $.each(qddata.data,function (i,item) {
+            var colomdata = item;
+            var list = '<table cellpadding="0" cellspacing="2" class="sj_table2 sxtips" data-href="'+infofrom+'-监狱释放人员">' +
+                '<tr class="sj_firtr">' +
+                '    <td colspan="9" style="background: transparent;">监狱释放人员'+'</td>' +
+                '</tr>' +
+                '<tbody>' +
+                '<tr>' +
+                '    <td>系统编号</td>' +
+                '    <td colspan="3" class="sk_nr">'+(colomdata[odata.indexOf("系统编号")]||"")+'</td>' +
+                '    <td>罪犯编号</td>' +
+                '    <td colspan="4" class="sk_nr">'+(colomdata[odata.indexOf("罪犯编号")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>姓名</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("姓名")]||"")+'</td>' +
+                '   <td>性别</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("性别")]||"")+'</td>' +
+                '   <td>民族</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("民族")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>出生日期</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("出生时间")]||"")+'</td>' +
+                '   <td>身份证号</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("身份证号")]||"")+'</td>' +
+                '   <td>户籍地址</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("户籍地址")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>家庭住址</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("家庭住址")]||"")+'</td>' +
+                '   <td>捕前文化程度</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("捕前文化程度")]||"")+'</td>' +
+                '   <td>婚姻状况</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("婚姻状况")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>捕前面貌</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("捕前面貌")]||"")+'</td>' +
+                '   <td>罪名</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("罪名")]||"")+'</td>' +
+                '   <td>刑期</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("刑期")]||"")+'</td>' +
+                '<tr>' +
+                '    <td>判决机关</td>' +
+                '    <td colspan="3" class="sk_nr">'+(colomdata[odata.indexOf("判决机关")]||"")+'</td>' +
+                '    <td>判决字号</td>' +
+                '    <td colspan="4" class="sk_nr">'+(colomdata[odata.indexOf("判决字号")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>判决日期</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("判决日期")]||"")+'</td>' +
+                '   <td>起日</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("起日")]||"")+'</td>' +
+                '   <td>止日</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("止日")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>入监日期</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("入监日期")]||"")+'</td>' +
+                '   <td>离监日期</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("离监日期")]||"")+'</td>' +
+                '   <td>离监类别</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("离监类别")]||"")+'</td>' +
+                '</tr>' +
+                '</tbody>' +
+                '                </table>';
+            $(".qiandu_jianyushifang").append(list);
+        })
+    }
+
+    //传销人员
+    function qiandu_cxry(qddata) {
+        $(".biaoqiandetial").append('<li class="sd_red">传销</li>');
+        var odata = qddata.column;
+        $.each(qddata.data,function (i,item) {
+            var colomdata = item;
+            var list = '<table cellpadding="0" cellspacing="2" class="sj_table2 sxtips" data-href="'+infofrom+'传销人员">' +
+                '<tr class="sj_firtr">' +
+                '    <td colspan="9" style="background: transparent;">传销人员'+'</td>' +
+                '</tr>' +
+                '<tbody>' +
+                '<tr>' +
+                '    <td>系统编号</td>' +
+                '    <td colspan="3" class="sk_nr">'+(colomdata[odata.indexOf("系统编号")]||"")+'</td>' +
+                '    <td>所属辖区</td>' +
+                '    <td colspan="4" class="sk_nr">'+(colomdata[odata.indexOf("所属辖区")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>姓名</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("姓名")]||"")+'</td>' +
+                '   <td>性别</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("性别")]||"")+'</td>' +
+                '   <td>公民身份证号</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("公民身份证号")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>出生时间</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("出生日期")]||"")+'</td>' +
+                '   <td>工作单位</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("工作单位")]||"")+'</td>' +
+                '   <td>学历</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("学历")]||"")+'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '   <td>籍贯</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("籍贯")]||"")+'</td>' +
+                '   <td>姓名拼音</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("姓名拼音")]||"")+'</td>' +
+                '   <td>联系地址</td>' +
+                '   <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("联系地址")]||"")+'</td>' +
+                '</tr>' +
+                '</tbody>' +
+                '                </table>';
+            $(".qiandu_chuanxiaory").append(list);
+        })
+    }
+
     //民政婚姻
     function qiandu_mzhy(qddata) {
         var odata = qddata.column;
+        console.log(qddata)
         $.each(qddata.data,function (i,item) {
-            var img = "../../img/default.jpg";
             var jiashi = '<dl class="sx_imgbox sxtips" data-href="' + infofrom + '-民政婚姻">' +
-                '<dd><img src="'+img+'" alt=""onerror="clga.whenoerron(this)"></dd>' +
-                '<dt>' +
+                '<dd></dd>' +
+                '<dt style="margin-left: 0;">' +
                 '<div>';
             $.each(item, function (i, item) {
                 if(i!=1){
@@ -2586,7 +2785,7 @@ function setDatasdgayjs(residdata) {
 
             '<tr>' +
             '    <td>XYR_XM</td>' +
-            '    <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("XYR_XM")][0]||"")+'</td>' +
+            '    <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("XYR_XM")]||"")+'</td>' +
             '    <td>ZBX</td>' +
             '    <td colspan="2" class="sk_nr">'+(colomdata[odata.indexOf("ZBX")]||"")+'</td>' +
             '    <td>AYMC</td>' +
@@ -3292,6 +3491,70 @@ function setDatasdgayjs(residdata) {
         $(".qiandu_gaqqfwhcgpjltitle").fadeIn();
     }
 
+    //汽车购票信息
+    function qiandu_qcgpxx(qddata) {
+        gettong(0);
+        var totalnu = 0;
+        function setPageNo(count) {
+            laypage.render({
+                elem: 'listpage18',
+                count: count,
+                first: '首页',
+                last: '尾页',
+                jump: function (obj, first) {
+                    ////clga.setpagecss(obj.elem);
+                    if (!first) {
+                        gettong(obj.curr - 1);
+                    }
+                }
+            });
+        }
+        function gettong(pageNume) {
+            $.ajax({
+                url: ctx+"track/sort",
+                type: "post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: JSON.stringify({
+                    "data": qddata,
+                    "pageNum": pageNume,
+                    "pageSize": 10,
+                    "sortMsg": "购票日期时间",
+                    "sortType": 0,
+                    "page":true
+                }),
+                contentType:"application/json",
+                success: function (res) {
+                    if (0 === pageNume) {
+                        count = res.data.data.totalNumber;
+                        setPageNo(count);
+                    }
+                    var odata = res.data.column;
+                    $.each(res.data.data.dataList,function (i,item) {
+                        totalnu++;
+                        var colomdata = item;
+                        var list = '<li class="sw_li sxtips" data-href="'+infofrom+'-公安请求服务火车购票记录">' +
+                            '<ul class="sx_ul5">' +
+                            '    <li class="sx_li" style="width: 6%;">'+totalnu+'</li>' +
+                            '    <li class="sx_li" style="width: 10%;">' + (colomdata[odata.indexOf("旅客姓名")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 13%;">' + (colomdata[odata.indexOf("购票日期时间")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 13%;">' + (colomdata[odata.indexOf("发车日期时间")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 8%;">' + (colomdata[odata.indexOf("车次")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 8%;">' + (colomdata[odata.indexOf("车牌号码")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 12%;">' + (colomdata[odata.indexOf("出发站")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 12%;">' + (colomdata[odata.indexOf("到达站")]||"") + '</li>' +
+                            '    <li class="sx_li" style="width: 12%;">' + (colomdata[odata.indexOf("GPFS")]||"") + '</li>' +
+                            '</ul>' +
+                            '</li>';
+                        $(".qiandu_qcgpxx").append(list);
+                    });
+                }
+            });
+        }
+        $(".qiandu_qcgpxxtitle").fadeIn();
+    }
+
     //宾馆疑似同住人员
     function qiandu_bgystzry(qddata) {
         gettong(0);
@@ -3750,6 +4013,101 @@ function setDatasdgayjs(residdata) {
         var colomdata = qddata.data[0];
         var odata = qddata.column;
         console.log(qddata)
+    }
+
+    //新疆国内旅客
+    function qiandu_xjgnlk(qddata) {
+        gettong(0);
+        var totalnu = 0;
+        function gettong(pageNume) {
+            $.ajax({
+                url: ctx+"track/sort",
+                type: "post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: JSON.stringify({
+                    "data": qddata,
+                    "pageNum": pageNume,
+                    "pageSize": 10,
+                    "sortMsg": "入住时间",
+                    "sortType": 0,
+                    "page":true
+                }),
+                contentType:"application/json",
+                success: function (res) {
+                    var odata = qddata.column;
+                    $.each(res.data.data.dataList,function (i,item) {
+                        totalnu++;
+                        var colomdata = item;
+                        var list = '<li class="sw_li sxtips" data-href="'+infofrom+'-新疆国内旅客">' +
+                            '<ul class="sx_ul">' +
+                            '    <li class="sx_li">' + totalnu+ '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("姓名")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("旅馆名称")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("管辖地名称")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("入住房号")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("入住时间")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("旅馆编码")]||"") + '</li>' +
+                            '    <li class="swxq_1 sx_li swxq_1" data-href="true">' +
+                            '        <span class="iconfont icon-rwcharacter"></span>' +
+                            '        <span>详情</span>' +
+                            '    </li>' +
+                            '</ul>' +
+                            '<div class="sw_div1 sw_div2">旅馆地址：' + (colomdata[odata.indexOf("旅馆地址")]||"") + '</div>' +
+                            '</li>'
+                        $(".guiji_xjgnlkbox").append(list);
+                    });
+                    $(".xjgnlktitle").fadeIn();
+                }
+            });
+        }
+    }
+
+    //新疆客运售票
+    function qiandu_xjkysp(qddata) {
+        gettong(0);
+        var totalnu = 0;
+        function gettong(pageNume) {
+            $.ajax({
+                url: ctx+"track/sort",
+                type: "post",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: JSON.stringify({
+                    "data": qddata,
+                    "pageNum": pageNume,
+                    "pageSize": 10,
+                    "sortMsg": "乘车时间",
+                    "sortType": 0,
+                    "page":true
+                }),
+                contentType:"application/json",
+                success: function (res) {
+                    var odata = qddata.column;
+                    $.each(res.data.data.dataList,function (i,item) {
+                        totalnu++;
+                        var colomdata = item;
+                        var list = '<li class="sw_li sxtips" data-href="'+infofrom+'-新疆客运售票">' +
+                            '<ul class="sx_ul">' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("姓名")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("客运站名称")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("发车站")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("到达站")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("乘车时间")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("售票时间")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("班次编号")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("车牌号")]||"") + '</li>' +
+                            '    <li class="sx_li">' + (colomdata[odata.indexOf("座位号")]||"") + '</li>' +
+                            '</ul>' +
+                            '</li>'
+                        $(".guiji_xjkyspbox").append(list);
+                    });
+                    $(".xjkysptitle").fadeIn();
+                }
+            });
+        }
     }
 
     //华东六省
@@ -4360,7 +4718,7 @@ $(".licontent,.sd_right").on("click",".smalltips",function () {
         type:"1",
         shadow:false,
         title:false,
-        content:$(this).attr("data-href"),
+        content:$(this).attr("data-href")
     })
 });
 //定义图片放大
@@ -4409,4 +4767,8 @@ $(".ad_coimgdetial").click(function () {
     })
 });
 
+// again再次爬去
+$(".againpathon").click(function () {
+    clga.searchbegin(jobdata.jobinfo.word,2,false);
+});
 

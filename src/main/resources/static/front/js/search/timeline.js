@@ -48,7 +48,6 @@ function getchecked() {
 }
 //数据接入
 var jobdata = JSON.parse(sessionStorage.getItem("jobinfo"));
-console.log(jobdata.jobinfo.jobid);
 $(".licontent").on("click",".guijichaxunbtn",function () {
     getguiji()
 });
@@ -80,7 +79,6 @@ function getguiji() {
                 $.each(item.columns,function (i,item) {
                     olist+='<span>'+item+'：'+adata[i]+'</span>'
                 });
-                console.log(item)
                 switch(item.mark){
                     case "hotel":
                         oimg = "../../img/hotel.png";
@@ -123,6 +121,7 @@ function getguiji() {
                $(".guijishijian").append(list);
             });
             systole();
+            watermark();
         }
     });
 }
@@ -150,7 +149,6 @@ var Y2 = time2.getFullYear();
 var M2 = ((time2.getMonth() + 1) > 9 ? (time2.getMonth() + 1) : '0' + (time2.getMonth() + 1));
 var D2 = (time2.getDate() > 9 ? time2.getDate() : '0' + time2.getDate());
 var timer2 = Y2+'-'+ M2+'-'+ D2; // 之后的七天或者一个月
-console.log(timer1+'---'+timer2);
 smalltipsluguan();
 function smalltipsluguan() {
     $.ajax({
